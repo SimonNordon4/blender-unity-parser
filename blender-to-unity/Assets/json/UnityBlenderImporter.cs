@@ -30,6 +30,24 @@ public class UnityBlenderImporter : ScriptedImporter
                 Debug.Log(co);
             }
         }
+        foreach (var key in obj.Normals.Keys)
+        {
+            Debug.Log(key);
+            var x = obj.Vertices[key];
+            foreach (var co in x)
+            {
+                Debug.Log(co);
+            }
+        }
+        foreach (var key in obj.Triangles.Keys)
+        {
+            Debug.Log(key);
+            var x = obj.Vertices[key];
+            foreach (var co in x)
+            {
+                Debug.Log(co);
+            }
+        }
 
     }
 }
@@ -52,10 +70,6 @@ public class UnityBlenderImporter : ScriptedImporter
         public Dictionary<string, long[]> Triangles { get; set; }
     }
 
-public class UVertices
-{
-    public int[] Verts { get; set; }
-}
 
     public partial class Uv
     {
