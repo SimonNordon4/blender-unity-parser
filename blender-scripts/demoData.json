@@ -1,0 +1,30 @@
+{
+    "string": "a string 1",
+    "int": 1,
+    "float": 1.0,
+    "isTrue": true,
+    "isTrue2": false,
+    "null": null,
+    "D2": {
+        "s2": "string two",
+        "D3": {
+            "s3": "string three",
+            "D4": {
+                "s4": "string four",
+                "D5": {
+                    "s5": "string five"
+                }
+            }
+        }
+    },
+    "stringList": [
+        "one",
+        "two",
+        "three"
+    ],
+    "stringTuple": [
+        "one",
+        1,
+        1.0
+    ]
+}
