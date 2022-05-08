@@ -16,74 +16,50 @@ public class UnityBlenderImporter : ScriptedImporter
         var fileName = System.IO.Path.GetFileNameWithoutExtension(ctx.assetPath);
 
         var json = (File.ReadAllText(ctx.assetPath));
-        var obj = JsonConvert.DeserializeObject<IDictionary<string, object>>(
-            json, new JsonConverter[] {new DictionaryReader()});
+        var obj = JsonConvert.DeserializeObject<uMesh>(json);
 
-        foreach (var key in obj.Keys)
-        {
-            Debug.Log(key);
-        }
-
-        Dictionary<string, object> verticesDict = (Dictionary<string, object>)obj["vertices"];
+        Debug.Log(obj.Name);
         
-        foreach (var key in verticesDict.Keys)
+        //FINALLY THIS RETURNS WHAT IT'S MEANT TO
+        foreach (var key in obj.Vertices.Keys)
         {
             Debug.Log(key);
-            Debug.Log(verticesDict[key]);
+            var x = obj.Vertices[key];
+            foreach (var co in x)
+            {
+                Debug.Log(co);
+            }
         }
 
     }
 }
 
+ public partial class uMesh
+ {
+        [JsonProperty("name")]
+        public string Name { get; set; }
 
-class DictionaryReader : CustomCreationConverter<IDictionary<string, object>>
-{
-    public override IDictionary<string, object> Create(Type objectType)
-    {
-        return new Dictionary<string, object>();
+        [JsonProperty("vertices")]
+        public Dictionary<string, long[]> Vertices { get; set; }
+
+        [JsonProperty("normals")]
+        public Dictionary<string, long[]> Normals { get; set; }
+
+        [JsonProperty("uv")]
+        public Uv Uv { get; set; }
+
+        [JsonProperty("triangles")]
+        public Dictionary<string, long[]> Triangles { get; set; }
     }
 
-    public override bool CanConvert(Type objectType)
-    {
-        // in addition to handling IDictionary<string, object>
-        // we want to handle the deserialization of dict value
-        // which is of type object
-        return objectType == typeof(object) || base.CanConvert(objectType);
-    }
-
-    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-    {
-        if (reader.TokenType == JsonToken.StartObject
-            || reader.TokenType == JsonToken.Null)
-            return base.ReadJson(reader, objectType, existingValue, serializer);
-
-        // if the next token is not an object
-        // then fall back on standard deserializer (strings, numbers etc.)
-        return serializer.Deserialize(reader);
-    }
-}
-
-[Serializable] 
-public class UMesh
-{
-    public string name;
-    //public string vertices;
-    public UVertices[] vertices;
-}
-
-[Serializable]
 public class UVertices
 {
-    public UCoordinate[] co;
+    public int[] Verts { get; set; }
 }
 
-[Serializable]
-public class UCoordinate
-{
-    public float[] xyz;
-}
-
-
+    public partial class Uv
+    {
+    }
 
 
 
