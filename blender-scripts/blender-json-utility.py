@@ -6,8 +6,13 @@ os.system("CLS")
 # Demonstration on how to use JSON for Blender.
 import json
 
-#define a dictionary.
+# smaller nested dictionaries can be serialized
+smallerDictionary = {
+    "string": "hello",
+    "string2": "world"
+}
 
+#define a dictionary.
 dictionary = {
     "string": "a string 1",
     "int": 1,
@@ -15,18 +20,7 @@ dictionary = {
     "isTrue": True,
     "isTrue2": False,
     "null": None,
-    "D2":{
-        "s2": "string two",
-        "D3": {
-            "s3": "string three",
-            "D4": {
-                "s4": "string four",
-                "D5": {
-                "s5": "string five",
-                },
-            },
-        },
-    },
+    "smalleDictionary": smallerDictionary, # We can nest dictionaries inside as well.
     "stringList":["one","two","three"],
     "stringTuple":("one",1,1.000)
 }
@@ -35,12 +29,12 @@ dictionary = {
 
 jsonData = json.dumps(dictionary)
 
-# Save the json in the curretn scripts directory.
+# Save the json in the current scripts directory.
 scriptPath = os.path.realpath(__file__)
 scriptDir = os.path.dirname(scriptPath)
 jsonDataDir = scriptDir + r"\demoData.json"
 
-# Convert Dictionary Data to Json (not saved)
+## Convert Dictionary Data to Json (not saved) This isn't that usable as is however, because JSON can be "double serialized" which messes it up.
 # jsonData = json.dumps(dictionary)
 
 # Write to File
