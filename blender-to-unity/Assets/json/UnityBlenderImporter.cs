@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.AssetImporters;
 using System.IO;
-using TinyJson;
-using Unity.VisualScripting;
-using Object = UnityEngine.Object;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 
 [ScriptedImporter(1, "ublend")]
@@ -16,25 +15,55 @@ public class UnityBlenderImporter : ScriptedImporter
         Debug.Log($"Importing {ctx.assetPath}");
         var fileName = System.IO.Path.GetFileNameWithoutExtension(ctx.assetPath);
 
-        var rawData = (File.ReadAllText(ctx.assetPath));
-        var parser = new UBlenderParser();
-        parser.ParseUBlend(rawData);
-    }
-}
+        var json = (File.ReadAllText(ctx.assetPath));
+        var obj = JsonConvert.DeserializeObject<IDictionary<string, object>>(
+            json, new JsonConverter[] {new DictionaryReader()});
 
-public class UBlenderParser
-{
-    public void ParseUBlend(string rawData)
-    {
-        var x = rawData.Split("name");
-        foreach (var result in x)
+        foreach (var key in obj.Keys)
         {
-            Debug.Log(result);
+            Debug.Log(key);
         }
+
+        Dictionary<string, object> verticesDict = (Dictionary<string, object>)obj["vertices"];
+        
+        foreach (var key in verticesDict.Keys)
+        {
+            Debug.Log(key);
+            Debug.Log(verticesDict[key]);
+        }
+
     }
 }
 
-[Serializable]
+
+class DictionaryReader : CustomCreationConverter<IDictionary<string, object>>
+{
+    public override IDictionary<string, object> Create(Type objectType)
+    {
+        return new Dictionary<string, object>();
+    }
+
+    public override bool CanConvert(Type objectType)
+    {
+        // in addition to handling IDictionary<string, object>
+        // we want to handle the deserialization of dict value
+        // which is of type object
+        return objectType == typeof(object) || base.CanConvert(objectType);
+    }
+
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    {
+        if (reader.TokenType == JsonToken.StartObject
+            || reader.TokenType == JsonToken.Null)
+            return base.ReadJson(reader, objectType, existingValue, serializer);
+
+        // if the next token is not an object
+        // then fall back on standard deserializer (strings, numbers etc.)
+        return serializer.Deserialize(reader);
+    }
+}
+
+[Serializable] 
 public class UMesh
 {
     public string name;
