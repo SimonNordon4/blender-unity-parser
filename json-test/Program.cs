@@ -15,7 +15,7 @@ namespace JsonTest
         {
             // Create Dummy Data.
             var v = new Vec3(1.0f, 1.0f, 1.0f);
-            var i = new Vec3Int(1, 1, 1);
+            var tri = new Vec3Int(1, 1, 1);
             var m = new bMesh();
 
             m.name = "TestMesh";
@@ -25,9 +25,9 @@ namespace JsonTest
             m.normals.Add(v);
             m.normals.Add(v);
             m.normals.Add(v);
-            m.triangles.Add(i);
-            m.triangles.Add(i);
-            m.triangles.Add(i);
+            m.triangles.Add(tri);
+            m.triangles.Add(tri);
+            m.triangles.Add(tri);
 
             // Write to Json
             var json = JsonConvert.SerializeObject(m);
@@ -39,14 +39,12 @@ namespace JsonTest
             if(data is null) return;
             var result = JsonConvert.DeserializeObject<bMesh>(data);
 
+            // Verify Results
             print(data);
-            //print(result.vertices[0].x);
-            print($"Mesh Name: {result.name}");
-            foreach(Vec3 vert in result.vertices)
-            {
-                print($"Vert: {vert.x}");
-            }
-
+            print($"Mesh Name: {result.name}"); // Name
+            for( int i = 0; i < result.vertices.Count; i++) print($"Vertex[{i}]: {result.vertices[i]}"); // Vertices
+            for( int i = 0; i < result.normals.Count; i++) print($"Normal[{i}]: {result.normals[i]}"); // Normals
+            for( int i = 0; i < result.triangles.Count; i++) print($"Triangle[{i}]: {result.triangles[i]}"); // Triangles
         }
 
         public static void print(object obj)
@@ -75,6 +73,11 @@ namespace JsonTest
         public float x;
         public float y;
         public float z;
+
+        public override string ToString()
+        {
+            return $"({x:0.0000},{y:0.0000},{z:0.0000})";
+        }
     }
 
     public class Vec3Int
@@ -88,6 +91,11 @@ namespace JsonTest
         public int x;
         public int y;
         public int z;
+
+        public override string ToString()
+        {
+            return $"({x},{y},{z})";
+        }
     }
 
     #endregion

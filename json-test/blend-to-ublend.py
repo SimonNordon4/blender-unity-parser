@@ -48,14 +48,23 @@ for ob in bpy.data.objects:
     newMesh = bMesh()
     newMesh.name = ob.name
     newMesh.vertices = []
+    newMesh.normals = []
+    newMesh.triangles = []
 
     mesh = ob.data
-    mesh.calc_loop_triangles()
+    mesh.calc_loop_triangles() # convert poly to triangles.
 
+    # get verts & normals
     for v in mesh.vertices:
         vert = Vec3(v.co.x,v.co.y,v.co.z)
+        norm = Vec3(v.normal.x,v.normal.y,v.normal.z)
         newMesh.vertices.append(vert)
+        newMesh.normals.append(norm)
    
+    # get triangles
+    for tri in mesh.loop_triangles:
+        tri = Vec3Int(tri.vertices[0],tri.vertices[1],tri.vertices[2])
+        newMesh.triangles.append(tri)
 
     print(newMesh)
 
