@@ -7,24 +7,30 @@ namespace JsonTest
     {
 
         private static string path = @"E:\repos\blender-to-unity\json-test\";
-        private static string cJson = "csharp_data.json";
-        private static string pJson = "python_data.json";
+        private static string cJson = "data_cs.json";
+        private static string pJson = "data_py.json";
 
         static void Main(string[] args)
         {
             // Create Dummy Data.
             var v = new Vec3(1.0f, 1.0f, 1.0f);
-            var i = new Vec3Int(1, 0, 2);
+            var i = new Vec3Int(1, 1, 1);
             var m = new bMesh();
 
             m.name = "TestMesh";
             m.vertices.Add(v);
+            m.vertices.Add(v);
+            m.vertices.Add(v);
             m.normals.Add(v);
+            m.normals.Add(v);
+            m.normals.Add(v);
+            m.triangles.Add(i);
+            m.triangles.Add(i);
             m.triangles.Add(i);
 
             // Write to Json
             var json = JsonConvert.SerializeObject(m);
-            File.WriteAllText(path + cJson, json);
+            File.WriteAllText(path + "data_cs.json", json);
 
             // Load and read Json.
             StreamReader sr = new StreamReader(path + pJson);
