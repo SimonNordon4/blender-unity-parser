@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
 
-namespace HelloWorld
+namespace JsonTest
 {
     class Program
     {
-
         static void Main(string[] args)
         {
             var x = new Program();
@@ -14,4 +13,11 @@ namespace HelloWorld
             Console.WriteLine("Hello");
         }
     }
+
+    public class Vec3{
+        float x;
+        float y;
+        float z;
+    }
+
 }
