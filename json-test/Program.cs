@@ -9,6 +9,7 @@ namespace JsonTest
         private static string path = @"E:\repos\blender-to-unity\json-test\";
         private static string cJson = "data_cs.json";
         private static string pJson = "data_py.json";
+        private static string bJson = "data_bpy.json";
 
         static void Main(string[] args)
         {
@@ -33,14 +34,18 @@ namespace JsonTest
             File.WriteAllText(path + "data_cs.json", json);
 
             // Load and read Json.
-            StreamReader sr = new StreamReader(path + pJson);
+            StreamReader sr = new StreamReader(path + bJson);
             var data = sr.ReadToEnd();
             if(data is null) return;
             var result = JsonConvert.DeserializeObject<bMesh>(data);
 
             print(data);
-            print(result.vertices[0].x);
-            print(result.name);
+            //print(result.vertices[0].x);
+            print($"Mesh Name: {result.name}");
+            foreach(Vec3 vert in result.vertices)
+            {
+                print($"Vert: {vert.x}");
+            }
 
         }
 
