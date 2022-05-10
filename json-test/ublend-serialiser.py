@@ -83,7 +83,7 @@ class ReadJson:
 #endregion
 
 data = MeshToJson.Get()
-WriteJson.Write(data,projectExport)
+WriteJson.Write(data,unityExport)
 result = ReadJson.Read(projectExport)
 
 print(result)

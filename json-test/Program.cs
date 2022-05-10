@@ -12,7 +12,6 @@ namespace JsonTest
         private static string cJson = "data_cs.json";
         private static string pJson = "data_py.json";
         private static string bJson = "data_bpy.json";
-
         private static string uJson = "data.ublend";
 
         static void Main(string[] args)
