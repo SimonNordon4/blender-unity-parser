@@ -82,7 +82,7 @@ class UMeshLoop2JSON:
 
         # Triangulate.
         mesh.calc_loop_triangles()
-        #mesh.calc_normals_split()  # Split Normals are only accessible via loops (not verts)
+        mesh.calc_normals_split()  # Split Normals are only accessible via loops (not verts)
 
         for loop in mesh.loops:
             norm = Vector3(loop.normal.x,loop.normal.z,loop.normal.y)
