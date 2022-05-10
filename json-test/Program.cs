@@ -6,17 +6,21 @@ namespace JsonTest
     class Program
     {
 
-        private static string path = @"E:\repos\blender-to-unity\json-test\";
+        private static string projectPath = @"E:\repos\blender-to-unity\json-test\";
+        private static string unityPath = @"E:\repos\blender-to-unity\blender-to-unity\Assets\blender-to-unity\";
+
         private static string cJson = "data_cs.json";
         private static string pJson = "data_py.json";
         private static string bJson = "data_bpy.json";
+
+        private static string uJson = "data.ublend";
 
         static void Main(string[] args)
         {
             // Create Dummy Data.
             var v = new Vec3(1.0f, 1.0f, 1.0f);
             var tri = new Vec3Int(1, 1, 1);
-            var m = new bMesh();
+            var m = new UMesh();
 
             m.name = "TestMesh";
             m.vertices.Add(v);
@@ -31,13 +35,13 @@ namespace JsonTest
 
             // Write to Json
             var json = JsonConvert.SerializeObject(m);
-            File.WriteAllText(path + "data_cs.json", json);
+            File.WriteAllText(projectPath + "data_cs.json", json);
 
             // Load and read Json.
-            StreamReader sr = new StreamReader(path + bJson);
+            StreamReader sr = new StreamReader(projectPath + bJson);
             var data = sr.ReadToEnd();
             if(data is null) return;
-            var result = JsonConvert.DeserializeObject<bMesh>(data);
+            var result = JsonConvert.DeserializeObject<UMesh>(data);
 
             // Verify Results
             print(data);
@@ -102,7 +106,7 @@ namespace JsonTest
 
     #region Asset Classes
 
-    public class bMesh
+    public class UMesh
     {
         public string name = "";
         public List<Vec3> vertices = new List<Vec3>();
