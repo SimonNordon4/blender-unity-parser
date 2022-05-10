@@ -37,6 +37,7 @@ projectExport = 'E:\\repos\\blender-to-unity\\json-test\\data_bpy.json'
 unityExport = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\blender-to-unity\\data.ublend'
 
 class UMeshToJson:
+
     def Get(obj):
         newMesh = UMesh()
         newMesh.name = obj.name
@@ -45,21 +46,22 @@ class UMeshToJson:
         newMesh.triangles = []
 
         mesh = obj.data
-        mesh.calc_loop_triangles() # convert poly to triangles.
-
-        # get verts & normals
+        
+        # TODO In Order to Split Meshes up correctly you'll have to split the mesh at normals and material seams.
+        # get verts & normals. note: We swap the order of y & z to convert to Unity directions from a base level.
         for v in mesh.vertices:
-            vert = Vector3(v.co.x,v.co.y,v.co.z)
-            norm = Vector3(v.normal.x,v.normal.y,v.normal.z)
+            vert = Vector3(v.co.x,v.co.z,v.co.y)
+            norm = Vector3(v.normal.x,v.normal.z,v.normal.y)
             newMesh.vertices.append(vert)
             newMesh.normals.append(norm)
+
+        mesh.calc_loop_triangles() # convert poly to triangles.
     
         # get triangles as an array of ints.
         for tri in mesh.loop_triangles:
-            #tri = Vec3Int(tri.vertices[0],tri.vertices[1],tri.vertices[2])
             newMesh.triangles.append(tri.vertices[0])
-            newMesh.triangles.append(tri.vertices[1])
             newMesh.triangles.append(tri.vertices[2])
+            newMesh.triangles.append(tri.vertices[1])
         
         return newMesh.toJson();
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.AssetImporters;
+using UnityEditor;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -27,8 +28,15 @@ public class UBlendImporter : ScriptedImporter
 
 
         // Create the object!
+        CreateGameObject(uMesh,ctx.assetPath);
         
-        var go = new GameObject(fileName);
+    }
+
+    // TODO experiment with direct Mesh Serialisation
+
+    public void CreateGameObject(UMesh uMesh, string filePath)
+    {
+        var go = new GameObject(Path.GetFileNameWithoutExtension(filePath));
         
         Mesh mesh = new Mesh();
 
@@ -36,15 +44,20 @@ public class UBlendImporter : ScriptedImporter
         mesh.normals = uMesh.normals;
         mesh.triangles = uMesh.triangles;
 
+        mesh.RecalculateNormals();
+        mesh.RecalculateBounds();
+        mesh.RecalculateTangents();
+
         var mf = go.AddComponent<MeshFilter>();
         mf.mesh = mesh;
 
-        go.AddComponent<MeshRenderer>();
+        var mr = go.AddComponent<MeshRenderer>();
+        mr.sharedMaterial = new Material(Shader.Find("Standard"));
+
+        // Attempt to save.
+        AssetDatabase.CreateAsset(mesh,Path.GetDirectoryName(filePath) + "mesh.asset");
+        AssetDatabase.SaveAssets();
     }
-
-    // TODO experiment with direct Mesh Serialisation
-
-
 
     public void print(object obj)
     {
