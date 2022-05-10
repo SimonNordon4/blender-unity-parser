@@ -13,13 +13,13 @@ public class UBlendImporter : ScriptedImporter
 {
     public override void OnImportAsset(AssetImportContext ctx)
     {
-        if(ctx is null)return;
+        if (ctx is null) return;
 
         Debug.Log($"Importing {ctx.assetPath}");
 
         var fileName = Path.GetFileNameWithoutExtension(ctx.assetPath);
         var fileData = (File.ReadAllText(ctx.assetPath));
-   
+
         // Verify Data
         Debug.Log(fileData);
 
@@ -28,8 +28,8 @@ public class UBlendImporter : ScriptedImporter
 
 
         // Create the object!
-        CreateGameObject(uMesh,ctx.assetPath);
-        
+        CreateGameObject(uMesh, ctx.assetPath);
+
     }
 
     // TODO experiment with direct Mesh Serialisation
@@ -37,7 +37,7 @@ public class UBlendImporter : ScriptedImporter
     public void CreateGameObject(UMesh uMesh, string filePath)
     {
         var go = new GameObject(Path.GetFileNameWithoutExtension(filePath));
-        
+
         Mesh mesh = new Mesh();
 
         mesh.vertices = uMesh.vertices;
@@ -55,8 +55,9 @@ public class UBlendImporter : ScriptedImporter
         mr.sharedMaterial = new Material(Shader.Find("Standard"));
 
         // Attempt to save.
-        AssetDatabase.CreateAsset(mesh,Path.GetDirectoryName(filePath) + "mesh.asset");
-        AssetDatabase.SaveAssets();
+        AssetDatabase.DeleteAsset(@"Assets/blender-to-unity/mesh.asset");
+        AssetDatabase.CreateAsset(mesh,@"Assets/blender-to-unity/mesh.asset");
+        //AssetDatabase.SaveAssets();
     }
 
     public void print(object obj)
