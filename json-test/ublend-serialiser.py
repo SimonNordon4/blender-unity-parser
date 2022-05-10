@@ -5,12 +5,9 @@ import bpy
 
 ## OBJECTIVE: SERIALIZE A MESH!
 
-#region Utility Classes
+#region Unity Classes
 
-projectExport = 'E:\\repos\\blender-to-unity\\json-test\\data_bpy.json'
-unityExport = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\blender-to-unity\\data.ublend'
-
-class Vec3:
+class Vector3:
    def __init__(self,x,y,z):
        self.x = x;
        self.y = y;
@@ -18,18 +15,11 @@ class Vec3:
    def toJson(self):
        return json.dumps(self,default=lambda o: o.__dict__,sort_keys=True,indent=4)
 
-class Vec3Int:
-    def __init__(self,x,y,z):
-       self.x = x;
-       self.y = y;
-       self.z = z;
-    def toJson(self):
-        return json.dumps(self,default=lambda o: o.__dict__,sort_keys=True,indent=4)
-    
 #endregion
 
 #region Asset Classes
 
+# Represents a Unity Mesh.
 class UMesh:
     def __init__(self):
         name = ""
@@ -43,9 +33,11 @@ class UMesh:
 
 #region Blender Classes
 
-class MeshToJson:
-    def Get():
-        obj = bpy.data.objects[0]
+projectExport = 'E:\\repos\\blender-to-unity\\json-test\\data_bpy.json'
+unityExport = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\blender-to-unity\\data.ublend'
+
+class UMeshToJson:
+    def Get(obj):
         newMesh = UMesh()
         newMesh.name = obj.name
         newMesh.vertices = []
@@ -57,16 +49,18 @@ class MeshToJson:
 
         # get verts & normals
         for v in mesh.vertices:
-            vert = Vec3(v.co.x,v.co.y,v.co.z)
-            norm = Vec3(v.normal.x,v.normal.y,v.normal.z)
+            vert = Vector3(v.co.x,v.co.y,v.co.z)
+            norm = Vector3(v.normal.x,v.normal.y,v.normal.z)
             newMesh.vertices.append(vert)
             newMesh.normals.append(norm)
     
-        # get triangles
+        # get triangles as an array of ints.
         for tri in mesh.loop_triangles:
-            tri = Vec3Int(tri.vertices[0],tri.vertices[1],tri.vertices[2])
-            newMesh.triangles.append(tri)
-
+            #tri = Vec3Int(tri.vertices[0],tri.vertices[1],tri.vertices[2])
+            newMesh.triangles.append(tri.vertices[0])
+            newMesh.triangles.append(tri.vertices[1])
+            newMesh.triangles.append(tri.vertices[2])
+        
         return newMesh.toJson();
 
 class WriteJson:
@@ -82,7 +76,7 @@ class ReadJson:
 
 #endregion
 
-data = MeshToJson.Get()
+data = UMeshToJson.Get(bpy.data.objects[0])
 WriteJson.Write(data,unityExport)
 result = ReadJson.Read(projectExport)
 

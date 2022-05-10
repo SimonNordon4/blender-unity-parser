@@ -18,7 +18,7 @@ public class JSONSerializer : MonoBehaviour
     {
         var test = new Test();
         test.nested = new Nested();
-        test.nested.vec = new Vector3(0,1,0);
+        
         var data = JsonConvert.SerializeObject(test);
         File.WriteAllText(unityPath + uJson, data);
     }
@@ -31,6 +31,6 @@ public class Test
 }
 
 public class Nested{
-    public Vector3 vec = Vector3.zero;
+    public Vector3[] vec = new Vector3[]{Vector3.back,Vector3.down};
 }
 #endif
