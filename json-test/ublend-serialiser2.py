@@ -84,23 +84,24 @@ class UMeshLoop2JSON:
         mesh.calc_loop_triangles()
         mesh.calc_normals_split()  # Split Normals are only accessible via loops (not verts)
 
+        for loop in mesh.loops:
+            norm = Vector3(loop.normal.x,loop.normal.z,loop.normal.y)
+            # now we have to do a tricky by getting vertices multiple times to match the split normals.
+            v = (mesh.vertices[loop.vertex_index].co)
+            vert = Vector3(v.x,v.z,v.y)
+            uMesh.vertices.append(vert)
+            uMesh.normals.append(norm)
+        
+            
+
         for tri in mesh.loop_triangles:
-            for vertice in tri.vertices:
-                v = mesh.vertices[vertice].co 
-                vert = Vector3(v.x,v.z,v.y) 
-                uMesh.vertices.append(vert)
-
-            for loop in tri.loops:
-                
-                n = mesh.loops[loop].normal
-                norm = Vector3(n.x,n.z,n.y)
-                uMesh.normals.append(norm)
-
             uMesh.triangles.append(tri.loops[0])
             uMesh.triangles.append(tri.loops[2])
             uMesh.triangles.append(tri.loops[1])
-
-                
+            for loop in tri.loops:
+                print(mesh.loops[loop].normal) # THE ANSWER LIES HERE <---! Get the loop normal / vert via the triangle
+            
+        
         return uMesh.toJson();
 
 class WriteJson:
@@ -124,4 +125,4 @@ data = UMeshLoop2JSON.Get(bpy.data.objects[0])
 WriteJson.Write(data,unityExport)
 result = ReadJson.Read(projectExport)
 
-print(data)
+#print(data)

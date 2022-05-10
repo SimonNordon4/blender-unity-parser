@@ -44,10 +44,6 @@ public class UBlendImporter : ScriptedImporter
         mesh.normals = uMesh.normals;
         mesh.triangles = uMesh.triangles;
 
-        //mesh.RecalculateNormals();
-        //mesh.RecalculateBounds();
-        //mesh.RecalculateTangents();
-
         var mf = go.AddComponent<MeshFilter>();
         mf.mesh = mesh;
 
