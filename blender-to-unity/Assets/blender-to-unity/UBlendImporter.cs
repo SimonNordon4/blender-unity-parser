@@ -38,17 +38,22 @@ public class UBlendImporter : ScriptedImporter
     {
         var go = new GameObject(Path.GetFileNameWithoutExtension(filePath));
 
+        //todo if Mesh is greater than ~65,000K then mapMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         Mesh mesh = new Mesh();
 
+        // todo check for values
         mesh.vertices = uMesh.vertices;
         mesh.normals = uMesh.normals;
         mesh.triangles = uMesh.triangles;
+        mesh.uv = uMesh.uv;
 
+        // todo make this a prefab.
         var mf = go.AddComponent<MeshFilter>();
         mf.mesh = mesh;
 
+        // todo check material parameters.
         var mr = go.AddComponent<MeshRenderer>();
-        mr.sharedMaterial = new Material(Shader.Find("Standard"));
+        mr.sharedMaterial = new Material(Shader.Find("Shader Graphs/uv"));
 
         // Attempt to save.
         AssetDatabase.DeleteAsset(@"Assets/blender-to-unity/mesh.asset");
@@ -73,6 +78,13 @@ public class UBlendImporter : ScriptedImporter
         public Vector3[] vertices = new Vector3[0];
         public Vector3[] normals = new Vector3[0];
         public int[] triangles = new int[0];
+        public Vector2[] uv = new Vector2[0];
+        public Vector2[] uv2 = new Vector2[0];
+        public Vector2[] uv3 = new Vector2[0];
+        public Vector2[] uv4 = new Vector2[0];
+        public Vector2[] uv5 = new Vector2[0];
+        public Vector2[] uv6 = new Vector2[0];
+        public Vector2[] uv7 = new Vector2[0];
     }
 
     #endregion
