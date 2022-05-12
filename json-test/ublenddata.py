@@ -1,4 +1,5 @@
 import json
+import bpy
 
 class vector2:
     ''' Unity Vector2 https://docs.unity3d.com/ScriptReference/Vector2.html'''
@@ -72,7 +73,7 @@ class mesh_to_unity_mesh:
         return uv_maps
 
     def convert(obj):
-        u_mesh = ublend.unity_mesh()
+        u_mesh = unity_mesh()
         u_mesh.name = obj.name + "_loops"
         u_mesh.vertices = []
         u_mesh.normals = []
