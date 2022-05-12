@@ -20,9 +20,9 @@ unityExport = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\blender-to
 
 # data = open(projectExport, "r")
 
-ublend.ublenddata.test.x()
+ublend.data.test.x()
 
-unity_mesh = ublend.ublenddata.mesh_to_unity_mesh.convert(bpy.data.objects[0])
+unity_mesh = ublend.ops.mesh_to_unity_mesh.convert(bpy.data.objects[0])
 json_data = unity_mesh.tojson()
 print(json_data)
 
