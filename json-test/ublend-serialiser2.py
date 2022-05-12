@@ -8,8 +8,8 @@ import ublend
 
 
 
-# projectExport = 'E:\\repos\\blender-to-unity\\json-test\\data_bpy.json'
-# unityExport = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\blender-to-unity\\data.ublend'
+projectExport = 'E:\\repos\\blender-to-unity\\json-test\\data_bpy.json'
+unityExport = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\blender-to-unity\\data.ublend'
 
 # data = ublend.ublenddata.mesh_to_unity_mesh.convert(bpy.data.objects[0])
 
@@ -24,6 +24,9 @@ ublend.ublenddata.test.x()
 
 unity_mesh = ublend.ublenddata.mesh_to_unity_mesh.convert(bpy.data.objects[0])
 json_data = unity_mesh.tojson()
-
 print(json_data)
+
+with open(unityExport, "w") as f:
+    f.write(json_data)
+    f.close()
 
