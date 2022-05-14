@@ -1,10 +1,8 @@
 # http://graphics.cs.cmu.edu/courses/15-466-f17/notes/models/export-layer.py
 import bpy
 import sys
-
 sys.path.append('E:\\repos\\blender-to-unity\\json-test\\')
 import ublend
-
 
 projectExport = 'E:\\repos\\blender-to-unity\\json-test\\data_bpy.json'
 unityExport = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\blender-to-unity\\data.ublend'

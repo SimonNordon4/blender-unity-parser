@@ -5,6 +5,7 @@ import bpy
 class mesh_to_unity_submesh:
     # Serialize a Blender Mesh into a Unity Friendly JSON
     def get_vertices_and_normals(mesh):
+        print("Getting Verts & normals")
         vertices = []
         normals = []
         for loop in mesh.loops:
@@ -12,6 +13,8 @@ class mesh_to_unity_submesh:
             # now we have to do a tricky by getting vertices multiple times to match the split normals.
             v = (mesh.vertices[loop.vertex_index].co)
             vert = data.vector3(v.x, v.z, v.y)
+            vertices.append(vert)
+            normals.append(vert)
         return vertices, normals
 
     def get_uv(mesh):
@@ -52,7 +55,6 @@ class mesh_to_unity_submesh:
         u_mesh.name = obj.data.name
         u_mesh.vertices = []
         u_mesh.normals = []
-        u_mesh.triangles = []
         u_mesh.uv = []
 
         # TODO: apply modifiers and create virtual copy of the mesh.
@@ -60,16 +62,18 @@ class mesh_to_unity_submesh:
         o_mesh = obj.data
         o_mesh.calc_loop_triangles()
         o_mesh.calc_normals_split()  # Split Normals are only accessible via loops (not verts)
+        
+        # VERTICES & NORMALS
+        u_mesh.vertices  , u_mesh.normals = mesh_to_unity_submesh.get_vertices_and_normals(o_mesh)
 
         # SUBMESH TRIANGLES
         # Get the submesh count, then use that to initialise the submesh_triangles list.
-        if len(mesh.materials) <= 0:
+        if len(o_mesh.materials) <= 0:
            u_mesh.submesh_count, u_mesh.submesh_triangles = mesh_to_unity_submesh.get_submesh_triangles_no_material(o_mesh)
         else:
            u_mesh.submesh_count, u_mesh.submesh_triangles = mesh_to_unity_submesh.get_submesh_triangles(o_mesh)
 
-        # Get UV Maps
-        
+        # UV MAPS
         uv_maps = mesh_to_unity_submesh.get_uv(o_mesh)
         if len(uv_maps) > 0:
             u_mesh.uv = uv_maps[0]
@@ -88,7 +92,4 @@ class mesh_to_unity_submesh:
         if len(uv_maps) > 7:
             u_mesh.uv8 = uv_maps[7]
             
-        #sub meshes    
-        u_mesh.subMeshCount = mesh_to_unity_submesh.get_sub_mesh_count(o_mesh)
-
         return u_mesh

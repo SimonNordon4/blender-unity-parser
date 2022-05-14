@@ -38,7 +38,6 @@ class unity_mesh:
     def __init__(self):
         name = ""
         bounds = [0,0];
-        
         vertices = []
         normals = []
         tangents =[]        
