@@ -1,15 +1,21 @@
 # http://graphics.cs.cmu.edu/courses/15-466-f17/notes/models/export-layer.py
 import bpy
 import sys
-sys.path.append('E:\\repos\\blender-to-unity\\json-test\\')
 
+sys.path.append('E:\\repos\\blender-to-unity\\json-test\\')
 import ublend
 
 
+# projectExport = 'E:\\repos\\blender-to-unity\\json-test\\data_bpy.json'
+# unityExport = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\blender-to-unity\\data.ublend'
 
+# unity_mesh = ublend.ops.mesh_to_unity_mesh.convert(bpy.data.objects[0])
+# json_data = unity_mesh.tojson()
+# print(json_data)
 
-projectExport = 'E:\\repos\\blender-to-unity\\json-test\\data_bpy.json'
-unityExport = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\blender-to-unity\\data.ublend'
+# with open(unityExport, "w") as f:
+#     f.write(json_data)
+#     f.close()
 
 # data = ublend.ublenddata.mesh_to_unity_mesh.convert(bpy.data.objects[0])
 
@@ -20,13 +26,5 @@ unityExport = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\blender-to
 
 # data = open(projectExport, "r")
 
-ublend.data.test.x()
-
-unity_mesh = ublend.ops.mesh_to_unity_mesh.convert(bpy.data.objects[0])
-json_data = unity_mesh.tojson()
-print(json_data)
-
-with open(unityExport, "w") as f:
-    f.write(json_data)
-    f.close()
+# MESH TRIANGLE EXPERIMENTATION.
 

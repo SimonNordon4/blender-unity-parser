@@ -54,6 +54,11 @@ class unity_mesh:
         uv6 = []
         uv7 = []
         uv8 = []
+        
+        # sub meshes.
+        subMeshCount = 1;
+        # a list of triangles.
+        subMeshTriangles = []
 
     def tojson(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

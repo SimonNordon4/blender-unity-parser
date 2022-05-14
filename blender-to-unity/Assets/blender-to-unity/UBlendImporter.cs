@@ -46,6 +46,7 @@ public class UBlendImporter : ScriptedImporter
         mesh.normals = uMesh.normals;
         mesh.triangles = uMesh.triangles;
         mesh.uv = uMesh.uv;
+        mesh.subMeshCount = uMesh.subMeshCount;
 
         // todo make this a prefab.
         var mf = go.AddComponent<MeshFilter>();
@@ -85,6 +86,7 @@ public class UBlendImporter : ScriptedImporter
         public Vector2[] uv5 = new Vector2[0];
         public Vector2[] uv6 = new Vector2[0];
         public Vector2[] uv7 = new Vector2[0];
+        public int subMeshCount = 1;
     }
 
     #endregion

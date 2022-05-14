@@ -23,11 +23,19 @@ public class JSONSerializer : MonoBehaviour
         uMesh.triangles = meshToSerialize.triangles;
 
         Debug.Log($"Normals: {meshToSerialize.normals.Length}");
+
+        Debug.Log($"Triangles: {meshToSerialize.triangles}");
+
+        foreach(var tri in meshToSerialize.triangles)
+        {
+            Debug.Log(tri);
+        }
+
+
         
-        var data = JsonConvert.SerializeObject(uMesh);
+        var data = JsonConvert.SerializeObject(meshToSerialize);
         File.WriteAllText(unityPath + uJson, data);
     }
 }
-
 
 #endif
