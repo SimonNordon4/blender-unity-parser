@@ -40,11 +40,14 @@ class unity_mesh:
         bounds = [0,0];
         
         vertices = []
-        triangles = []
-        
         normals = []
         tangents =[]        
         colors = []
+        
+        # sub meshes.
+        submesh_count = 1;
+        # a list of lists of triangles corresponding to the submesh count.
+        submesh_triangles = []
         
         uv = []
         uv2 = []
@@ -55,10 +58,5 @@ class unity_mesh:
         uv7 = []
         uv8 = []
         
-        # sub meshes.
-        subMeshCount = 1;
-        # a list of triangles.
-        subMeshTriangles = []
-
     def tojson(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

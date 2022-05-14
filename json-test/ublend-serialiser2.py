@@ -6,18 +6,16 @@ sys.path.append('E:\\repos\\blender-to-unity\\json-test\\')
 import ublend
 
 
-# projectExport = 'E:\\repos\\blender-to-unity\\json-test\\data_bpy.json'
-# unityExport = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\blender-to-unity\\data.ublend'
+projectExport = 'E:\\repos\\blender-to-unity\\json-test\\data_bpy.json'
+unityExport = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\blender-to-unity\\data.ublend'
 
-# unity_mesh = ublend.ops.mesh_to_unity_mesh.convert(bpy.data.objects[0])
-# json_data = unity_mesh.tojson()
-# print(json_data)
+unity_mesh = ublend.ops.mesh_to_unity_submesh.convert(bpy.data.objects[0])
+json_data = unity_mesh.tojson()
+print(json_data)
 
 # with open(unityExport, "w") as f:
 #     f.write(json_data)
 #     f.close()
-
-# data = ublend.ublenddata.mesh_to_unity_mesh.convert(bpy.data.objects[0])
 
 # with open(projectExport, "w") as f:
 #     _json = data.tojson()
