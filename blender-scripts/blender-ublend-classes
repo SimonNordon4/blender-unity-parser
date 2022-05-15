@@ -1,9 +1,0 @@
-import bpy
-
-class uVertices:
-    verts = [];
-
-class uMesh:
-    name = "";
-    verts = []
-    
