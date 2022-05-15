@@ -39,14 +39,13 @@ class unity_mesh:
         name = ""
         bounds = [0,0];
         vertices = []
+        triangles = []
         normals = []
         tangents =[]        
         colors = []
         
         # sub meshes.
         submesh_count = 1;
-        # a list of lists of triangles corresponding to the submesh count.
-        submesh_triangles = []
         
         uv = []
         uv2 = []
