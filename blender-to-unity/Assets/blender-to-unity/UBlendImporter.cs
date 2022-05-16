@@ -1,12 +1,11 @@
 #if UNITY_EDITOR
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.AssetImporters;
 using UnityEditor;
 using System.IO;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+
+
 
 [ScriptedImporter(1, "ublend")]
 public class UBlendImporter : ScriptedImporter
@@ -28,10 +27,18 @@ public class UBlendImporter : ScriptedImporter
         // Verify Result - this will later deserialize the entire thing, not just a mesh.
         var uMesh = JsonConvert.DeserializeObject<UMesh>(fileData);
 
-        CreateGameObject(uMesh,filePath);
+        //UMeshValidation(uMesh);
+
+        CreateGameObject(uMesh,ctx.assetPath);
     }
 
     // Top level prefab for the entire object.
+
+    private void UMeshValidation(UMesh uMesh)
+    {
+        var umeshValidationJson = JsonConvert.SerializeObject(uMesh);
+        print(umeshValidationJson);
+    }
 
     public Mesh CreateMesh(UMesh uMesh)
     {
@@ -40,15 +47,20 @@ public class UBlendImporter : ScriptedImporter
         mesh.SetVertices(uMesh.vertices);
         mesh.SetNormals(uMesh.normals);
 
-       
+        mesh.subMeshCount = uMesh.subMeshCount;
+        for (int i = 0; i < uMesh.subMeshTriangles.Length; i++)
+        {
+            print($"Creating Submesh {i} of {uMesh.subMeshTriangles.Length}");
+            mesh.SetTriangles(uMesh.subMeshTriangles[i], (i),true);
+        }
 
         return mesh;
     }
 
 
-    public void CreateGameObject(UMesh uMesh, string filePath)
+    public void CreateGameObject(UMesh uMesh, string assetPath)
     {
-        var go = new GameObject(Path.GetFileNameWithoutExtension(filePath));
+        var go = new GameObject(Path.GetFileNameWithoutExtension(assetPath));
 
         //todo if Mesh is greater than ~65,000K then mapMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         Mesh mesh = CreateMesh(uMesh);
@@ -80,22 +92,26 @@ public class UBlendImporter : ScriptedImporter
 
     /// <summary>
     /// Unity Mesh Transport Container. https://docs.unity3d.com/ScriptReference/Mesh.html
+    /// <remarks>Variables name have to exactly match the JSON FILE. Variables name follow python naming conventions. This might be overridable with json property? not sure if it works both ways though lol</remarks>
     /// </summary>
     public class UMesh
     {
+       
         public string name = "";
         public Vector3[] vertices = new Vector3[0];
         public Vector3[] normals = new Vector3[0];
+        [JsonProperty("submesh_triangles")]
         public int[][] subMeshTriangles = new int[0][]; // mesh.tirangles doesn't support multiple submeshes, so instead all triangles should be considered belonging to a submesh, we use Mesh.SetTriangles
+        [JsonProperty("submesh_triangles")]
         public int subMeshCount = 1;
-        public Vector2[][] uvs = new Vector2[0][];
-        // public Vector2[] uv = new Vector2[0];
-        // public Vector2[] uv2 = new Vector2[0];
-        // public Vector2[] uv3 = new Vector2[0];
-        // public Vector2[] uv4 = new Vector2[0];
-        // public Vector2[] uv5 = new Vector2[0];
-        // public Vector2[] uv6 = new Vector2[0];
-        // public Vector2[] uv7 = new Vector2[0];
+        //public Vector2[][] uvs = new Vector2[0][];
+        public Vector2[] uv = new Vector2[0];
+        public Vector2[] uv2 = new Vector2[0];
+        public Vector2[] uv3 = new Vector2[0];
+        public Vector2[] uv4 = new Vector2[0];
+        public Vector2[] uv5 = new Vector2[0];
+        public Vector2[] uv6 = new Vector2[0];
+        public Vector2[] uv7 = new Vector2[0];
     }
 
     #endregion

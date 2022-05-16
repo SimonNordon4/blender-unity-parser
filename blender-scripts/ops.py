@@ -1,4 +1,3 @@
-import numpy as np # we can't tojson a np array, find away to concatenate without it.
 import ublend
 
 # Each submesh is a subset of triangles, so we'll still get verts and normals as before, but triangles will have to be assigned on a per material basis.
@@ -34,28 +33,49 @@ class BMeshToUMesh:
             uv_maps.append(uv_layer)
         return uv_maps
     
+    # @staticmethod
+    # def get_triangles(mesh):
+    #     ''' Returns the meshes triangles for each of the meshes materials in a single array'''
+    #     mat_num = len(mesh.materials)
+    #     if mat_num >= 1:
+    #         submesh_triangles = []
+    #         for i in range(mat_num): # instantiate triangle lists
+    #             submesh_triangles.append([])
+    #         for tri in mesh.loop_triangles: # append triangles to respective material id (trianlges) lists.
+    #             submesh_triangles[tri.material_index].append(tri.loops[0])
+    #             submesh_triangles[tri.material_index].append(tri.loops[2])
+    #             submesh_triangles[tri.material_index].append(tri.loops[1])
+    #         triangles = []
+    #     else: # if there's no materials we don't have to worry about submeshes.
+    #         triangles = []
+    #         for tri in mesh.loop_triangles:
+    #             triangles.append(tri.loops[0])
+    #             triangles.append(tri.loops[2])
+    #             triangles.append(tri.loops[1])
+    #     return triangles
+    
     @staticmethod
-    def get_triangles(mesh):
-        ''' Returns the meshes triangles for each of the meshes materials in a single array'''
+    def get_submesh_triangles(mesh):
+        ''' Returns a list of submesh triangles for each material slot on the object. Materials returns the correct number of material slots, even if no material is defined.'''
         mat_num = len(mesh.materials)
         if mat_num >= 1:
-            submesh_triangles = []
-            for i in range(mat_num): # instantiate triangle lists
-                submesh_triangles.append([])
-            for tri in mesh.loop_triangles: # append triangles to respective material id (trianlges) lists.
-                submesh_triangles[tri.material_index].append(tri.loops[0])
-                submesh_triangles[tri.material_index].append(tri.loops[2])
-                submesh_triangles[tri.material_index].append(tri.loops[1])
             triangles = []
-            for sm_tri in submesh_triangles: # add all the submesh triangles into a single list, in the correct order.
-                triangles = np.concatenate([triangles,sm_tri])
+            for i in range(mat_num): # instantiate triangle lists
+                triangles.append([])
+            for tri in mesh.loop_triangles: # append triangles to respective material id (trianlges) lists.
+                triangles[tri.material_index].append(tri.loops[0])
+                triangles[tri.material_index].append(tri.loops[2])
+                triangles[tri.material_index].append(tri.loops[1])
         else: # if there's no materials we don't have to worry about submeshes.
             triangles = []
             for tri in mesh.loop_triangles:
                 triangles.append(tri.loops[0])
                 triangles.append(tri.loops[2])
                 triangles.append(tri.loops[1])
-        return triangles
+        submesh_triangles = []
+        for tris in triangles:
+            submesh_triangles.append(tris)
+        return submesh_triangles
     
     @staticmethod
     def convert(obj):
@@ -78,7 +98,7 @@ class BMeshToUMesh:
         # SUBMESH TRIANGLES
         # Get the submesh count, then use that to initialise the submesh_triangles list.
         u_mesh.submesh_count = len(o_mesh.materials)
-        u_mesh.submesh_triangles = BMeshToUMesh.get_triangles(o_mesh)
+        u_mesh.submesh_triangles = BMeshToUMesh.get_submesh_triangles(o_mesh)
 
         # UV MAPS
         uv_maps = BMeshToUMesh.get_uv(o_mesh)
