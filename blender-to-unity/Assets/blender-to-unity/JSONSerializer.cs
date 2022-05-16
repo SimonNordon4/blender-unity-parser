@@ -17,17 +17,16 @@ public class JSONSerializer : MonoBehaviour
     public void SaveToFile()
     {
         var uMesh = new UBlendImporter.UMesh();
-        uMesh.name = meshToSerialize.name;
-        uMesh.vertices = meshToSerialize.vertices;
-        uMesh.normals = meshToSerialize.normals;
 
+        var uv1 = new Vector2[]{new Vector2(0,1),new Vector2(1,0)};
+        var uv2 = new Vector2[]{new Vector2(0,1),new Vector2(1,0)};
 
-        Debug.Log($"Normals: {meshToSerialize.normals.Length}");
+        var uvs = new Vector2[][] {uv1,uv2};
 
-        Debug.Log($"Triangles: {meshToSerialize.triangles}");
+        uMesh.uvs = uvs;
 
-
-        var data = JsonConvert.SerializeObject(meshToSerialize);
+        var data = JsonConvert.SerializeObject(uMesh);
+        Debug.Log(data);
         File.WriteAllText(unityPath + uJson, data);
     }
 }

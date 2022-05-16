@@ -1,4 +1,6 @@
 #if UNITY_EDITOR
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.AssetImporters;
 using UnityEditor;
@@ -44,15 +46,23 @@ public class UBlendImporter : ScriptedImporter
     {
         Mesh mesh = new Mesh();
 
+        // CREATE VERTEX DATA
         mesh.SetVertices(uMesh.vertices);
         mesh.SetNormals(uMesh.normals);
 
+        // CREATE TRIANGLES
         mesh.subMeshCount = uMesh.subMeshCount;
         for (int i = 0; i < uMesh.subMeshTriangles.Length; i++)
         {
             print($"Creating Submesh {i} of {uMesh.subMeshTriangles.Length}");
             mesh.SetTriangles(uMesh.subMeshTriangles[i], (i),true);
         }
+
+        // CRATE UVS
+        for (int i = 0; i < uMesh.uvs.Length; i++){
+            mesh.SetUVs(i,uMesh.uvs[i]);
+        }
+
 
         return mesh;
     }
@@ -92,7 +102,6 @@ public class UBlendImporter : ScriptedImporter
 
     /// <summary>
     /// Unity Mesh Transport Container. https://docs.unity3d.com/ScriptReference/Mesh.html
-    /// <remarks>Variables name have to exactly match the JSON FILE. Variables name follow python naming conventions. This might be overridable with json property? not sure if it works both ways though lol</remarks>
     /// </summary>
     public class UMesh
     {
@@ -102,16 +111,10 @@ public class UBlendImporter : ScriptedImporter
         public Vector3[] normals = new Vector3[0];
         [JsonProperty("submesh_triangles")]
         public int[][] subMeshTriangles = new int[0][]; // mesh.tirangles doesn't support multiple submeshes, so instead all triangles should be considered belonging to a submesh, we use Mesh.SetTriangles
-        [JsonProperty("submesh_triangles")]
+        [JsonProperty("submesh_count")]
         public int subMeshCount = 1;
-        //public Vector2[][] uvs = new Vector2[0][];
-        public Vector2[] uv = new Vector2[0];
-        public Vector2[] uv2 = new Vector2[0];
-        public Vector2[] uv3 = new Vector2[0];
-        public Vector2[] uv4 = new Vector2[0];
-        public Vector2[] uv5 = new Vector2[0];
-        public Vector2[] uv6 = new Vector2[0];
-        public Vector2[] uv7 = new Vector2[0];
+        //TODO: add Vector4 uvs for additional mappings types? 
+        public Vector2[][] uvs = new Vector2[0][];
     }
 
     #endregion

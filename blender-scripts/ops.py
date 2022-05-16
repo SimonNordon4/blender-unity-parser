@@ -22,38 +22,17 @@ class BMeshToUMesh:
         return vertices, normals
 
     @staticmethod
-    def get_uv(mesh):
+    def get_uvs(mesh):
         ''' Return up to the first 8 uv maps'''
         uv_maps = []
         for uvlay in mesh.uv_layers:
             uv_layer = []
             for d in uvlay.data:
-                uv = ublend.data.Vector2(d.uv.x, d.uv.y) 
+                uv = ublend.data.Vector2(d.uv.x, d.uv.y)
                 uv_layer.append(uv)
             uv_maps.append(uv_layer)
         return uv_maps
-    
-    # @staticmethod
-    # def get_triangles(mesh):
-    #     ''' Returns the meshes triangles for each of the meshes materials in a single array'''
-    #     mat_num = len(mesh.materials)
-    #     if mat_num >= 1:
-    #         submesh_triangles = []
-    #         for i in range(mat_num): # instantiate triangle lists
-    #             submesh_triangles.append([])
-    #         for tri in mesh.loop_triangles: # append triangles to respective material id (trianlges) lists.
-    #             submesh_triangles[tri.material_index].append(tri.loops[0])
-    #             submesh_triangles[tri.material_index].append(tri.loops[2])
-    #             submesh_triangles[tri.material_index].append(tri.loops[1])
-    #         triangles = []
-    #     else: # if there's no materials we don't have to worry about submeshes.
-    #         triangles = []
-    #         for tri in mesh.loop_triangles:
-    #             triangles.append(tri.loops[0])
-    #             triangles.append(tri.loops[2])
-    #             triangles.append(tri.loops[1])
-    #     return triangles
-    
+
     @staticmethod
     def get_submesh_triangles(mesh):
         ''' Returns a list of submesh triangles for each material slot on the object. Materials returns the correct number of material slots, even if no material is defined.'''
@@ -66,12 +45,13 @@ class BMeshToUMesh:
                 triangles[tri.material_index].append(tri.loops[0])
                 triangles[tri.material_index].append(tri.loops[2])
                 triangles[tri.material_index].append(tri.loops[1])
-        else: # if there's no materials we don't have to worry about submeshes.
+        else: # if there's no materials we don't have to worry about submeshes, but we still need to append a list of lists to ensure correct serialisation.
             triangles = []
+            triangles.append([])
             for tri in mesh.loop_triangles:
-                triangles.append(tri.loops[0])
-                triangles.append(tri.loops[2])
-                triangles.append(tri.loops[1])
+                triangles[0].append(tri.loops[0])
+                triangles[0].append(tri.loops[2])
+                triangles[0].append(tri.loops[1])
         submesh_triangles = []
         for tris in triangles:
             submesh_triangles.append(tris)
@@ -82,12 +62,8 @@ class BMeshToUMesh:
         ''' Convert a Blender Mesh to a UMesh Class (Representation of Unity Mesh)'''
         u_mesh = ublend.data.UnityMesh()
         u_mesh.name = obj.data.name
-        u_mesh.vertices = []
-        u_mesh.normals = []
-        u_mesh.uv = []
 
         # TODO: apply modifiers and create virtual copy of the mesh.
-        # prep the mesh
         o_mesh = obj.data
         o_mesh.calc_loop_triangles()
         o_mesh.calc_normals_split()  # Split Normals are only accessible via loops (not verts)
@@ -97,26 +73,11 @@ class BMeshToUMesh:
 
         # SUBMESH TRIANGLES
         # Get the submesh count, then use that to initialise the submesh_triangles list.
-        u_mesh.submesh_count = len(o_mesh.materials)
+        mat_num = len(o_mesh.materials)
+        u_mesh.submesh_count = mat_num if mat_num != 0 else 1
         u_mesh.submesh_triangles = BMeshToUMesh.get_submesh_triangles(o_mesh)
 
         # UV MAPS
-        uv_maps = BMeshToUMesh.get_uv(o_mesh)
-        if len(uv_maps) > 0:
-            u_mesh.uv = uv_maps[0]
-        if len(uv_maps) > 1:
-            u_mesh.uv2 = uv_maps[1]
-        if len(uv_maps) > 2:
-            u_mesh.uv3 = uv_maps[2]
-        if len(uv_maps) > 3:
-            u_mesh.uv4 = uv_maps[3]
-        if len(uv_maps) > 4:
-            u_mesh.uv5 = uv_maps[4]
-        if len(uv_maps) > 5:
-            u_mesh.uv6 = uv_maps[5]
-        if len(uv_maps) > 6:
-            u_mesh.uv7 = uv_maps[6]
-        if len(uv_maps) > 7:
-            u_mesh.uv8 = uv_maps[7]
-            
+        u_mesh.uvs = BMeshToUMesh.get_uvs(o_mesh)
+        
         return u_mesh
