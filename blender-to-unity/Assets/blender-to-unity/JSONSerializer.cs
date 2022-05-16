@@ -33,9 +33,6 @@ public class JSONSerializer : MonoBehaviour
         {
             Debug.Log(tri);
         }
-
-
-        
         var data = JsonConvert.SerializeObject(meshToSerialize);
         File.WriteAllText(unityPath + uJson, data);
     }
