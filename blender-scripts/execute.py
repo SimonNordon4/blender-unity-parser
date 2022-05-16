@@ -1,20 +1,20 @@
 from sys import path
 import bpy
-path.append('E:\\repos\\blender-to-unity\\blender-scripts')
 import ublend
 
 path.append('E:\\repos\\blender-to-unity\\blender-scripts')
 
-UNITY_EXPORT = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\blender-to-unity\\data.ublend'
+UNITY_PROJECT = 'E:\\repos\\blender-to-unity\\blender-to-unity\\'
+UNITY_EXPORT = UNITY_PROJECT + 'Assets\\blender-to-unity\\data.ublend'
 
 data = ublend.ops.BMeshToUMesh.convert(bpy.data.objects[0])
 _json = data.tojson()
 
 print(_json)
 
-with open(UNITY_EXPORT, "w") as f:
-    f.write(_json)
-    f.close()
+# with open(UNITY_EXPORT, "w") as f:
+#     f.write(_json)
+#     f.close()
 
 # with open(_json, "w") as f:
 #     _json = data.tojson()

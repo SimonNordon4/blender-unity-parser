@@ -1,7 +1,5 @@
 import numpy as np # we can't tojson a np array, find away to concatenate without it.
-import bpy
 import ublend
-
 
 # Each submesh is a subset of triangles, so we'll still get verts and normals as before, but triangles will have to be assigned on a per material basis.
 class BMeshToUMesh:
@@ -16,10 +14,10 @@ class BMeshToUMesh:
         vertices = []
         normals = []
         for loop in mesh.loops:
-            norm = ublend.data.vector3(loop.normal.x, loop.normal.z, loop.normal.y)
+            norm = ublend.data.Vector3(loop.normal.x, loop.normal.z, loop.normal.y)
             # now we have to do a tricky by getting vertices multiple times to match the split normals.
             v = (mesh.vertices[loop.vertex_index].co)
-            vert = ublend.data.vector3(v.x, v.z, v.y)
+            vert = ublend.data.Vector3(v.x, v.z, v.y)
             vertices.append(vert)
             normals.append(norm)
         return vertices, normals
@@ -31,7 +29,7 @@ class BMeshToUMesh:
         for uvlay in mesh.uv_layers:
             uv_layer = []
             for d in uvlay.data:
-                uv = ublend.data.vector2(d.uv.x, d.uv.y) 
+                uv = ublend.data.Vector2(d.uv.x, d.uv.y) 
                 uv_layer.append(uv)
             uv_maps.append(uv_layer)
         return uv_maps
@@ -49,8 +47,8 @@ class BMeshToUMesh:
                 submesh_triangles[tri.material_index].append(tri.loops[2])
                 submesh_triangles[tri.material_index].append(tri.loops[1])
             triangles = []
-            for sm in submesh_triangles: # add all the submesh triangles into a single list, in the correct order.
-                triangles = np.concatenate([triangles,sm])
+            for sm_tri in submesh_triangles: # add all the submesh triangles into a single list, in the correct order.
+                triangles = np.concatenate([triangles,sm_tri])
         else: # if there's no materials we don't have to worry about submeshes.
             triangles = []
             for tri in mesh.loop_triangles:
@@ -62,7 +60,7 @@ class BMeshToUMesh:
     @staticmethod
     def convert(obj):
         ''' Convert a Blender Mesh to a UMesh Class (Representation of Unity Mesh)'''
-        u_mesh = ublend.data.unity_mesh()
+        u_mesh = ublend.data.UnityMesh()
         u_mesh.name = obj.data.name
         u_mesh.vertices = []
         u_mesh.normals = []
