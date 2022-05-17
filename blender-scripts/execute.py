@@ -6,13 +6,13 @@ import ublend
 UNITY_PROJECT = 'E:\\repos\\blender-to-unity\\blender-to-unity\\'
 UNITY_EXPORT = UNITY_PROJECT + 'Assets\\blender-to-unity\\data.ublend'
 
-data = ublend.ops.BMeshToUMesh.convert(bpy.data.objects[0])
-_json = data.tojson()
+u_blend_file_data = ublend.ops.CreateUBlend().create_ublend()
+u_blend_data = u_blend_file_data.tojson()
 
-print(_json)
+print(u_blend_data)
 
 with open(UNITY_EXPORT, "w") as f:
-    f.write(_json)
+    f.write(u_blend_data)
     f.close()
 
 # with open(_json, "w") as f:

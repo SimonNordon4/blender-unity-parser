@@ -1,4 +1,35 @@
+import bpy
 import ublend
+
+class CreateUBlend:
+    ''' Entry Point for UBlend Serialisation'''
+    def __init__(self):
+        CreateUBlend.self = self
+    @staticmethod
+    def get_scene_meshes():
+        ''' Gather all meshes in the file with at least 1 user.'''
+        scene_meshes = []
+        for mesh in bpy.data.meshes:
+            if(mesh.users > 0):
+                scene_meshes.append(mesh)
+        return scene_meshes
+            
+            
+    
+    @staticmethod
+    def create_ublend():
+        ''' Construct the ublend object for serialisation'''
+        u_blend = ublend.data.UBlendFileData()
+        
+        # Serialise Meshes
+        meshes = CreateUBlend.get_scene_meshes()
+        for mesh in meshes:
+            u_mesh = BMeshToUMesh.convert(mesh)
+            u_blend.u_meshes.append(u_mesh)
+        return u_blend
+        
+        # Check for Images
+        # Check for Materials
 
 # Each submesh is a subset of triangles, so we'll still get verts and normals as before, but triangles will have to be assigned on a per material basis.
 class BMeshToUMesh:
@@ -58,13 +89,13 @@ class BMeshToUMesh:
         return submesh_triangles
     
     @staticmethod
-    def convert(obj):
+    def convert(mesh):
         ''' Convert a Blender Mesh to a UMesh Class (Representation of Unity Mesh)'''
         u_mesh = ublend.data.UnityMesh()
-        u_mesh.name = obj.data.name
+        u_mesh.name = mesh.name
 
         # TODO: apply modifiers and create virtual copy of the mesh.
-        o_mesh = obj.data
+        o_mesh = mesh
         o_mesh.calc_loop_triangles()
         o_mesh.calc_normals_split()  # Split Normals are only accessible via loops (not verts)
         

@@ -1,5 +1,16 @@
 from dataclasses import dataclass
 import json
+
+@dataclass
+class UBlendFileData:
+    ''' Map Ublend File Data to Unity Format'''
+    def __init__(self):
+        self.objects = [] # GameObject
+        self.u_meshes = [] # Mesh
+        self.materials = [] # Materials
+    def tojson(self):
+        return json.dumps(self,default=lambda o: o.__dict__,sort_keys=True,indent=4)
+
 @dataclass
 class Vector2:
     ''' Unity Vector2 https://docs.unity3d.com/ScriptReference/Vector2.html'''
@@ -33,17 +44,13 @@ class MonoBehaviour:
 @dataclass
 class Transform:
     ''' Unity Transform Representation https://docs.unity3d.com/ScriptReference/Transform.html'''
-
 @dataclass
 class UnityMesh:
     ''' Unity Mesh Representation https://docs.unity3d.com/ScriptReference/Mesh.html'''
     def __init__(self):
         self.name = ""
-        self.bounds = []
         self.vertices = []
         self.normals = []
-        self.tangents = []
-        self.colors = []
         # sub meshes.
         self.submesh_count = 1
         self.submesh_triangles = []

@@ -105,7 +105,6 @@ public class UBlendImporter : ScriptedImporter
     /// </summary>
     public class UMesh
     {
-       
         public string name = "";
         public Vector3[] vertices = new Vector3[0];
         public Vector3[] normals = new Vector3[0];
@@ -117,6 +116,10 @@ public class UBlendImporter : ScriptedImporter
         public Vector2[][] uvs = new Vector2[0][];
     }
 
+    public class UGameObject
+    {
+        public string name = "";
+    }
     #endregion
 }
 
