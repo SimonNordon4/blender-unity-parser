@@ -16,18 +16,39 @@ public class JSONSerializer : MonoBehaviour
     [Button]
     public void SaveToFile()
     {
-        var uMesh = new UnityToBlender.UMesh();
+        var tc = new TestChild();
+        var tc2 = new TestChild();
+        var tc3 = new TestChild();
 
-        var uv1 = new Vector2[]{new Vector2(0,1),new Vector2(1,0)};
-        var uv2 = new Vector2[]{new Vector2(0,1),new Vector2(1,0)};
+        tc.name = "Test 1";
+        tc.age = 3;
+        tc.parent = tc2;
 
-        var uvs = new Vector2[][] {uv1,uv2};
+        tc2.name = "Test 2";
+        tc2.age = 4;
+        tc2.parent = null;
 
-        uMesh.uvs = uvs;
+        tc3.name = "Test 3";
+        tc3.age = 5;
+        tc3.parent = tc2;
 
-        var data = JsonConvert.SerializeObject(uMesh);
+        var p = new TestParent();
+        p.children = new TestChild[] { tc, tc2, tc3 };
+
+        var data = JsonConvert.SerializeObject(p);
         Debug.Log(data);
         File.WriteAllText(unityPath + uJson, data);
+    }
+
+    [System.Serializable]
+    public class TestParent{
+       public TestChild[] children;
+    }
+[System.Serializable]
+    public class TestChild{
+        public string name;
+        public int age;
+        public TestChild parent;
     }
 }
 

@@ -44,7 +44,7 @@ class Quaternion:
     
     
 @dataclass  
-class UnityScene:
+class UScene:
     ''' Unity Scene Data Container. Represents Root Object more than the scene'''
     def __init__(self):
         name = ""
@@ -52,18 +52,20 @@ class UnityScene:
 class UGameObject:
     ''' JSON Gameobject Representation https://docs.unity3d.com/ScriptReference/GameObject.html'''
     def __init__(self):
-        self.name = None;
-        self.transform = UTransform();
+        self.name = None
+        self.transform = UTransform()
 
 @dataclass
-class JComponent:
+class UComponent:
     ''' Parental Monobehaviour Class https://docs.unity3d.com/ScriptReference/MonoBehaviour.html'''
+    def __init__(self):
+        self.u_gameobject = ""
     
 @dataclass
 class UTransform:
     '''JSON Transform Representation  https://docs.unity3d.com/ScriptReference/Transform.html '''
     def __init__(self):
-        self.parent = None
+        self.parent = None;
         self.position = Vector3(0,0,0)
         self.rotation = Vector3(0,0,0)
         self.lossy_scale = Vector3(0,0,0)

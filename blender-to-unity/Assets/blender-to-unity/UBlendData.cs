@@ -7,6 +7,7 @@ namespace UnityToBlender
     /// <summary>
     /// The main Data Chunk of the UBlend JSON
     /// </summary>
+    [System.Serializable]
     public class UBlendData
     {
         [JsonProperty("u_gameobjects")]
@@ -16,21 +17,22 @@ namespace UnityToBlender
         public UMesh[] uMeshes;
     }
 
+    [System.Serializable]
     public class UGameObject
     {
         public string name;
         public UTransform transform;
     }
-
+    [System.Serializable]
     public class UTransform
     {
-        public string parent;
+        public string parent; // Strings are unique in Blender, so we can use bpy.object.name
         public Vector3 position;
         public Vector3 eularAngles;
         [JsonProperty("lossy_scale")]
         public Vector3 lossyScale;
     }
-
+    [System.Serializable]
     public class UMesh
     {
         public string name = "";

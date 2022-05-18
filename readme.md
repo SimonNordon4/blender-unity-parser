@@ -179,7 +179,7 @@ It's Blender Responsibility to ensure it produces a usable .ublend file. Unity s
 
 Scene:
         
-    A Custom World Level Properties UILayout Panel for setting Scene Data.
+    A Custom World Level Properties UILayout Panel for setting Scene Data. This can include Ambient Occlusion, Light Maps, Occlusion Data, etc.
 
 Object:
         
@@ -199,5 +199,8 @@ Textures:
 
 ## To Do
 
-[x] Serialize a single material mesh (.ublend)
-[ ] Import a single material mesh into Unity (.ublend)
+[x] Import Mesh (.ublend)
+[x] Import Gameobject (.ublend)
+[x] Import Transform (.ublend)
+[ ] Import MeshRenderer (.ublend)
+[ ] Link Mesh to GameObject.MeshFilter

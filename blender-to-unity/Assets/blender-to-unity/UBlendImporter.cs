@@ -13,6 +13,8 @@ namespace UnityToBlender
     [ScriptedImporter(1, "ublend")]
     public class UBlendImporter : ScriptedImporter
     {
+        [ReadOnly]
+        public UBlendData uBlend;
         public override void OnImportAsset(AssetImportContext ctx)
         {
             // TODO use ctx.AddObjectToAsset() to create a proper prefab.
@@ -20,18 +22,22 @@ namespace UnityToBlender
 
             Debug.Log($"Importing {ctx.assetPath}");
 
-            var fileName = Path.GetFileNameWithoutExtension(ctx.assetPath);
-            var filePath = Path.GetDirectoryName(ctx.assetPath);
-            var fileData = (File.ReadAllText(ctx.assetPath));
+            var data = (File.ReadAllText(ctx.assetPath));
 
             // Incoming Data
-            Debug.Log(fileData);
+            Debug.Log(data);
 
-            var ublendData = JsonConvert.DeserializeObject<UBlendData>(fileData);
-            Util.ValidateImportData(ublendData);
+            var uBlendData = JsonConvert.DeserializeObject<UBlendData>(data);
+            uBlend = uBlendData;
+            Util.ValidateImportData(uBlendData);
+
+            var go = new GameObject("Test");
+            var mat = new Material(Shader.Find("Standard"));
+            ctx.AddObjectToAsset("my import", go);
+            ctx.AddObjectToAsset("my material", mat);
+            ctx.SetMainObject(go);
         }
 
-        // Top level prefab for the entire object.
 
 
         // public Mesh CreateMesh(UMesh uMesh)
