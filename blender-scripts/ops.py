@@ -1,4 +1,5 @@
 import bpy
+from data import Quaternion, UGameObject, Vector3
 import ublend
 
 class CreateUBlend:
@@ -13,29 +14,41 @@ class CreateUBlend:
             if(mesh.users > 0):
                 scene_meshes.append(mesh)
         return scene_meshes
-            
-            
     
+    @staticmethod
+    def get_scene_objects():
+        ''' Gather all objects in the scene'''
+        scene_objects = []
+        for obj in bpy.data.objects:
+            if obj.type == "MESH": # For now only get objects that are mesh types
+                scene_objects.append(obj)
+        return scene_objects;
+            
     @staticmethod
     def create_ublend():
         ''' Construct the ublend object for serialisation'''
-        u_blend = ublend.data.UBlendFileData()
-        
+        u_blend = ublend.data.UBlendData()
+
         # Serialise Meshes
-        meshes = CreateUBlend.get_scene_meshes()
-        for mesh in meshes:
-            u_mesh = BMeshToUMesh.convert(mesh)
-            u_blend.u_meshes.append(u_mesh)
-        return u_blend
-        
+        # meshes = CreateUBlend.get_scene_meshes()
+        # for mesh in meshes:
+        #     u_mesh = MeshToUMesh.convert(mesh)
+        #     u_blend.u_meshes.append(u_mesh)
         # Check for Images
         # Check for Materials
 
-# Each submesh is a subset of triangles, so we'll still get verts and normals as before, but triangles will have to be assigned on a per material basis.
-class BMeshToUMesh:
-    ''' Converts a Blender Mesh to a uMesh'''
+        # Assets collected, now gather objects and their components.
+        objects = CreateUBlend.get_scene_objects()
+        for obj in objects:
+            u_obj = ObjectToJGameObject.convert(obj)
+            u_blend.u_gameobjects.append(u_obj)
+        
+        return u_blend
+
+class MeshToUMesh:
+    ''' Converts a Blender Mesh to a Json Mesh'''
     def __init__(self):
-        BMeshToUMesh.self = self
+        MeshToUMesh.self = self
         
     @staticmethod
     def get_vertices_and_normals(mesh):
@@ -91,24 +104,53 @@ class BMeshToUMesh:
     @staticmethod
     def convert(mesh):
         ''' Convert a Blender Mesh to a UMesh Class (Representation of Unity Mesh)'''
-        u_mesh = ublend.data.UnityMesh()
+        u_mesh = ublend.data.UMesh()
         u_mesh.name = mesh.name
 
         # TODO: apply modifiers and create virtual copy of the mesh.
-        o_mesh = mesh
-        o_mesh.calc_loop_triangles()
-        o_mesh.calc_normals_split()  # Split Normals are only accessible via loops (not verts)
+        b_mesh = mesh
+        b_mesh.calc_loop_triangles()
+        b_mesh.calc_normals_split()  # Split Normals are only accessible via loops (not verts)
         
         # VERTICES & NORMALS
-        u_mesh.vertices  , u_mesh.normals = BMeshToUMesh.get_vertices_and_normals(o_mesh)
+        u_mesh.vertices  , u_mesh.normals = MeshToUMesh.get_vertices_and_normals(b_mesh)
 
         # SUBMESH TRIANGLES
         # Get the submesh count, then use that to initialise the submesh_triangles list.
-        mat_num = len(o_mesh.materials)
+        mat_num = len(b_mesh.materials)
         u_mesh.submesh_count = mat_num if mat_num != 0 else 1
-        u_mesh.submesh_triangles = BMeshToUMesh.get_submesh_triangles(o_mesh)
+        u_mesh.submesh_triangles = MeshToUMesh.get_submesh_triangles(b_mesh)
 
         # UV MAPS
-        u_mesh.uvs = BMeshToUMesh.get_uvs(o_mesh)
+        u_mesh.uvs = MeshToUMesh.get_uvs(b_mesh)
         
         return u_mesh
+
+class ObjectToJGameObject:
+    ''' Convert a Blender Object to a JGameObject'''
+    def __init__(self):
+        ObjectToJGameObject.self = self
+    @staticmethod
+    def convert(obj):
+        ''' Returns a uGameObject from a blender object'''
+        u_gameobject = ublend.data.UGameObject()
+        u_gameobject.name = obj.name
+        
+        # Apply gauranteed transform.
+        u_gameobject.transform = ublend.data.UTransform()
+        u_gameobject.transform.position = Util.vec3(obj.location)
+        u_gameobject.transform.rotation = Util.vec3(obj.rotation_euler)
+        u_gameobject.transform.lossy_scale = Util.vec3(obj.scale)
+        
+        return u_gameobject
+        
+class Util:
+    ''' Collection of utilites '''
+    def __init__(self):
+        self.self = self
+    @staticmethod
+    def vec3(vector3):
+        return Vector3(vector3.x,vector3.y,vector3.z)
+    @staticmethod
+    def quart(q):
+        return Quaternion(q.x,q.y,q.z,q.w)

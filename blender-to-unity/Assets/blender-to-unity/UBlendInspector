@@ -1,0 +1,10 @@
+using System;
+using UnityEditor;
+
+namespace UnityToBlender
+{
+    public class UBlendInspector: ScriptImporterEditor
+    {
+        
+    }
+}

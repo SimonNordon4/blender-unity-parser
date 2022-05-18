@@ -16,7 +16,7 @@ public class JSONSerializer : MonoBehaviour
     [Button]
     public void SaveToFile()
     {
-        var uMesh = new UBlendImporter.UMesh();
+        var uMesh = new UnityToBlender.UMesh();
 
         var uv1 = new Vector2[]{new Vector2(0,1),new Vector2(1,0)};
         var uv2 = new Vector2[]{new Vector2(0,1),new Vector2(1,0)};
