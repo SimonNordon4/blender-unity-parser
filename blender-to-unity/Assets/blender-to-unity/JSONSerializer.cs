@@ -4,6 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Newtonsoft.Json;
 using System.IO;
+using UnityToBlender;
 
 [ExecuteInEditMode]
 public class JSONSerializer : MonoBehaviour
@@ -13,31 +14,22 @@ public class JSONSerializer : MonoBehaviour
     private static string unityPath = @"E:\repos\blender-to-unity\blender-to-unity\Assets\blender-to-unity\";
 
     private static string uJson = "data_unity.json";
+    private static string uBlend = "data_unity.ublend";
     [Button]
     public void SaveToFile()
     {
-        var tc = new TestChild();
-        var tc2 = new TestChild();
-        var tc3 = new TestChild();
+        UBlendData data = new UBlendData();
 
-        tc.name = "Test 1";
-        tc.age = 3;
-        tc.parent = tc2;
+        UGameObject uGameObject = new UGameObject();
+        uGameObject.name = "test";
+       
+        data.uGameObjects = new UGameObject[] { uGameObject };
 
-        tc2.name = "Test 2";
-        tc2.age = 4;
-        tc2.parent = null;
+        var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+        Debug.Log(json);
+        File.WriteAllText(unityPath + uBlend, json);
 
-        tc3.name = "Test 3";
-        tc3.age = 5;
-        tc3.parent = tc2;
-
-        var p = new TestParent();
-        p.children = new TestChild[] { tc, tc2, tc3 };
-
-        var data = JsonConvert.SerializeObject(p);
-        Debug.Log(data);
-        File.WriteAllText(unityPath + uJson, data);
+        UnityEditor.AssetDatabase.Refresh();
     }
 
     [System.Serializable]

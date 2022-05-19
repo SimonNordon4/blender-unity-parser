@@ -22,6 +22,7 @@ namespace UnityToBlender
     {
         public string name;
         public UTransform transform;
+        public UComponent[] components;
     }
     [System.Serializable]
     public class UTransform
@@ -32,6 +33,17 @@ namespace UnityToBlender
         [JsonProperty("lossy_scale")]
         public Vector3 lossyScale;
     }
+    [System.Serializable]
+    public class UComponent
+    {
+        public string u_type;
+    }
+    [System.Serializable]
+    public class UMeshFilter
+    {
+        public string mesh;
+    }
+
     [System.Serializable]
     public class UMesh
     {

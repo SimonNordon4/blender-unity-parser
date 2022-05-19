@@ -48,7 +48,6 @@ class UGameObject:
 class UComponent:
     ''' Parental Monobehaviour Class https://docs.unity3d.com/ScriptReference/MonoBehaviour.html'''
     def __init__(self):
-        self.u_gameobject = ""
         self.u_type = type(self).__name__
     
 @dataclass

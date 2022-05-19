@@ -40,7 +40,7 @@ class CreateUBlend:
         # Assets collected, now gather objects and their components.
         objects = CreateUBlend.get_scene_objects()
         for obj in objects:
-            u_obj = ObjectToJGameObject.convert(obj)
+            u_obj = ObjectToUGameObject.convert(obj)
             u_blend.u_gameobjects.append(u_obj)
         
         return u_blend
@@ -126,10 +126,10 @@ class MeshToUMesh:
         
         return u_mesh
 
-class ObjectToJGameObject:
+class ObjectToUGameObject:
     ''' Convert a Blender Object to a JGameObject'''
     def __init__(self):
-        ObjectToJGameObject.self = self
+        ObjectToUGameObject.self = self
     @staticmethod
     def convert(obj):
         ''' Returns a uGameObject from a blender object'''
@@ -142,7 +142,9 @@ class ObjectToJGameObject:
         u_gameobject.transform.rotation = Util.vec3(obj.rotation_euler)
         u_gameobject.transform.lossy_scale = Util.vec3(obj.scale)
         
-        u_gameobject.components.append(ublend.data.UMeshFilter(obj.data.name)) # We can add the mesh because we've already pre-filtered object for meshes.
+        umesh_filter = ublend.data.UMeshFilter(obj.data.name)
+        umesh_filter.mesh = obj.data.name
+        u_gameobject.components.append(umesh_filter) # We can add the mesh because we've already pre-filtered object for meshes.
         return u_gameobject
         
 class Util:
