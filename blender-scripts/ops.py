@@ -1,5 +1,5 @@
 import bpy
-from data import Quaternion, UGameObject, Vector3
+from data import UGameObject, Vector3
 import ublend
 
 class CreateUBlend:
@@ -28,12 +28,12 @@ class CreateUBlend:
     def create_ublend():
         ''' Construct the ublend object for serialisation'''
         u_blend = ublend.data.UBlendData()
-
         # Serialise Meshes
-        # meshes = CreateUBlend.get_scene_meshes()
-        # for mesh in meshes:
-        #     u_mesh = MeshToUMesh.convert(mesh)
-        #     u_blend.u_meshes.append(u_mesh)
+        meshes = CreateUBlend.get_scene_meshes()
+        for mesh in meshes:
+            u_mesh = MeshToUMesh.convert(mesh)
+            u_blend.u_meshes.append(u_mesh)
+            
         # Check for Images
         # Check for Materials
 
@@ -142,6 +142,7 @@ class ObjectToJGameObject:
         u_gameobject.transform.rotation = Util.vec3(obj.rotation_euler)
         u_gameobject.transform.lossy_scale = Util.vec3(obj.scale)
         
+        u_gameobject.components.append(ublend.data.UMeshFilter(obj.data.name)) # We can add the mesh because we've already pre-filtered object for meshes.
         return u_gameobject
         
 class Util:
@@ -151,6 +152,3 @@ class Util:
     @staticmethod
     def vec3(vector3):
         return Vector3(vector3.x,vector3.y,vector3.z)
-    @staticmethod
-    def quart(q):
-        return Quaternion(q.x,q.y,q.z,q.w)

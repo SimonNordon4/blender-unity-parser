@@ -1,7 +1,11 @@
-from sys import path
-import bpy
-path.append('E:\\repos\\blender-to-unity\\blender-scripts')
+import importlib
+import sys
+sys.path.append('E:\\repos\\blender-to-unity\\blender-scripts')
 import ublend
+importlib.reload(ublend.ops) # Reloading allows us to modify modules without quitting blender.
+importlib.reload(ublend.data)
+
+
 
 UNITY_PROJECT = 'E:\\repos\\blender-to-unity\\blender-to-unity\\'
 UNITY_EXPORT = UNITY_PROJECT + 'Assets\\blender-to-unity\\data.ublend'

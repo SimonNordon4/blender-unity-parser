@@ -30,18 +30,6 @@ class Vector3:
 
     def tojson(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
-@dataclass
-class Quaternion:
-    ''' Unity Quaternion https://docs.unity3d.com/ScriptReference/Quaternion.html '''
-    def __init__(self, x, y, z, w):
-        self.x = x
-        self.y = y
-        self.z = z
-        self.w = w
-
-    def tojson(self):
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
-    
     
 @dataclass  
 class UScene:
@@ -54,21 +42,34 @@ class UGameObject:
     def __init__(self):
         self.name = None
         self.transform = UTransform()
+        self.components = []
 
 @dataclass
 class UComponent:
     ''' Parental Monobehaviour Class https://docs.unity3d.com/ScriptReference/MonoBehaviour.html'''
     def __init__(self):
         self.u_gameobject = ""
+        self.u_type = type(self).__name__
     
 @dataclass
-class UTransform:
+class UTransform(UComponent):
     '''JSON Transform Representation  https://docs.unity3d.com/ScriptReference/Transform.html '''
     def __init__(self):
-        self.parent = None;
+        self.parent = None; #Reference a UGameObject by name
         self.position = Vector3(0,0,0)
         self.rotation = Vector3(0,0,0)
         self.lossy_scale = Vector3(0,0,0)
+@dataclass
+class UMeshFilter(UComponent):
+    def __init__(self,mesh_name):
+        self.u_type = type(self).__name__
+        self.mesh = mesh_name; #Reference a UMesh by name
+        
+@dataclass
+class UMeshRenderer(UComponent):
+    def __init__(self):
+        self.u_type = type(self).__name__
+        self.materials = []
 
 @dataclass
 class UMesh:
