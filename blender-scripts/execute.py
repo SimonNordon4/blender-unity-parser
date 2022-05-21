@@ -9,7 +9,6 @@ import ublend
 importlib.reload(ublend.ops) # Reloading allows us to modify modules without quitting blender.
 importlib.reload(ublend.data)
 
-
 UNITY_PROJECT = 'E:\\repos\\blender-to-unity\\blender-to-unity\\'
 UNITY_EXPORT = UNITY_PROJECT + 'Assets\\blender-to-unity\\data.ublend'
 
@@ -18,8 +17,6 @@ u_blend_file_data = ublend.ops.CreateUBlend().create_ublend()
 time_create_blend = time.time()
 u_blend_data = u_blend_file_data.tojson()
 time_json = time.time()
-
-print(u_blend_data)
 
 print('Total Vertices: ' + str(len(u_blend_file_data.u_meshes[0].vertices)))
 print('Time to create blend (ms): ' + str((time_create_blend - start)*1000))
