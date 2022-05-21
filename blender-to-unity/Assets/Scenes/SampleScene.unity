@@ -337,12 +337,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c4fec172ecc50468ee2c7044707960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshToSerialize: {fileID: -2223534194910042949, guid: 61e85101e8b434b4bae57f4e6b767534,
-    type: 3}
-  data:
-    name: Test
-    number: 3
-    lists: 010000000200000003000000
+  uBlend:
+    components:
+    - rid: 2473878556072476714
+    - rid: 2473878556072476715
+    - rid: 2473878556072476716
+  references:
+    version: 2
+    RefIds:
+    - rid: 2473878556072476714
+      type: {class: Component, ns: , asm: Assembly-CSharp}
+      data:
+        type: Component
+    - rid: 2473878556072476715
+      type: {class: Teleport, ns: , asm: Assembly-CSharp}
+      data:
+        type: Component
+        type: Teleport
+        location: {x: 0, y: 0, z: 0}
+    - rid: 2473878556072476716
+      type: {class: Collider, ns: , asm: Assembly-CSharp}
+      data:
+        type: Component
+        type: Collider
+        isTrigger: 0
 --- !u!4 &1735848925
 Transform:
   m_ObjectHideFlags: 0

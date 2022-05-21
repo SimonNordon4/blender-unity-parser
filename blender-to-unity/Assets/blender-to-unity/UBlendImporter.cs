@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 using Sirenix.OdinInspector;
 
 
-namespace UnityToBlender
+namespace BlenderToUnity
 {
     [ScriptedImporter(1, "ublend")]
     public class UBlendImporter : ScriptedImporter

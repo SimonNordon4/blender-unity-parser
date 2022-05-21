@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityToBlender
+namespace BlenderToUnity
 {
     /// <summary>
     /// Standard Operations for creation of unity objects.

@@ -4,7 +4,7 @@ using UnityEditor.AssetImporters;
 using UnityEditor.SceneManagement;
 using UnityEditor;
 
-namespace UnityToBlender
+namespace BlenderToUnity
 {
     [CustomEditor(typeof(UBlendImporter))]
     public class UBlendInspector: ScriptedImporterEditor

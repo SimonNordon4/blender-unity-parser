@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
-namespace UnityToBlender
+namespace BlenderToUnity
 {
     public class Util
     {

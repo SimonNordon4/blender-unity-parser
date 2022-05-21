@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
-namespace UnityToBlender
+namespace BlenderToUnity
 {
     /// <summary>
     /// The main Data Chunk of the UBlend JSON
@@ -11,18 +11,20 @@ namespace UnityToBlender
     public class UBlendData
     {
         [JsonProperty("u_gameobjects")]
+        [ReadOnly]
         public UGameObject[] uGameObjects;
 
         [JsonProperty("u_meshes")]
+        [ReadOnly]
         public UMesh[] uMeshes;
     }
 
     [System.Serializable]
     public class UGameObject
     {
-        public string name;
-        public UTransform transform;
-        public UComponent[] components;
+        public string uName;
+        [SerializeReference]
+        public List<UComponent> uComponents = new List<UComponent>();
     }
     [System.Serializable]
     public class UTransform
