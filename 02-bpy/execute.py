@@ -5,7 +5,7 @@ from sysconfig import get_path
 import time
 
 from pkg_resources import get_distribution
-sys.path.append('E:\\repos\\blender-to-unity\\blender-scripts')
+sys.path.append('E:\\repos\\blender-to-unity\\02-bpy')
 # Reloading allows us to modify modules without quitting blender.
 importlib.reload(ublend.ops)
 importlib.reload(ublend.data)
