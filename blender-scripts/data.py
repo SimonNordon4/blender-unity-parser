@@ -1,5 +1,7 @@
 from dataclasses import dataclass
-import json
+import sys
+sys.path.append('C:\\Users\\61426\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\orjson\\')
+import orjson
 
 @dataclass
 class UBlendData:
@@ -9,7 +11,7 @@ class UBlendData:
         self.u_meshes = [] # Mesh
         self.u_materials = [] # Materials
     def tojson(self):
-        return json.dumps(self,default=lambda o: o.__dict__,sort_keys=True,indent=4)
+        return orjson.dumps(self).decode("utf-8") #,default=lambda o: o.__dict__,sort_keys=True,indent=4)
 
 @dataclass
 class Vector2:
@@ -18,8 +20,6 @@ class Vector2:
         self.x = x
         self.y = y
 
-    def tojson(self):
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 @dataclass
 class Vector3:
     ''' Unity Vector3 https://docs.unity3d.com/ScriptReference/Vector3.html '''
@@ -27,9 +27,6 @@ class Vector3:
         self.x = x
         self.y = y
         self.z = z
-
-    def tojson(self):
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
     
 @dataclass  
 class UScene:
@@ -82,6 +79,4 @@ class UMesh:
         self.submesh_triangles = []
         self.uvs = []
 
-    def tojson(self):
-        '''Convert this data class to a JSON'''
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+    

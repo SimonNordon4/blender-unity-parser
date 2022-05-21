@@ -27,7 +27,6 @@ namespace UnityToBlender
             foreach (var uGameObjectToken in jo["u_gameobjects"])
             {
                 var uGameObject = new UGameObject();
-                uGameObject.id = uGameObjectToken["id"]?.ToString();
                 uGameObject.name = uGameObjectToken["name"]?.ToString();
                 uGameObject.uComponents = GetUComponents(uGameObjectToken);
                 uGameObjects.Add(uGameObject);
@@ -42,7 +41,7 @@ namespace UnityToBlender
             List<UComponent> uComponents = new List<UComponent>();
             foreach (var uComponentToken in uGameObjectToken["components"])
             {
-                var typeDefintion = "UnityToBlender." + uComponentToken["type"].ToString();
+                var typeDefintion = "UnityToBlender." + uComponentToken["type"]?.ToString();
                 var uComponent = GetUComponent(uComponentToken,Type.GetType(typeDefintion));
                 uComponents.Add(uComponent);
             }
@@ -52,16 +51,21 @@ namespace UnityToBlender
 
         public static UComponent GetUComponent(JToken uComponentToken, Type type)
         {   
-            //hack
+            // TODO: Eventually I'll need to make this accept generic component children with expandable classes. [M]
             if(type == typeof(UTransform))
             {
-                var UTransform = new UTransform();
-                UTransform.id = uComponentToken["id"].ToString();
-                UTransform.type = type;
-                UTransform.position = new Vector3(float.Parse(uComponentToken["position"]["x"].ToString()), float.Parse(uComponentToken["position"]["y"].ToString()), float.Parse(uComponentToken["position"]["z"].ToString()));
-                UTransform.rotation = new Vector3(float.Parse(uComponentToken["rotation"]["x"].ToString()), float.Parse(uComponentToken["rotation"]["y"].ToString()), float.Parse(uComponentToken["rotation"]["z"].ToString()));
-                UTransform.scale = new Vector3(float.Parse(uComponentToken["scale"]["x"].ToString()), float.Parse(uComponentToken["scale"]["y"].ToString()), float.Parse(uComponentToken["scale"]["z"].ToString()));
-                return UTransform;
+                var uTransform = new UTransform();
+                uTransform.position = new Vector3(float.Parse(uComponentToken["position"]["x"].ToString()), float.Parse(uComponentToken["position"]["y"].ToString()), float.Parse(uComponentToken["position"]["z"].ToString()));
+                uTransform.rotation = new Vector3(float.Parse(uComponentToken["rotation"]["x"].ToString()), float.Parse(uComponentToken["rotation"]["y"].ToString()), float.Parse(uComponentToken["rotation"]["z"].ToString()));
+                uTransform.scale = new Vector3(float.Parse(uComponentToken["scale"]["x"].ToString()), float.Parse(uComponentToken["scale"]["y"].ToString()), float.Parse(uComponentToken["scale"]["z"].ToString()));
+                uTransform.parentName = uComponentToken["parent_name"]?.ToString();
+                return uTransform;
+            }
+            else if(type == typeof(UMeshFilter))
+            {
+                var uMeshFilter = new UMeshFilter();
+                uMeshFilter.meshName = uComponentToken["mesh_name"]?.ToString();
+                return uMeshFilter;
             }
             return default;
         }

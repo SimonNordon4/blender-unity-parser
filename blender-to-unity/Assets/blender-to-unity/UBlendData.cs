@@ -8,7 +8,7 @@ namespace UnityToBlender
     [Serializable]
     public class UBlendType
     {
-        public string id = "";
+        //public string id = "";
     }
 
     [Serializable]
@@ -29,16 +29,22 @@ namespace UnityToBlender
     [Serializable]
     public class UComponent : UBlendType
     {
-        public Type type = null;
+        //public Type type = null; We don't need to store the type, it just has to be present in the json.
     }
 
     [Serializable]
     public class UTransform : UComponent
     {
-        public UTransform parent = null;
+        public string parentName = null;
         public Vector3 position = Vector3.zero;
         public Vector3 rotation = Vector3.zero;
         public Vector3 scale = Vector3.one;
+    }
+
+    [Serializable]
+    public class UMeshFilter : UComponent
+    {
+        public string meshName = "";
     }
 
     // /// <summary>

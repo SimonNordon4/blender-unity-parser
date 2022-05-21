@@ -53,7 +53,6 @@ class MeshToUMesh:
     @staticmethod
     def get_vertices_and_normals(mesh):
         '''Does Stuff'''
-        print("Getting Verts & normals")
         vertices = []
         normals = []
         for loop in mesh.loops:
