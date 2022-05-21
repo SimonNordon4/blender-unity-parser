@@ -64,7 +64,7 @@ namespace BlenderToUnity
     public class UMeshFilter : UComponent
     {
         public string meshName = "";
-        public const string meshNameKey = "mesh_name";
+        public const string meshNameKey = "u_mesh_ref";
     }
 
     // /// <summary>

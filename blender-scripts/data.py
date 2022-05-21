@@ -25,7 +25,6 @@ class UGameObject:
     ''' JSON Gameobject Representation https://docs.unity3d.com/ScriptReference/GameObject.html'''
     def __init__(self):
         self.u_name = None
-        self.u_transform = UTransform()
         self.u_components = []
 
 @dataclass
@@ -38,6 +37,7 @@ class UComponent:
 class UTransform(UComponent):
     '''JSON Transform Representation  https://docs.unity3d.com/ScriptReference/Transform.html '''
     def __init__(self):
+        self.u_type = type(self).__name__
         self.u_parent = None; #Reference a UGameObject by name
         self.u_position = Vector3(0,0,0)
         self.u_rotation = Vector3(0,0,0)

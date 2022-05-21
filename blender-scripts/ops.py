@@ -136,10 +136,12 @@ class ObjectToUGameObject:
         u_gameobject.u_name = obj.name
         
         # Apply gauranteed transform.
-        u_gameobject.u_transform = ublend.data.UTransform()
-        u_gameobject.u_transform.u_position = Util.vec3(obj.location)
-        u_gameobject.u_transform.u_rotation = Util.vec3(obj.rotation_euler)
-        u_gameobject.u_transform.u_scale = Util.vec3(obj.scale)
+        
+        u_transform = ublend.data.UTransform()
+        u_transform.u_position = Util.vec3(obj.location)
+        u_transform.u_rotation = Util.vec3(obj.rotation_euler)
+        u_transform.u_scale = Util.vec3(obj.scale)
+        u_gameobject.u_components.append(u_transform)
         
         umesh_filter = ublend.data.UMeshFilter(obj.data.name)
         umesh_filter.u_mesh_ref = obj.data.name
