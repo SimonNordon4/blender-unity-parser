@@ -25,4 +25,19 @@ namespace UnityToBlender
             // serializedObject.ApplyModifiedProperties();
         }
     }
+
+    // [CustomPropertyDrawer(typeof(UComponent))]
+    // public class UComponentDrawer: PropertyDrawer
+    // {
+    //     public override float GetPropertyHeight( SerializedProperty property, GUIContent label ) 
+    //     {
+    //         return EditorGUI.GetPropertyHeight(property);
+    //     }
+    
+    //     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    //     {
+    //         Debug.Log(property.serializedObject.targetObject.GetType());
+    //         EditorGUI.PropertyField(position, property, label, true);
+    //     }
+    // }
 }

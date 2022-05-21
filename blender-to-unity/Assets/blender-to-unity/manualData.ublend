@@ -1,26 +1,25 @@
 {
     "u_gameobjects": [
         {
-            "id": "1",
             "name": "Player",
             "components": [
                 {
                     "id": "2",
                     "type": "UTransform",
                     "position": {
-                        "x": 0.0,
+                        "x": 1.0,
                         "y": 0.0,
                         "z": 0.0
                     },
                     "rotation": {
                         "x": 0.0,
-                        "y": 0.0,
+                        "y": 1.0,
                         "z": 0.0
                     },
                     "scale": {
                         "x": 0.0,
                         "y": 0.0,
-                        "z": 0.0
+                        "z": 1.0
                     }              
                 }
             ]

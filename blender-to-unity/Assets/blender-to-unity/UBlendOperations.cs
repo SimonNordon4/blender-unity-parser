@@ -27,8 +27,8 @@ namespace UnityToBlender
             foreach (var uGameObjectToken in jo["u_gameobjects"])
             {
                 var uGameObject = new UGameObject();
-                uGameObject.id = uGameObjectToken["id"].ToString();
-                uGameObject.name = uGameObjectToken["name"].ToString();
+                uGameObject.id = uGameObjectToken["id"]?.ToString();
+                uGameObject.name = uGameObjectToken["name"]?.ToString();
                 uGameObject.uComponents = GetUComponents(uGameObjectToken);
                 uGameObjects.Add(uGameObject);
             }

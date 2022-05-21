@@ -5,32 +5,34 @@ using Newtonsoft.Json;
 
 namespace UnityToBlender
 {
-    [System.Serializable]
+    [Serializable]
     public class UBlendType
     {
         public string id = "";
     }
 
-    [System.Serializable]
+    [Serializable]
     public class UBlendData : UBlendType
     {
+        [SerializeReference]
         public List<UGameObject> uGameObjects = new List<UGameObject>();
     }
 
-    [System.Serializable]
+    [Serializable]
     public class UGameObject : UBlendType
     {
         public string name = "";
+        [SerializeReference]
         public List<UComponent> uComponents = new List<UComponent>();
     }
 
-    [System.Serializable]
+    [Serializable]
     public class UComponent : UBlendType
     {
         public Type type = null;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class UTransform : UComponent
     {
         public UTransform parent = null;
