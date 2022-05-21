@@ -339,6 +339,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshToSerialize: {fileID: -2223534194910042949, guid: 61e85101e8b434b4bae57f4e6b767534,
     type: 3}
+  data:
+    name: Test
+    number: 3
+    lists: 010000000200000003000000
 --- !u!4 &1735848925
 Transform:
   m_ObjectHideFlags: 0

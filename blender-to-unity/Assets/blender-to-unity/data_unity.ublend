@@ -1,1 +1,16 @@
-{"u_gameobjects":[{"name":"test","transform":null,"components":[{"mesh":"Example Mesh","u_type":null},{"parent":null,"position":{"x":1.0,"y":2.0,"z":3.0},"eularAngles":{"x":0.0,"y":0.0,"z":0.0},"lossy_scale":{"x":0.0,"y":0.0,"z":0.0},"u_type":null}]}],"u_meshes":null}
+{
+  "components": [
+    {
+      "location": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "type": null
+    },
+    {
+      "isTrigger": 0,
+      "type": null
+    }
+  ]
+}

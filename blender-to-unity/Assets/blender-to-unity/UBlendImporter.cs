@@ -6,6 +6,7 @@ using UnityEditor.AssetImporters;
 using UnityEditor;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 
 namespace UnityToBlender
@@ -15,6 +16,9 @@ namespace UnityToBlender
     {
         [ReadOnly]
         public UBlendData uBlend;
+
+        [ReadOnly]
+        public JObject jobj; 
         public override void OnImportAsset(AssetImportContext ctx)
         {
             // TODO use ctx.AddObjectToAsset() to create a proper prefab.
@@ -26,6 +30,8 @@ namespace UnityToBlender
 
             // Incoming Data
             Debug.Log(data);
+
+            jobj = JObject.Parse(data);
 
             var uBlendData = JsonConvert.DeserializeObject<UBlendData>(data);
             uBlend = uBlendData;
