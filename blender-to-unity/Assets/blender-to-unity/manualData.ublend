@@ -1,0 +1,29 @@
+{
+    "u_gameobjects": [
+        {
+            "id": "1",
+            "name": "Player",
+            "components": [
+                {
+                    "id": "2",
+                    "type": "UTransform",
+                    "position": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ]                    
+                }
+            ]
+        }
+    ]
+}

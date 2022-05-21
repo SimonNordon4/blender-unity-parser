@@ -15,39 +15,52 @@ namespace UnityToBlender
     [ScriptedImporter(1, "ublend")]
     public class UBlendImporter : ScriptedImporter
     {
-        [ReadOnly]
-        public UBlendData uBlend;
-
-        [ReadOnly]
-        public JObjectViewer jobj; 
-
-        public Dictionary<string,object> testDict;
+        [ReadOnly]public UBlendData uBlend;
         public override void OnImportAsset(AssetImportContext ctx)
         {
-            // TODO use ctx.AddObjectToAsset() to create a proper prefab.
-            if (ctx is null) return;
-
-            Debug.Log($"Importing {ctx.assetPath}");
-
-            var data = (File.ReadAllText(ctx.assetPath));
-
-            // Incoming Data
-            Debug.Log(data);
-
-            var jLinq = JObject.Parse(data);
-
-            jobj.test = JObjectViewer.JObjectToDictionary(jLinq);
-
-            var uBlendData = JsonConvert.DeserializeObject<UBlendData>(data);
-            uBlend = uBlendData;
-            Util.ValidateImportData(uBlendData);
-
-            var go = new GameObject("Test");
-            var mat = new Material(Shader.Find("Standard"));
-            ctx.AddObjectToAsset("my import", go);
-            ctx.AddObjectToAsset("my material", mat);
-            ctx.SetMainObject(go);
+            string json = File.ReadAllText(ctx.assetPath);
+            JObject jObject = JObject.Parse(json);
+            
+            uBlend = UBlendOperations.JObjectToUBlendData(jObject);
+            Util.print(uBlend.uGameObjects.Count);
         }
+    }
+}
+
+#endif
+
+ // [ScriptedImporter(1, "ublend")]
+    // public class UBlendImporter : ScriptedImporter
+    // {
+    //     [ReadOnly]
+    //     public UBlendData uBlend;
+
+    //     public override void OnImportAsset(AssetImportContext ctx)
+    //     {
+    //         // TODO use ctx.AddObjectToAsset() to create a proper prefab.
+    //         if (ctx is null) return;
+
+    //         Debug.Log($"Importing {ctx.assetPath}");
+
+    //         var data = (File.ReadAllText(ctx.assetPath));
+
+    //         // Incoming Data
+    //         Debug.Log(data);
+
+    //         var jLinq = JObject.Parse(data);
+
+    //         jobj.test = JObjectViewer.JObjectToDictionary(jLinq);
+
+    //         var uBlendData = JsonConvert.DeserializeObject<UBlendData>(data);
+    //         uBlend = uBlendData;
+    //         Util.ValidateImportData(uBlendData);
+
+    //         var go = new GameObject("Test");
+    //         var mat = new Material(Shader.Find("Standard"));
+    //         ctx.AddObjectToAsset("my import", go);
+    //         ctx.AddObjectToAsset("my material", mat);
+    //         ctx.SetMainObject(go);
+    //     }
 
 
         // public Mesh CreateMesh(UMesh uMesh)
@@ -95,44 +108,37 @@ namespace UnityToBlender
         //     AssetDatabase.CreateAsset(mesh, @"Assets/blender-to-unity/mesh.asset");
         //     AssetDatabase.SaveAssets();
         // }
-    }
+    
 
-[System.Serializable]
-    public class JObjectViewer
-    {
-        public Dictionary<string,object> test;
+// [System.Serializable]
+//     public class JObjectViewer
+//     {
+//         public Dictionary<string,object> test;
 
-        public static Dictionary<string,object> JObjectToDictionary(JObject jObj)
-        {
-            var result = jObj.ToObject<Dictionary<string,object>>();
-            return result;
-        }
-    }
-}
+//         public static Dictionary<string,object> JObjectToDictionary(JObject jObj)
+//         {
+//             var result = jObj.ToObject<Dictionary<string,object>>();
+//             return result;
+//         }
+//     }
+// }
 
-public static class JObjectExtensions
-{
-    public static IDictionary<string, object> ToDictionary(this JObject @object)
-    {
-        var result = @object.ToObject<Dictionary<string, object>>();
+// public class Example
+// {
+//     private JObject jsonObject;
+//     public void CreateMesh()
+//     {
+//         var mesh1 = new Mesh();
+//         mesh1.SetTriangles((int[])jsonObject["mesh"]["triangles"],(int)jsonObject["subMeshs"][0]);
 
-        // var JObjectKeys = (from r in result
-        //                    let key = r.Key
-        //                    let value = r.Value
-        //                    where value.GetType() == typeof(JObject)
-        //                    select key).ToList();
+//         // or
 
-        // var JArrayKeys = (from r in result
-        //                   let key = r.Key
-        //                   let value = r.Value
-        //                   where value.GetType() == typeof(JArray)
-        //                   select key).ToList();
+//         var mesh2 = new Mesh();
+//         var uMesh = new UMesh();
 
-        // JArrayKeys.ForEach(key => result[key] = ((JArray)result[key]).Values().Select(x => ((JValue)x).Value).ToArray());
-        // JObjectKeys.ForEach(key => result[key] = ToDictionary(result[key] as JObject));
+//         uMesh.triangles = (int[])jsonObject["mesh"]["triangles"];
+//         uMesh.subMeshes = (int[])jsonObject["subMeshs"];
 
-        return result;
-    }
-}
-#endif
-
+//         mesh2.SetTriangles(uMesh.triangles, uMesh.subMeshes[0]);
+//     }
+// }
