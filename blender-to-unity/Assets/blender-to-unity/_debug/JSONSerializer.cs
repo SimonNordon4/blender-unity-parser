@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System.IO;
-using UnityToBlender;
+using BlenderToUnity;
 using System.Collections.Generic;
 
 [ExecuteInEditMode]

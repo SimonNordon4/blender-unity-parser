@@ -8,9 +8,10 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sirenix.OdinInspector;
+using System.Reflection;
 
 
-namespace UnityToBlender
+namespace BlenderToUnity
 {
     [ScriptedImporter(1, "ublend")]
     public class UBlendImporter : ScriptedImporter

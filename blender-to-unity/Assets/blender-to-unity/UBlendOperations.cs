@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using Newtonsoft.Json.Linq;
 
-namespace UnityToBlender
+namespace BlenderToUnity
 {
     /// <summary>
     /// Standard Operations for creation of unity objects.
@@ -24,10 +24,10 @@ namespace UnityToBlender
         {
             List<UGameObject> uGameObjects = new List<UGameObject>();
 
-            foreach (var uGameObjectToken in jo["u_gameobjects"])
+            foreach (var uGameObjectToken in jo[UBlendDataKey.uGameObjects])
             {
                 var uGameObject = new UGameObject();
-                uGameObject.name = uGameObjectToken["name"]?.ToString();
+                uGameObject.uName = uGameObjectToken["name"]?.ToString();
                 uGameObject.uComponents = GetUComponents(uGameObjectToken);
                 uGameObjects.Add(uGameObject);
             }

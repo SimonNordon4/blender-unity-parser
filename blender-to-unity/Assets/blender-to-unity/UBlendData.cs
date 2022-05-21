@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Newtonsoft.Json;
+using System.Reflection;
 
-namespace UnityToBlender
+namespace BlenderToUnity
 {
     [Serializable]
     public class UBlendType
@@ -14,14 +15,24 @@ namespace UnityToBlender
     [Serializable]
     public class UBlendData : UBlendType
     {
-        [SerializeReference]
+        [SerializeReference][JsonProperty("u_gameobjects")]
         public List<UGameObject> uGameObjects = new List<UGameObject>();
+        [JsonProperty("u_meshes")]
+        public List<UMesh> uMeshes = new List<UMesh>();
+
+        public static string uGameObjectsKey = ((JsonPropertyAttribute)typeof(UBlendData).GetField("uGameObjects").GetCustomAttribute(typeof(JsonPropertyAttribute),true)).PropertyName;
+    }
+
+    [Serializable]
+    public class UMesh : UBlendType
+    {
+        
     }
 
     [Serializable]
     public class UGameObject : UBlendType
     {
-        public string name = "";
+        public string uName = "";
         [SerializeReference]
         public List<UComponent> uComponents = new List<UComponent>();
     }
