@@ -7,6 +7,7 @@ using UnityEditor;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Sirenix.OdinInspector;
 
 
 namespace UnityToBlender
@@ -18,7 +19,9 @@ namespace UnityToBlender
         public UBlendData uBlend;
 
         [ReadOnly]
-        public JObject jobj; 
+        public JObjectViewer jobj; 
+
+        public Dictionary<string,object> testDict;
         public override void OnImportAsset(AssetImportContext ctx)
         {
             // TODO use ctx.AddObjectToAsset() to create a proper prefab.
@@ -31,7 +34,9 @@ namespace UnityToBlender
             // Incoming Data
             Debug.Log(data);
 
-            jobj = JObject.Parse(data);
+            var jLinq = JObject.Parse(data);
+
+            jobj.test = JObjectViewer.JObjectToDictionary(jLinq);
 
             var uBlendData = JsonConvert.DeserializeObject<UBlendData>(data);
             uBlend = uBlendData;
@@ -43,7 +48,6 @@ namespace UnityToBlender
             ctx.AddObjectToAsset("my material", mat);
             ctx.SetMainObject(go);
         }
-
 
 
         // public Mesh CreateMesh(UMesh uMesh)
@@ -91,6 +95,43 @@ namespace UnityToBlender
         //     AssetDatabase.CreateAsset(mesh, @"Assets/blender-to-unity/mesh.asset");
         //     AssetDatabase.SaveAssets();
         // }
+    }
+
+[System.Serializable]
+    public class JObjectViewer
+    {
+        public Dictionary<string,object> test;
+
+        public static Dictionary<string,object> JObjectToDictionary(JObject jObj)
+        {
+            var result = jObj.ToObject<Dictionary<string,object>>();
+            return result;
+        }
+    }
+}
+
+public static class JObjectExtensions
+{
+    public static IDictionary<string, object> ToDictionary(this JObject @object)
+    {
+        var result = @object.ToObject<Dictionary<string, object>>();
+
+        // var JObjectKeys = (from r in result
+        //                    let key = r.Key
+        //                    let value = r.Value
+        //                    where value.GetType() == typeof(JObject)
+        //                    select key).ToList();
+
+        // var JArrayKeys = (from r in result
+        //                   let key = r.Key
+        //                   let value = r.Value
+        //                   where value.GetType() == typeof(JArray)
+        //                   select key).ToList();
+
+        // JArrayKeys.ForEach(key => result[key] = ((JArray)result[key]).Values().Select(x => ((JValue)x).Value).ToArray());
+        // JObjectKeys.ForEach(key => result[key] = ToDictionary(result[key] as JObject));
+
+        return result;
     }
 }
 #endif

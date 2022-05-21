@@ -20,9 +20,7 @@ public class JSONSerializer : MonoBehaviour
     private static string uBlend = "data_unity.ublend";
 
     [SerializeField]
-    [ReadOnly]
-    private ObjectData data;
-
+    public Dictionary<string,object> testDict = new Dictionary<string, object>();
 
     public void SaveToFile(object data)
     {
