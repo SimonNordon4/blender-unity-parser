@@ -43,8 +43,7 @@ namespace UnityToBlender
             foreach (var uComponentToken in uGameObjectToken["components"])
             {
                 var typeDefintion = "UnityToBlender." + uComponentToken["type"].ToString();
-                Debug.Log(Type.GetType(typeDefintion));
-                var uComponent = GetUComponent(uComponentToken,Type.GetType(uComponentToken["type"].ToString()));
+                var uComponent = GetUComponent(uComponentToken,Type.GetType(typeDefintion));
                 uComponents.Add(uComponent);
             }
 

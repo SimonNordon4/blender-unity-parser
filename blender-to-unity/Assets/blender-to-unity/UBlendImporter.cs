@@ -16,13 +16,18 @@ namespace UnityToBlender
     public class UBlendImporter : ScriptedImporter
     {
         [ReadOnly]public UBlendData uBlend;
+        public List<UComponent> test;
         public override void OnImportAsset(AssetImportContext ctx)
         {
             string json = File.ReadAllText(ctx.assetPath);
             JObject jObject = JObject.Parse(json);
             
             uBlend = UBlendOperations.JObjectToUBlendData(jObject);
-            Util.print(uBlend.uGameObjects.Count);
+            var x = (UTransform)uBlend.uGameObjects[0].uComponents[0];
+            Util.print(x.position);
+
+            test = new List<UComponent>();
+            test.Add(new UTransform());
         }
     }
 }
