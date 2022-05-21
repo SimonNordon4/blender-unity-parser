@@ -23,7 +23,7 @@ namespace BlenderToUnity
             JObject jObject = JObject.Parse(json);
             
             uBlend = UBlendOperations.JObjectToUBlendData(jObject);
-            uBlend.uGameObjects[0].uComponents.Add(new UTransform());
+            //uBlend.uGameObjects[0].uComponents.Add(new UTransform());
         }
     }
 }

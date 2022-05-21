@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace BlenderToUnity
 {
@@ -24,7 +25,7 @@ namespace BlenderToUnity
         {
             List<UGameObject> uGameObjects = new List<UGameObject>();
 
-            foreach (var uGameObjectToken in jo[UBlendDataKey.uGameObjects])
+            foreach (var uGameObjectToken in jo[UBlendData.uGameObjectsKey])
             {
                 var uGameObject = new UGameObject();
                 uGameObject.uName = uGameObjectToken["name"]?.ToString();
@@ -39,9 +40,9 @@ namespace BlenderToUnity
         {
 
             List<UComponent> uComponents = new List<UComponent>();
-            foreach (var uComponentToken in uGameObjectToken["components"])
+            foreach (var uComponentToken in uGameObjectToken[UGameObject.uComponentsKey])
             {
-                var typeDefintion = "UnityToBlender." + uComponentToken["type"]?.ToString();
+                var typeDefintion = "UnityToBlender." + uComponentToken[UComponent.uTypeKey]?.ToString();
                 var uComponent = GetUComponent(uComponentToken,Type.GetType(typeDefintion));
                 uComponents.Add(uComponent);
             }
@@ -55,9 +56,14 @@ namespace BlenderToUnity
             if(type == typeof(UTransform))
             {
                 var uTransform = new UTransform();
-                uTransform.position = new Vector3(float.Parse(uComponentToken["position"]["x"].ToString()), float.Parse(uComponentToken["position"]["y"].ToString()), float.Parse(uComponentToken["position"]["z"].ToString()));
-                uTransform.rotation = new Vector3(float.Parse(uComponentToken["rotation"]["x"].ToString()), float.Parse(uComponentToken["rotation"]["y"].ToString()), float.Parse(uComponentToken["rotation"]["z"].ToString()));
-                uTransform.scale = new Vector3(float.Parse(uComponentToken["scale"]["x"].ToString()), float.Parse(uComponentToken["scale"]["y"].ToString()), float.Parse(uComponentToken["scale"]["z"].ToString()));
+                uTransform.position = JsonConvert.DeserializeObject<Vector3>(uComponentToken[UTransform.positionKey].ToString());
+                //uTransform.position = new Vector3(float.Parse(uComponentToken["position"]["x"].ToString()), float.Parse(uComponentToken["position"]["y"].ToString()), float.Parse(uComponentToken["position"]["z"].ToString()));
+
+                uTransform.rotation = JsonConvert.DeserializeObject<Vector3>(uComponentToken[UTransform.rotationKey].ToString());
+                //uTransform.rotation = new Vector3(float.Parse(uComponentToken["rotation"]["x"].ToString()), float.Parse(uComponentToken["rotation"]["y"].ToString()), float.Parse(uComponentToken["rotation"]["z"].ToString()));
+
+                uTransform.scale = JsonConvert.DeserializeObject<Vector3>(uComponentToken[UTransform.scaleKey].ToString());
+                //uTransform.scale = new Vector3(float.Parse(uComponentToken["scale"]["x"].ToString()), float.Parse(uComponentToken["scale"]["y"].ToString()), float.Parse(uComponentToken["scale"]["z"].ToString()));
                 uTransform.parentName = uComponentToken["parent_name"]?.ToString();
                 return uTransform;
             }

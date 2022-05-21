@@ -15,12 +15,11 @@ namespace BlenderToUnity
     [Serializable]
     public class UBlendData : UBlendType
     {
-        [SerializeReference][JsonProperty("u_gameobjects")]
         public List<UGameObject> uGameObjects = new List<UGameObject>();
-        [JsonProperty("u_meshes")]
         public List<UMesh> uMeshes = new List<UMesh>();
 
-        public static string uGameObjectsKey = ((JsonPropertyAttribute)typeof(UBlendData).GetField("uGameObjects").GetCustomAttribute(typeof(JsonPropertyAttribute),true)).PropertyName;
+        public const string uGameObjectsKey = "u_gameobjects";
+        public const string uMeshesKey = "u_meshes";
     }
 
     [Serializable]
@@ -35,12 +34,16 @@ namespace BlenderToUnity
         public string uName = "";
         [SerializeReference]
         public List<UComponent> uComponents = new List<UComponent>();
+
+        public const string uNameKey = "u_name";
+        public const string uComponentsKey = "u_components";
     }
 
     [Serializable]
     public class UComponent : UBlendType
     {
         //public Type type = null; We don't need to store the type, it just has to be present in the json.
+        public const string uTypeKey = "u_type";
     }
 
     [Serializable]
@@ -50,12 +53,18 @@ namespace BlenderToUnity
         public Vector3 position = Vector3.zero;
         public Vector3 rotation = Vector3.zero;
         public Vector3 scale = Vector3.one;
+
+        public const string parentNameKey = "u_parent";
+        public const string positionKey = "u_position";
+        public const string rotationKey = "u_rotation";
+        public const string scaleKey = "u_scale";
     }
 
     [Serializable]
     public class UMeshFilter : UComponent
     {
         public string meshName = "";
+        public const string meshNameKey = "mesh_name";
     }
 
     // /// <summary>
