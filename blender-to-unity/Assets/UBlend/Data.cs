@@ -71,6 +71,22 @@ namespace UBlend{
     public class UGameObject
     {
         public string name = string.Empty;
+        public List<UComponent> u_components = new List<UComponent>();
+    }
+
+    [Serializable]
+    public class UComponent
+    {
+        
+    }
+
+    [Serializable]
+    public class UTransform : UComponent
+    {
+        public string parent_name = string.Empty;
+        public Vector3 position = Vector3.zero;
+        public Vector3 rotation = Vector3.zero;
+        public Vector3 scale = Vector3.zero;
     }
 
     #endregion
