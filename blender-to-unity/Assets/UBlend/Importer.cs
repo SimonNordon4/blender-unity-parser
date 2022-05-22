@@ -41,9 +41,7 @@ namespace UBlend
             foreach(var u_gameobject in uBlendData.u_objects.u_gameobjects)
             {
                 var go = new GameObject(u_gameobject.name);
-                // go.transform.position =
-                // go.transform.rotation = 
-                // go.transform.lossyScale = 
+                // go.transform.position = u_gameobject.u_components[nameof(UTransform)].u_transform.position;
                 
                 // ctx.AddObjectToAsset(u_object.name, u_object_go);
                 // ctx.SetMainObject(u_object_go);
