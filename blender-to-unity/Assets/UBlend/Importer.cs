@@ -14,7 +14,7 @@ namespace UBlend
             string fileContent = File.ReadAllText(ctx.assetPath);
             //JObject jObject = JObject.Parse(json);
             
-            //uBlend = UBlendOperations.JObjectToUBlendData(jObject);
+            uBlendData = Ops.GetUBlend(Ops.GetJObject(fileContent));
         }
     }
 }

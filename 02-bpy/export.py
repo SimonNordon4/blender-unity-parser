@@ -20,6 +20,7 @@ class File():
             f.write(ublend_json)
         return
     
-ublenddata = ublend.ops.get_ublend_data()
+ublenddata = ublend.ops.get_ublend()
+print(ublenddata.tojson())
 
 File.save_to_unity(UNITY_EXPORT, ublenddata.tojson())

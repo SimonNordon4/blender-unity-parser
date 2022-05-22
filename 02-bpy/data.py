@@ -6,11 +6,12 @@ import orjson
 
 @dataclass
 class Data:
-    ''' Data Conainer for entire UBlend file '''
+    ''' Data Conainer for entire UBlend file.
+        Abstract Class for storing assets, objects and settings - these are implictly inferred in c#'''
     def __init__(self):
-        self.assets = []
-        self.gameobjects = []
-        self.settings = []
+        self.assets = Assets()
+        self.objects = Objects()
+        self.settings = Settings()
     def tojson(self):
         ''' Convert the entire file into Json'''
         return orjson.dumps(self).decode("utf-8")

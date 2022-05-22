@@ -9,7 +9,9 @@ namespace UBlend{
     [Serializable]
     public class Data 
     {
-
+        public Assets assets = new Assets();
+        public Objects objects = new Objects();
+        public Settings settings = new Settings();
     }
 
     #region Asset Defintions
@@ -40,7 +42,7 @@ namespace UBlend{
 
     #region Object Defintions
     [Serializable]
-    public class Object
+    public class Objects
     {
         public List<GameObject> gameObjects;
     }
