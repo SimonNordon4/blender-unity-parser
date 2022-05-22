@@ -71,3 +71,38 @@ When it comes to C#, we'll be using a JObject (Dictionary) to deserialize the Js
     data.u_objects = jObject["u_objects"];
 
 ```
+
+## UPDATE 22/05/2022
+
+We need to make a change to the way components works, because a gameobject will (generally) only have a single component of a certain type. So Instead, we'll remove type as a class field, as well as removing type to lists (lists will be inferred from the types within them). 
+
+We'll then make the type the property key.
+
+```json
+{
+    "type": "UGameObject",
+    "u_components" : {
+        "UComponent":[
+            {
+            "type" : "UTransform",
+            "parent_name" : ""
+            }
+        ]
+    }
+}
+```
+
+now becomes
+
+```json
+{
+    "type": "UGameObject",
+    "u_components" : [
+        {
+            "UTransform" : {
+                "parent_name" : ""
+            }
+        }
+    ]
+}
+```
