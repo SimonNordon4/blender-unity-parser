@@ -64,20 +64,38 @@ namespace UBlend
 
                 if(uType == typeof(UTransform))
                 {
-                   
+                   GetUTransform(t, u_components);
+                }
+                if(uType == typeof(UMeshFilter)){
+                    GetUMeshFilter(t, u_components);
                 }
             }
         }
 
-        public static bool CheckKey(string key, JToken token)
+        public static void GetUTransform(JToken u_transformToken, List<UComponent> u_components)
         {
-            if (token[key] is null)
-            {
-                Debug.LogError($"{key} is not a valid key in {token} ");
-                return false;
-            }
-            return true;
+            UTransform uTransform = new UTransform();
+            uTransform.parent_name = u_transformToken[nameof(uTransform.parent_name)].ToString();
+            float[] pos = u_transformToken[nameof(uTransform.position)].ToObject<float[]>();
+            uTransform.position = new Vector3(pos[0], pos[1], pos[2]);
+
+            float[] rot = u_transformToken[nameof(uTransform.rotation)].ToObject<float[]>();
+            uTransform.rotation = new Vector3(rot[0], rot[1], rot[2]);
+
+            float[] scale = u_transformToken[nameof(uTransform.scale)].ToObject<float[]>();
+            uTransform.scale = new Vector3(scale[0], scale[1], scale[2]);
+
+            u_components.Add(uTransform);
         }
+
+        public static void GetUMeshFilter(JToken u_meshFilterToken, List<UComponent> u_components)
+        {
+            UMeshFilter uMeshFilter = new UMeshFilter();
+            uMeshFilter.mesh_name = u_meshFilterToken[nameof(uMeshFilter.mesh_name)].ToString();
+            u_components.Add(uMeshFilter);
+        }
+
+
     }
 
 

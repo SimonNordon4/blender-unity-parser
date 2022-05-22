@@ -71,6 +71,7 @@ namespace UBlend{
     public class UGameObject
     {
         public string name = string.Empty;
+        [SerializeReference]
         public List<UComponent> u_components = new List<UComponent>();
     }
 
@@ -87,6 +88,12 @@ namespace UBlend{
         public Vector3 position = Vector3.zero;
         public Vector3 rotation = Vector3.zero;
         public Vector3 scale = Vector3.zero;
+    }
+
+    [Serializable]
+    public class UMeshFilter : UComponent
+    {
+        public string mesh_name = string.Empty;
     }
 
     #endregion

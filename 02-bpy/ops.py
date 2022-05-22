@@ -31,6 +31,7 @@ def get_u_gameobjects(u_gameobjects):
             go = data.UGameObject()
             go.name = obj.name
             get_u_transform(go.u_components[data.UComponent.__name__], obj)
+            get_u_meshfilter(go.u_components[data.UComponent.__name__], obj)
             u_gameobjects.append(go)
 
 
@@ -44,3 +45,9 @@ def get_u_transform(u_components, obj):
     transform.parent_name = obj.parent.name if obj.parent else None
 
     u_components.append(transform)
+   
+def get_u_meshfilter(u_components,obj):
+    ''' Get the Mesh Filter component of a gameobject '''
+    mesh_filter = data.UMeshFilter();
+    mesh_filter.mesh_name = obj.data.name
+    u_components.append(mesh_filter)

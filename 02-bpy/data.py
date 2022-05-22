@@ -47,7 +47,7 @@ class UComponent:
         self.type = type(self).__name__
         
 @dataclass
-class UTransform:
+class UTransform(UComponent):
     ''' Unity MonoBehaviour Representation'''
     def __init__(self):
         self.type = type(self).__name__
@@ -55,6 +55,19 @@ class UTransform:
         self.rotation = [0,0,0]
         self.scale = [1,1,1]
         self.parent_name = None
+        
+    #         [Serializable]
+    # public class UMeshFilter : UComponent
+    # {
+    #     public string mesh_name = string.Empty;
+    # }
+    
+@dataclass
+class UMeshFilter(UComponent):
+    ''' Unity MeshFilter Representation'''
+    def __init__(self):
+        self.type = type(self).__name__
+        self.mesh_name = ""
         
 #endregion
 
