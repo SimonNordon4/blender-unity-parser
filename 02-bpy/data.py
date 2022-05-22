@@ -30,15 +30,15 @@ class UAssets:
 class UObjects:
     ''' Unity GameObject Representation'''
     def __init__(self):
-        self.u_gameobjects = {UGameObject.__name__ : []}
+        self.u_gameobjects = []
 
 @dataclass
 class UGameObject:
     ''' Unity GameObject Representation'''
     def __init__(self):
-        self.type = type(self).__name__
         self.name = ""
-        self.u_components = {UComponent.__name__ :[]}
+        self.u_transform = UTransform()
+        self.u_components = []
     
 @dataclass
 class UComponent:
@@ -47,23 +47,17 @@ class UComponent:
         self.type = type(self).__name__
         
 @dataclass
-class UTransform(UComponent):
+class UTransform:
     ''' Unity MonoBehaviour Representation'''
     def __init__(self):
-        self.type = type(self).__name__
         self.position = [0,0,0]
         self.rotation = [0,0,0]
         self.scale = [1,1,1]
         self.parent_name = None
         
-    #         [Serializable]
-    # public class UMeshFilter : UComponent
-    # {
-    #     public string mesh_name = string.Empty;
-    # }
-    
+
 @dataclass
-class UMeshFilter(UComponent):
+class UMeshFilter:
     ''' Unity MeshFilter Representation'''
     def __init__(self):
         self.type = type(self).__name__

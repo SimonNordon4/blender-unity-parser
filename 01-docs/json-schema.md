@@ -78,6 +78,8 @@ We need to make a change to the way components works, because a gameobject will 
 
 We'll then make the type the property key.
 
+I'm changing my mind. This should only be done on lists that are ambigous. 
+
 ```json
 {
     "type": "UGameObject",

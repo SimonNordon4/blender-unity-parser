@@ -71,8 +71,33 @@ namespace UBlend{
     public class UGameObject
     {
         public string name = string.Empty;
+        public UTransform u_transform = new UTransform();
+
         [SerializeReference]
         public List<UComponent> u_components = new List<UComponent>();
+
+        public UComponent GetComponent(Type type)
+        {
+            foreach (var component in u_components)
+            {
+                if (component.GetType() == type)
+                {
+                    return component;
+                }
+            }
+            return null;
+        }
+        public List<UComponent> GetComponents(Type type){
+            List<UComponent> components = new List<UComponent>();
+            foreach (var component in u_components)
+            {
+                if (component.GetType() == type)
+                {
+                    components.Add(component);
+                }
+            }
+            return components;
+        }
     }
 
     [Serializable]

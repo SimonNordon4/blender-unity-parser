@@ -21,6 +21,7 @@ namespace UBlend
             return JObject.Parse(json);
         }
 
+        // Start digging down into the json object
         public static Data GetUBlend(JObject json)
         {
             Data data = new Data();
@@ -31,6 +32,7 @@ namespace UBlend
             return data;
         }
 
+        // grab our assets
         public static void GetAssets(JToken u_assetsToken, UAssets u_assets)
         {
 
@@ -40,52 +42,48 @@ namespace UBlend
             //get textures
         }
 
+        // We are living a get objects level incase there are other instances that aren't gameobjects.
         public static void GetObjects(JToken u_objectsToken, UObjects u_objects)
         {
             GetGameObjects(u_objectsToken[nameof(u_objects.u_gameobjects)], u_objects.u_gameobjects);
         }
 
+        // Get our gameobjects, assign a name and components.
         public static void GetGameObjects(JToken u_gameobjectsToken, List<UGameObject> u_gameobjects)
         {
-            foreach (JToken t in u_gameobjectsToken[nameof(UGameObject)])
+            foreach (JToken t in u_gameobjectsToken)
             {
                 var go = new UGameObject();
                 go.name = t[nameof(go.name)].ToString();
-                GetComponents(t[nameof(go.u_components)], go.u_components);
+                SetUTransform(t[nameof(go.u_transform)], go.u_transform);
+                SetComponents(t[nameof(go.u_components)], go.u_components);
                 u_gameobjects.Add(go);
             }
         }
 
-        public static void GetComponents(JToken u_componentsToken, List<UComponent> u_components)
+        public static void SetUTransform(JToken u_transformToken, UTransform u_transform)
         {
-            foreach (JToken t in u_componentsToken[nameof(UComponent)])
-            {
-                Type uType = Type.GetType(name_space + t[k_type].ToString());
+            u_transform.parent_name = u_transformToken[nameof(u_transform.parent_name)].ToString();
+            float[] pos = u_transformToken[nameof(u_transform.position)].ToObject<float[]>();
+            u_transform.position = new Vector3(pos[0], pos[1], pos[2]);
 
-                if(uType == typeof(UTransform))
+            float[] rot = u_transformToken[nameof(u_transform.rotation)].ToObject<float[]>();
+            u_transform.rotation = new Vector3(rot[0], rot[1], rot[2]);
+
+            float[] scale = u_transformToken[nameof(u_transform.scale)].ToObject<float[]>();
+            u_transform.scale = new Vector3(scale[0], scale[1], scale[2]);
+        }
+
+        // Sort our components by their type.
+        public static void SetComponents(JToken u_componentsToken, List<UComponent> u_components)
+        {
+            foreach (JToken t in u_componentsToken)
+            {
+                if((t[k_type].ToString()) == nameof(UMeshFilter))
                 {
-                   GetUTransform(t, u_components);
-                }
-                if(uType == typeof(UMeshFilter)){
                     GetUMeshFilter(t, u_components);
                 }
             }
-        }
-
-        public static void GetUTransform(JToken u_transformToken, List<UComponent> u_components)
-        {
-            UTransform uTransform = new UTransform();
-            uTransform.parent_name = u_transformToken[nameof(uTransform.parent_name)].ToString();
-            float[] pos = u_transformToken[nameof(uTransform.position)].ToObject<float[]>();
-            uTransform.position = new Vector3(pos[0], pos[1], pos[2]);
-
-            float[] rot = u_transformToken[nameof(uTransform.rotation)].ToObject<float[]>();
-            uTransform.rotation = new Vector3(rot[0], rot[1], rot[2]);
-
-            float[] scale = u_transformToken[nameof(uTransform.scale)].ToObject<float[]>();
-            uTransform.scale = new Vector3(scale[0], scale[1], scale[2]);
-
-            u_components.Add(uTransform);
         }
 
         public static void GetUMeshFilter(JToken u_meshFilterToken, List<UComponent> u_components)
@@ -94,8 +92,6 @@ namespace UBlend
             uMeshFilter.mesh_name = u_meshFilterToken[nameof(uMeshFilter.mesh_name)].ToString();
             u_components.Add(uMeshFilter);
         }
-
-
     }
 
 
