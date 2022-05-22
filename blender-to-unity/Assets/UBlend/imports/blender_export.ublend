@@ -1,1 +1,1 @@
-{"assets":{"Assets":{"meshes":[],"materials":[],"textures":[]}},"objects":{"Objects":{}},"settings":{"Settings":{}}}
+{"assets":{"meshes":[],"materials":[],"textures":[]},"objects":{"gameobjects":{"GameObject":[{"type":"GameObject","id":2854280894048,"name":"Cube"},{"type":"GameObject","id":2854281028000,"name":"Cylinder"},{"type":"GameObject","id":2854281026320,"name":"Sphere"},{"type":"GameObject","id":2854281025360,"name":"Suzanne"},{"type":"GameObject","id":2854281026752,"name":"Torus"}]}},"settings":{}}

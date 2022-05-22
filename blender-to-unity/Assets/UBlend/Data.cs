@@ -10,30 +10,44 @@ namespace UBlend{
     public class Data 
     {
         public Assets assets = new Assets();
-        public Objects objects = new Objects();
+        public UObjects objects = new UObjects();
         public Settings settings = new Settings();
     }
 
     #region Asset Defintions
+
+    /// <summary>
+    /// Container for UBlend Assets: Meshes, Materials, Textures
+    /// </summary>
     [Serializable]
     public class Assets
     {
-        public List<Mesh> meshes;
-        public List<Material> materials;
-        public List<Texture> textures;
+        public List<UMesh> u_meshes = new List<UMesh>();
+        public List<UMaterial> u_materials = new List<UMaterial>();
+        public List<UTexture> u_textures = new List<UTexture>();
     }
+
+    /// <summary>
+    /// UBlend Mesh Description
+    /// </summary>
     [Serializable]
-    public class Mesh
+    public class UMesh
     {
 
     }
+    /// <summary>
+    /// UBlend Material Description
+    /// </summary>
     [Serializable]
-    public class Material
+    public class UMaterial
     {
 
     }
+    /// <summary>
+    /// UBlend Material Description
+    /// </summary>
     [Serializable]
-    public class Texture
+    public class UTexture
     {
 
     }
@@ -41,15 +55,22 @@ namespace UBlend{
     #endregion
 
     #region Object Defintions
+    /// <summary>
+    /// Container for UBlend Objects: GameObjects
+    /// </summary>
     [Serializable]
-    public class Objects
+    public class UObjects
     {
-        public List<GameObject> gameObjects;
+        public List<UGameObject> u_gameobjects = new List<UGameObject>();
     }
-    [Serializable]
-    public class GameObject
-    {
 
+    /// <summary>
+    /// UBlend Interpretation of a GameObject
+    /// </summary>
+    [Serializable]
+    public class UGameObject
+    {
+        public string name = string.Empty;
     }
 
     #endregion

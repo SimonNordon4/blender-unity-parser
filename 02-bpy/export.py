@@ -1,9 +1,7 @@
 import importlib
 from sys import path
 import time
-
 path.append('E:\\repos\\blender-to-unity\\02-bpy')
-# Reloading allows us to modify modules without quitting blender.
 import ublend
 importlib.reload(ublend.ops)
 importlib.reload(ublend.data)

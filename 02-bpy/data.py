@@ -23,12 +23,24 @@ class Assets:
         self.meshes = []
         self.materials = []
         self.textures = []
-       
+
+#region Objects
+  
 @dataclass
 class Objects:
     ''' Unity GameObject Representation'''
     def __init__(self):
-        return None
+        self.gameobjects = {GameObject.__name__ : []}
+
+@dataclass
+class GameObject:
+    ''' Unity GameObject Representation'''
+    def __init__(self):
+        self.type = type(self).__name__
+        self.id = id(self)
+        self.name = ""
+    
+#endregion
 
 @dataclass
 class Settings:

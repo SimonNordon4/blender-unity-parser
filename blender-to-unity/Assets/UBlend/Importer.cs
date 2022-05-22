@@ -11,10 +11,13 @@ namespace UBlend
         [ReadOnly]public Data uBlendData;
         public override void OnImportAsset(AssetImportContext ctx)
         {
+            // Read text from file.
             string fileContent = File.ReadAllText(ctx.assetPath);
-            //JObject jObject = JObject.Parse(json);
             
+            // Convert to UBlendData.
             uBlendData = Ops.GetUBlend(Ops.GetJObject(fileContent));
+
+            // Convert uBlendData to Unity Data.
         }
     }
 }
