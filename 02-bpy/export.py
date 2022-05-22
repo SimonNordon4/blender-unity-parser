@@ -1,8 +1,8 @@
-import ublend
 import importlib
 from sys import path
 import time
 path.append('E:\\repos\\blender-to-unity\\02-bpy')
+import ublend
 importlib.reload(ublend.ops)
 importlib.reload(ublend.data)
 
@@ -19,8 +19,11 @@ class File():
             f.write(ublend_json)
         return
 
-
+start_time = time.time()
 ublenddata = ublend.ops.get_u_data()
-print(ublenddata.tojson())
-
+serialize_time = time.time() - start_time
 File.save_to_unity(UNITY_EXPORT, ublenddata.tojson())
+write_time = time.time() - start_time - serialize_time
+
+print("Serialize Time: " + str(serialize_time))
+print("Write Time: " + str(write_time))

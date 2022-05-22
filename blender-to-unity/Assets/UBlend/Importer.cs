@@ -10,43 +10,82 @@ namespace UBlend
     [ScriptedImporter(1, "ublend")]
     public class Importer : ScriptedImporter
     {
+        private Material debugMat;
+        [ReadOnly]public Data uBlendData;
+
         private GameObject rootObject;
         private Dictionary<string,GameObject> GameObjectReference = new Dictionary<string,GameObject>();
         private Dictionary<string,Mesh> MeshReference = new Dictionary<string,Mesh>();
         private Dictionary<string,Material> MaterialReference = new Dictionary<string,Material>();
 
-        [ReadOnly]public Data uBlendData;
         public override void OnImportAsset(AssetImportContext ctx)
         {
+            //TEMP
+            debugMat = (Material)AssetDatabase.LoadAssetAtPath("Assets/Shaders/uv.mat", typeof(Material));
+
+            var readTime = System.Diagnostics.Stopwatch.StartNew();
             // Read text from file.
             string fileContent = File.ReadAllText(ctx.assetPath);
+
+            readTime.Stop();
+
+            var parseTime = System.Diagnostics.Stopwatch.StartNew();
             
             // Convert to UBlendData.
             uBlendData = ReadUBlend.GetUBlend(ReadUBlend.GetJObject(fileContent));
 
+            parseTime.Stop();
+
+            var createTime = System.Diagnostics.Stopwatch.StartNew();
+
             CreateData(ctx,uBlendData);
+
+            createTime.Stop();
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+
+            Debug.Log($"Read: {readTime.ElapsedMilliseconds}ms");
+            Debug.Log($"Parse: {parseTime.ElapsedMilliseconds}ms");
+            Debug.Log($"Create: {createTime.ElapsedMilliseconds}ms");
         }
         public void CreateData(AssetImportContext ctx, Data uBlendData)
         {
             rootObject = new GameObject();
-            rootObject.AddComponent<UBlendComponent>().uBlendData = uBlendData;
             ctx.AddObjectToAsset(Path.GetFileNameWithoutExtension(ctx.assetPath), rootObject);
-            CreateGameObjects(ctx,uBlendData);
+            CreateMeshes(ctx,uBlendData.u_assets.u_meshes);
+            CreateGameObjects(uBlendData.u_objects.u_gameobjects);
             SetGameObjectParents(uBlendData);
             ctx.SetMainObject(rootObject);
         }
 
-        public void CreateMeshes(AssetImportContext ctx, Data uBlendData)
+        public void CreateMeshes(AssetImportContext ctx, List<UMesh> u_meshes)
         {
-            // TODO: Implement
+            foreach (var u_mesh in u_meshes)
+            {
+                Mesh mesh = new Mesh();
+                mesh.name = u_mesh.u_name;
+                mesh.SetVertices(u_mesh.u_vertices);
+                mesh.SetNormals(u_mesh.u_normals);
+                mesh.subMeshCount = u_mesh.u_submesh_count;
+                for (int i = 0; i < u_mesh.u_submesh_triangles.Count; i++)
+                {
+                    mesh.SetTriangles(u_mesh.u_submesh_triangles[i].u_triangles, (i), true);
+                }
+                for (int i = 0; i < u_mesh.u_uvs.Count; i++)
+                {
+                    mesh.SetUVs(i, u_mesh.u_uvs[i].u_uv);
+                }
+
+                MeshReference.Add(u_mesh.u_name, mesh);
+
+                ctx.AddObjectToAsset(mesh.name,mesh);
+            }
         }
 
-        public void CreateGameObjects(AssetImportContext ctx, Data uBlendData)
+        public void CreateGameObjects(List<UGameObject> u_gameobjects)
         {
-            foreach(var u_gameobject in uBlendData.u_objects.u_gameobjects)
+            foreach(var u_gameobject in u_gameobjects)
             {
                 var go = new GameObject(u_gameobject.name); // Essential that the game object name match the u_name.
                 go.transform.position = u_gameobject.u_transform.position;
@@ -55,8 +94,6 @@ namespace UBlend
                 CreateComponents(go, u_gameobject);
 
                 GameObjectReference.Add(go.name,go);
-
-                ctx.AddObjectToAsset(go.name, go);
             }
         }
 
@@ -68,11 +105,11 @@ namespace UBlend
                 {
                     var u_mf = u_co as UMeshFilter;
                     var mf = go.AddComponent<MeshFilter>();
-                    //mf.mesh = MeshReference[u_mf.mesh_name];
+                    mf.mesh = MeshReference[u_mf.mesh_name];
 
                     // TEMP. For now we'll assing a basic mesh renderer.
                     var mr = go.AddComponent<MeshRenderer>();
-                    mr.material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+                    mr.sharedMaterial = debugMat;
                 }
             }
         }

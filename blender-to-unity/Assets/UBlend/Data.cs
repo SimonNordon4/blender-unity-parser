@@ -9,6 +9,7 @@ namespace UBlend{
     [Serializable]
     public class Data 
     {
+        [SerializeReference]
         public UAssets u_assets = new UAssets();
         public UObjects u_objects = new UObjects();
         public USettings u_settings = new USettings();
@@ -33,7 +34,30 @@ namespace UBlend{
     [Serializable]
     public class UMesh
     {
+        public string u_name = "";
+        public List<Vector3> u_vertices = new List<Vector3>();
+        public List<Vector3> u_normals = new List<Vector3>();
 
+        // sub meshes.
+        public int u_submesh_count = 1;
+        public List<SubMeshTriangles> u_submesh_triangles = new List<SubMeshTriangles>();
+        public List<UUVLayer> u_uvs = new List<UUVLayer>();
+    }
+
+    [Serializable]
+    public class SubMeshTriangles
+    {
+        public List<int> u_triangles = new List<int>();
+    }
+
+    [Serializable]
+    public class UUVLayer
+    {
+        public List<Vector2> u_uv = new List<Vector2>();
+        public UUVLayer(List<Vector2> u_uv)
+        {
+            this.u_uv = u_uv;
+        }
     }
     /// <summary>
     /// UBlend Material Description

@@ -26,30 +26,53 @@ namespace UBlend
         {
             Data data = new Data();
 
-            GetAssets(json[nameof(data.u_assets)], data.u_assets);
-            GetObjects(json[nameof(data.u_objects)], data.u_objects);
+            SetAssets(json[nameof(data.u_assets)], data.u_assets);
+            SetObjects(json[nameof(data.u_objects)], data.u_objects);
 
             return data;
         }
 
         // grab our assets
-        public static void GetAssets(JToken u_assetsToken, UAssets u_assets)
+        public static void SetAssets(JToken u_assetsToken, UAssets u_assets)
         {
 
-            u_assets = u_assetsToken.ToObject<UAssets>();
+            SetMeshes(u_assetsToken[nameof(u_assets.u_meshes)], u_assets.u_meshes);
             //get meshes
             //get materials
             //get textures
         }
 
-        // We are living a get objects level incase there are other instances that aren't gameobjects.
-        public static void GetObjects(JToken u_objectsToken, UObjects u_objects)
+        public static void SetMeshes(JToken u_meshesToken, List<UMesh> u_meshes)
         {
-            GetGameObjects(u_objectsToken[nameof(u_objects.u_gameobjects)], u_objects.u_gameobjects);
+            foreach (var t in u_meshesToken)
+            {
+                var u_mesh = new UMesh();
+                u_mesh.u_name = t[nameof(u_mesh.u_name)].ToString();
+                u_mesh.u_vertices = GetVector3List(t[nameof(u_mesh.u_vertices)]);
+                u_mesh.u_normals = GetVector3List(t[nameof(u_mesh.u_normals)]);
+                
+                foreach (JToken uvToken in t[nameof(u_mesh.u_uvs)])
+                {
+                    u_mesh.u_uvs.Add(new UUVLayer(GetVector2List(uvToken)));
+                }
+                u_mesh.u_submesh_count = (int)t[nameof(u_mesh.u_submesh_count)];
+
+                foreach(JToken tris in t[nameof(u_mesh.u_submesh_triangles)])
+                {
+                    u_mesh.u_submesh_triangles.Add(new SubMeshTriangles() { u_triangles = GetIntList(tris) });
+                }
+                u_meshes.Add(u_mesh);
+            }
+        }
+
+        // We are living a get objects level incase there are other instances that aren't gameobjects.
+        public static void SetObjects(JToken u_objectsToken, UObjects u_objects)
+        {
+            SetGameObjects(u_objectsToken[nameof(u_objects.u_gameobjects)], u_objects.u_gameobjects);
         }
 
         // Get our gameobjects, assign a name and components.
-        public static void GetGameObjects(JToken u_gameobjectsToken, List<UGameObject> u_gameobjects)
+        public static void SetGameObjects(JToken u_gameobjectsToken, List<UGameObject> u_gameobjects)
         {
             foreach (JToken t in u_gameobjectsToken)
             {
@@ -92,6 +115,40 @@ namespace UBlend
             uMeshFilter.mesh_name = u_meshFilterToken[nameof(uMeshFilter.mesh_name)].ToString();
             u_components.Add(uMeshFilter);
         }
+
+        #region Utility
+        public static List<Vector3> GetVector3List(JToken token)
+        {
+            List<Vector3> list = new List<Vector3>();
+            foreach (JToken t in token)
+            {
+                float[] vec3 = t.ToObject<float[]>();
+                list.Add(new Vector3(vec3[0], vec3[1], vec3[2]));  
+            }
+            return list;
+        }
+
+        public static List<Vector2> GetVector2List(JToken token)
+        {
+            List<Vector2> list = new List<Vector2>();
+            foreach (JToken t in token)
+            {
+                float[] pos = t.ToObject<float[]>();
+                list.Add(new Vector2(pos[0], pos[1]));
+            }
+            return list;
+        }
+
+        public static List<int> GetIntList(JToken token)
+        {
+            List<int> list = new List<int>();
+            foreach (JToken t in token)
+            {
+                list.Add((int)t);
+            }
+            return list;
+        }
+        #endregion
     }
 
 
