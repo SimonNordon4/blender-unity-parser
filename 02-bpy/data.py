@@ -23,6 +23,18 @@ class UAssets:
         self.u_meshes = []
         self.u_materials = []
         self.u_textures = []
+        
+@dataclass
+class UMesh:
+    ''' Unity Mesh Representation https://docs.unity3d.com/ScriptReference/Mesh.html'''
+    def __init__(self):
+        self.u_name = ""
+        self.u_vertices = []
+        self.u_normals = []
+        # sub meshes.
+        self.u_submesh_count = 1
+        self.u_submesh_triangles = []
+        self.u_uvs = []
 
 #region Objects
   

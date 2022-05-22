@@ -7,20 +7,25 @@ def get_u_data():
     ''' Get the data from the Blender scene '''
     print("Getting Ublend Data")
     ublend_data = data.UData()
+    set_u_assets(ublend_data.u_assets)
     set_u_objects(ublend_data.u_objects)
     return ublend_data
 
 
-def set_u_assets():
+def set_u_assets(u_assets):
     ''' Not Implementd'''
-    return None
+    set_u_meshes(u_assets.u_meshes)
+
+def set_u_meshes(u_meshes):
+    for mesh in bpy.data.meshes:
+        u_mesh = MeshToUMesh.convert(mesh)
+        u_meshes.append(u_mesh)
 
 
-def set_u_objects(objects):
+def set_u_objects(u_objects):
     ''' Get All Blender Objects'''
-    print("Getting Objects")
     # Convert Scene Objects to GameObjects. Remeber that the class type is the key
-    set_u_gameobjects(objects.u_gameobjects)
+    set_u_gameobjects(u_objects.u_gameobjects)
 
 
 def set_u_gameobjects(u_gameobjects):
@@ -48,3 +53,84 @@ def set_u_meshfilter(u_components,obj):
     mesh_filter = data.UMeshFilter();
     mesh_filter.mesh_name = obj.data.name
     u_components.append(mesh_filter)
+
+class MeshToUMesh:
+    ''' Converts a Blender Mesh to a Json Mesh
+        It's the big boy mesh calc, be gentle with it'''
+    def __init__(self):
+        MeshToUMesh.self = self
+        
+    @staticmethod
+    def get_vertices_and_normals(mesh):
+        '''Does Stuff'''
+        vertices = []
+        normals = []
+        for loop in mesh.loops:
+            norm = [loop.normal.x, loop.normal.z, loop.normal.y]
+            # now we have to do a tricky by getting vertices multiple times to match the split normals.
+            v = (mesh.vertices[loop.vertex_index].co)
+            vert = [v.x, v.z, v.y]
+            vertices.append(vert)
+            normals.append(norm)
+        return vertices, normals
+
+    @staticmethod
+    def get_uvs(mesh):
+        ''' Return up to the first 8 uv maps'''
+        uv_maps = []
+        for uvlay in mesh.uv_layers:
+            uv_layer = []
+            for d in uvlay.data:
+                uv = [d.uv.x, d.uv.y]
+                uv_layer.append(uv)
+            uv_maps.append(uv_layer)
+        return uv_maps
+
+    @staticmethod
+    def get_submesh_triangles(mesh):
+        ''' Returns a list of submesh triangles for each material slot on the object. Materials returns the correct number of material slots, even if no material is defined.'''
+        mat_num = len(mesh.materials)
+        if mat_num >= 1:
+            triangles = []
+            for i in range(mat_num): # instantiate triangle lists
+                triangles.append([])
+            for tri in mesh.loop_triangles: # append triangles to respective material id (trianlges) lists.
+                triangles[tri.material_index].append(tri.loops[0])
+                triangles[tri.material_index].append(tri.loops[2])
+                triangles[tri.material_index].append(tri.loops[1])
+        else: # if there's no materials we don't have to worry about submeshes, but we still need to append a list of lists to ensure correct serialisation.
+            triangles = []
+            triangles.append([])
+            for tri in mesh.loop_triangles:
+                triangles[0].append(tri.loops[0])
+                triangles[0].append(tri.loops[2])
+                triangles[0].append(tri.loops[1])
+        submesh_triangles = []
+        for tris in triangles:
+            submesh_triangles.append(tris)
+        return submesh_triangles
+    
+    @staticmethod
+    def convert(mesh):
+        ''' Convert a Blender Mesh to a UMesh Class (Representation of Unity Mesh)'''
+        u_mesh = data.UMesh()
+        u_mesh.u_name = mesh.name
+
+        # TODO: apply modifiers and create virtual copy of the mesh.
+        b_mesh = mesh
+        b_mesh.calc_loop_triangles()
+        b_mesh.calc_normals_split()  # Split Normals are only accessible via loops (not verts)
+        
+        # VERTICES & NORMALS
+        u_mesh.u_vertices  , u_mesh.u_normals = MeshToUMesh.get_vertices_and_normals(b_mesh)
+
+        # SUBMESH TRIANGLES
+        # Get the submesh count, then use that to initialise the submesh_triangles list.
+        mat_num = len(b_mesh.materials)
+        u_mesh.u_submesh_count = mat_num if mat_num != 0 else 1
+        u_mesh.u_submesh_triangles = MeshToUMesh.get_submesh_triangles(b_mesh)
+
+        # UV MAPS
+        u_mesh.u_uvs = MeshToUMesh.get_uvs(b_mesh)
+        
+        return u_mesh
