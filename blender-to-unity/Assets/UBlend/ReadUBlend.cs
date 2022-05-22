@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace UBlend
 {
-    public class Ops
+    public class ReadUBlend
     {
         public const string k_type = "type";
         public const string name_space = "UBlend.";
