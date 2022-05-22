@@ -7,13 +7,4 @@ ScriptedImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  script: {fileID: 11500000, guid: fde7b89dfef2e3e48beaa99d8723f0ad, type: 3}
-  uBlend:
-    id: 
-    uGameObjects: []
-  trans:
-    id: 
-  test:
-  - id: 
-  - id: 
-  - id: 
+  script: {instanceID: 0}

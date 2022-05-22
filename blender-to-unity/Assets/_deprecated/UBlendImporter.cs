@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace BlenderToUnity
 {
-    [ScriptedImporter(1, "ublend")]
+    [ScriptedImporter(1, "ublend_deprecated")]
     public class UBlendImporter : ScriptedImporter
     {
         [ReadOnly]public UBlendData uBlend;

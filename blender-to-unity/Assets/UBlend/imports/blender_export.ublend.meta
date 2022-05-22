@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 423907afbff0c32478f9140947f805bf
+guid: a4b305932e3b06b4b96da6b742c3e5f0
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -7,7 +7,4 @@ ScriptedImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  script: {fileID: 11500000, guid: fde7b89dfef2e3e48beaa99d8723f0ad, type: 3}
-  uBlend:
-    uGameObjects: []
-    uMeshes: []
+  script: {fileID: 11500000, guid: 129238f7f15cc3f49b7d9e6a267e473b, type: 3}
