@@ -5,35 +5,35 @@ path.append('C:\\Users\\61426\\AppData\\Local\\Programs\\Python\\Python310\\lib\
 import orjson
 
 @dataclass
-class Data:
+class UData:
     ''' Data Conainer for entire UBlend file.
         Abstract Class for storing assets, objects and settings - these are implictly inferred in c#'''
     def __init__(self):
-        self.assets = Assets()
-        self.objects = Objects()
-        self.settings = Settings()
+        self.u_assets = UAssets()
+        self.u_objects = UObjects()
+        self.u_settings = USettings()
     def tojson(self):
         ''' Convert the entire file into Json'''
         return orjson.dumps(self).decode("utf-8")
       
 @dataclass
-class Assets:
+class UAssets:
     ''' Class for stroing all Asset Types'''
     def __init__(self):
-        self.meshes = []
-        self.materials = []
-        self.textures = []
+        self.u_meshes = []
+        self.u_materials = []
+        self.u_textures = []
 
 #region Objects
   
 @dataclass
-class Objects:
+class UObjects:
     ''' Unity GameObject Representation'''
     def __init__(self):
-        self.gameobjects = {GameObject.__name__ : []}
+        self.u_gameobjects = {UGameObject.__name__ : []}
 
 @dataclass
-class GameObject:
+class UGameObject:
     ''' Unity GameObject Representation'''
     def __init__(self):
         self.type = type(self).__name__
@@ -43,7 +43,7 @@ class GameObject:
 #endregion
 
 @dataclass
-class Settings:
+class USettings:
     ''' Ublend File Settings'''
     def __init__(self):
         return None

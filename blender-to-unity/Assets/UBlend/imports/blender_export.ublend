@@ -1,1 +1,39 @@
-{"assets":{"meshes":[],"materials":[],"textures":[]},"objects":{"gameobjects":{"GameObject":[{"type":"GameObject","id":2854280894048,"name":"Cube"},{"type":"GameObject","id":2854281028000,"name":"Cylinder"},{"type":"GameObject","id":2854281026320,"name":"Sphere"},{"type":"GameObject","id":2854281025360,"name":"Suzanne"},{"type":"GameObject","id":2854281026752,"name":"Torus"}]}},"settings":{}}
+{
+    "u_assets": {
+        "u_meshes": [],
+        "u_materials": [],
+        "u_textures": []
+    },
+    "u_objects": {
+        "u_gameobjects": {
+            "UGameObject": [
+                {
+                    "type": "UGameObject",
+                    "id": 2854281029200,
+                    "name": "Cube"
+                },
+                {
+                    "type": "UGameObject",
+                    "id": 2854281349056,
+                    "name": "Cylinder"
+                },
+                {
+                    "type": "UGameObject",
+                    "id": 2854281363216,
+                    "name": "Sphere"
+                },
+                {
+                    "type": "UGameObject",
+                    "id": 2854281360720,
+                    "name": "Suzanne"
+                },
+                {
+                    "type": "UGameObject",
+                    "id": 2854281351552,
+                    "name": "Torus"
+                }
+            ]
+        }
+    },
+    "u_settings": {}
+}

@@ -9,9 +9,9 @@ namespace UBlend{
     [Serializable]
     public class Data 
     {
-        public Assets assets = new Assets();
-        public UObjects objects = new UObjects();
-        public Settings settings = new Settings();
+        public UAssets u_assets = new UAssets();
+        public UObjects u_objects = new UObjects();
+        public USettings u_settings = new USettings();
     }
 
     #region Asset Defintions
@@ -20,7 +20,7 @@ namespace UBlend{
     /// Container for UBlend Assets: Meshes, Materials, Textures
     /// </summary>
     [Serializable]
-    public class Assets
+    public class UAssets
     {
         public List<UMesh> u_meshes = new List<UMesh>();
         public List<UMaterial> u_materials = new List<UMaterial>();
@@ -75,7 +75,7 @@ namespace UBlend{
 
     #endregion
     [Serializable]
-    public class Settings
+    public class USettings
     {
 
     }
