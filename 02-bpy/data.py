@@ -39,7 +39,26 @@ class UGameObject:
         self.type = type(self).__name__
         self.id = id(self)
         self.name = ""
+        self.u_components = {UComponent.__name__ : []}
     
+@dataclass
+class UComponent:
+    ''' Unity MonoBehaviour Representation'''
+    def __init__(self):
+        self.type = type(self).__name__
+        self.id = id(self)
+        
+@dataclass
+class UTransform:
+    ''' Unity MonoBehaviour Representation'''
+    def __init__(self):
+        self.type = type(self).__name__
+        self.id = id(self)
+        self.position = [0,0,0]
+        self.rotation = [0,0,0]
+        self.scale = [1,1,1]
+        self.parent_id = None
+        
 #endregion
 
 @dataclass
