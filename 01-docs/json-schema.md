@@ -62,7 +62,12 @@ When it comes to C#, we'll be using a JObject (Dictionary) to deserialize the Js
 ```csharp
 
     jObject = JObject.Parse(uBlendFileContents);
-    // Todo show how to access keys value pairs using the property name itself
+    var data = new UBlendData();
 
+    // To access the objects token we use name of. The field name is the key.
+    data.u_objects = jObject[nameof(data.u_objects)]
+
+    // So the above line is the equivilant to
+    data.u_objects = jObject["u_objects"];
 
 ```
