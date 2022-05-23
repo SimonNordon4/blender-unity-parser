@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace UBlend
 {
-    public class ReadUBlend
+    public class UBlendJsonNet_JObject
     {
         public const string k_type = "type";
         public const string name_space = "UBlend.";
@@ -22,12 +22,13 @@ namespace UBlend
         }
 
         // Start digging down into the json object
-        public static Data GetUBlend(JObject json)
+        public static Data GetUBlend(string json)
         {
             Data data = new Data();
+            JObject jObject = GetJObject(json);
 
-            SetAssets(json[nameof(data.u_assets)], data.u_assets);
-            SetObjects(json[nameof(data.u_objects)], data.u_objects);
+            SetAssets(jObject[nameof(data.u_assets)], data.u_assets);
+            SetObjects(jObject[nameof(data.u_objects)], data.u_objects);
 
             return data;
         }

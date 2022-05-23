@@ -13,6 +13,10 @@ namespace UBlend
         private Material debugMat;
         [ReadOnly]public Data uBlendData;
 
+        public enum JSONSerializer { UNITY,JSON_NET, JSON_NET_OBJECT};
+        [SerializeField]
+        private JSONSerializer serializer = JSONSerializer.JSON_NET;
+
         private GameObject rootObject;
         private Dictionary<string,GameObject> GameObjectReference = new Dictionary<string,GameObject>();
         private Dictionary<string,Mesh> MeshReference = new Dictionary<string,Mesh>();
@@ -31,8 +35,20 @@ namespace UBlend
 
             var parseTime = System.Diagnostics.Stopwatch.StartNew();
             
-            // Convert to UBlendData.
-            uBlendData = ReadUBlend.GetUBlend(ReadUBlend.GetJObject(fileContent));
+            switch(serializer)
+            {
+                case JSONSerializer.UNITY:
+                    uBlendData = JsonUtility.FromJson<Data>(fileContent);
+                    break;
+                case JSONSerializer.JSON_NET:
+                    uBlendData = Newtonsoft.Json.JsonConvert.DeserializeObject<Data>(fileContent);
+                    break;
+                case JSONSerializer.JSON_NET_OBJECT:
+                    uBlendData = UBlendJsonNet_JObject.GetUBlend(fileContent);
+                    break;
+            }
+           
+            
 
             parseTime.Stop();
 
@@ -46,7 +62,7 @@ namespace UBlend
             AssetDatabase.Refresh();
 
             Debug.Log($"Read: {readTime.ElapsedMilliseconds}ms");
-            Debug.Log($"Parse: {parseTime.ElapsedMilliseconds}ms");
+            Debug.Log($"Parse: {parseTime.ElapsedMilliseconds}ms using {serializer}");
             Debug.Log($"Create: {createTime.ElapsedMilliseconds}ms");
         }
         public void CreateData(AssetImportContext ctx, Data uBlendData)
