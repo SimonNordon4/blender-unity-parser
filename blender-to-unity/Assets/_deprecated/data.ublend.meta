@@ -7,4 +7,18 @@ ScriptedImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  script: {instanceID: 0}
+  script: {fileID: 11500000, guid: 129238f7f15cc3f49b7d9e6a267e473b, type: 3}
+  uBlendData:
+    u_assets:
+      rid: 1000
+    u_objects:
+      u_gameobjects: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 1000
+      type: {class: UAssets, ns: UBlend, asm: Assembly-CSharp}
+      data:
+        u_meshes: []
+        u_materials: []
+        u_textures: []
