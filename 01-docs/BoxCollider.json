@@ -1,0 +1,20 @@
+{
+    "BoxCollider": {
+        "m_Material": {
+            "instanceID": 0
+        },
+        "m_IsTrigger": false,
+        "m_Enabled": true,
+        "serializedVersion": "2",
+        "m_Size": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "m_Center": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    }
+}

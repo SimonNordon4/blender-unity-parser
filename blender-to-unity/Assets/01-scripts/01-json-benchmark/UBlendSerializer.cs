@@ -2,24 +2,23 @@ using UnityEngine;
 using UnityEditor;
 using Sirenix.OdinInspector;
 using System;
-using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace UBlend
 {
     [ExecuteInEditMode]
-    public class GameObjectSerializer : MonoBehaviour
+    public class UBlendSerializer : MonoBehaviour
     {
-        public GameObject input_ublend;
+        public UBlend input_ublend;
         [ReadOnly]
-        public GameObject output_ublend;
+        public UBlend output_ublend;
         private string inputjson = "";
         private string outputjson = "";
 
         private string jsonFileName = "mesh";
 
 
-        [Button]
+
         private void SerialiseData(){
 
             var serializeData = Stopwatch.StartNew();
@@ -28,7 +27,7 @@ namespace UBlend
 
             print($"serialize time: {serializeData.ElapsedMilliseconds}");
         }
-        [Button]
+
         private void WriteData()
         {
             var writeData = Stopwatch.StartNew();
@@ -38,22 +37,19 @@ namespace UBlend
             writeData.Stop();
             print($"Write time: {writeData.ElapsedMilliseconds}");
         }
-        [Button]
+
         private void ReadData()
         {
             var readData = Stopwatch.StartNew();
-            outputjson = System.IO.File.ReadAllText(@$"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\01-json-benchmark\_jsondata\{jsonFileName}.json");
+            outputjson = System.IO.File.ReadAllText(@$"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\01-json-benchmark\_jsondata\ublend_new.json");
             readData.Stop();
             print($"Read time: {readData.ElapsedMilliseconds}");
         }
-        [Button]
+
         private void DeserialiseData()
         {
             var deserializeData = Stopwatch.StartNew();
-            GameObject data = new GameObject();
-            EditorJsonUtility.FromJsonOverwrite(outputjson, data);
-            output_ublend = data;
-
+            EditorJsonUtility.FromJsonOverwrite(outputjson, output_ublend);
 
             deserializeData.Stop();
 
@@ -61,20 +57,24 @@ namespace UBlend
         }
 
         [Button(ButtonSizes.Large)]
-        private void All()
+        private void SerializeDeserialize()
         {
             SerialiseData();
             WriteData();
             ReadData();
             DeserialiseData();
             AssetDatabase.Refresh();
-            TestOutputData();
-            AssetDatabase.Refresh();
         }
 
-        private void TestOutputData()
+        [Button(ButtonSizes.Large)]
+        private void SerializeDeserializeAgain()
         {
-            
+            input_ublend = output_ublend;
+            SerialiseData();
+            WriteData();
+            ReadData();
+            DeserialiseData();
+            AssetDatabase.Refresh();
         }
 
     }

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 1623917798}
   - component: {fileID: 1623917799}
   m_Layer: 0
-  m_Name: TestData
+  m_Name: SerializeUBlend
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,34 +168,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input_ublend:
-    u_assets:
-      rid: 2473878604974391319
-    u_objects:
-      u_gameobjects:
-      - name: Test
-        u_transform:
-          parent_name: 
-          position: {x: 0, y: 0, z: 0}
-          rotation: {x: 0, y: 0, z: 0}
-          scale: {x: 0, y: 0, z: 0}
-        u_components: []
+    u_meshes:
+    - name: TestMEsh
+      vertices: []
+      normals: []
+      uv: []
+      uv2: []
+      uv3: []
+      uv4: []
+      uv5: []
+      uv6: []
+      uv7: []
+      u_sub_meshes:
+      - triangles: 000000000000000000000000000000000000000000000000
+    u_gameobjects:
+    - name: MyObj1
+      u_transform:
+        parent_name: MyObj2
+        position: {x: 3, y: 12, z: 3}
+        rotation: {x: 0.03524537, y: 0.04328689, z: 0.007190683, w: 0.99841493}
+        scale: {x: 2, y: 3, z: 1}
+    - name: sdf
+      u_transform:
+        parent_name: sadfasdf
+        position: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0, w: 1}
+        scale: {x: 1, y: 1, z: 1}
   output_ublend:
-    u_assets:
-      rid: 2473878604974391318
-    u_objects:
-      u_gameobjects: []
-  references:
-    version: 2
-    RefIds:
-    - rid: 2473878604974391318
-      type: {class: UAssets, ns: UBlend, asm: Assembly-CSharp}
-      data:
-        u_meshes: []
-        u_materials: []
-        u_textures: []
-    - rid: 2473878604974391319
-      type: {class: UAssets, ns: UBlend, asm: Assembly-CSharp}
-      data:
-        u_meshes: []
-        u_materials: []
-        u_textures: []
+    u_meshes:
+    - name: TestMEsh
+      vertices: []
+      normals: []
+      uv: []
+      uv2: []
+      uv3: []
+      uv4: []
+      uv5: []
+      uv6: []
+      uv7: []
+      u_sub_meshes:
+      - triangles: 000000000000000000000000000000000000000000000000
+    u_gameobjects:
+    - name: MyObj1
+      u_transform:
+        parent_name: MyObj2
+        position: {x: 3, y: 12, z: 3}
+        rotation: {x: 0.03524537, y: 0.04328689, z: 0.007190683, w: 0.99841493}
+        scale: {x: 2, y: 3, z: 1}
+    - name: sdf
+      u_transform:
+        parent_name: sadfasdf
+        position: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0, w: 1}
+        scale: {x: 1, y: 1, z: 1}

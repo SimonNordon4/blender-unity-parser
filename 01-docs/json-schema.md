@@ -1,110 +1,83 @@
-# Naming Convention
+# WHO'S JASON? 24/05/2022 
 
-Before we talk through the JSON Component, let's go over naming. We should do our best to have consistent naming across python, json and c#. This means adopting snake_case for all fields, and camelCase for all classes. 
+Json Schema will fit to EditorJsonUtility.ToJson() formatting.
 
-    All UBlend Classes should be abbreviated with 'U'. (eg. UMesh)
+It's python's duty to ensure it can be deserialized by Unity without additional plugins. General rules for serialization:
 
-    All UBlend Objects Fields and Object Array Fields should be abbreviated with 'u_'. (eg. u_meshes)
+        Avoid [SerializedReference] as much as possible.
+        Avoid deeply nested references as much as possible.
 
-    Any string, number or boolean field can be left as is. This includes lists containting this type. (eg. u_mesh.name)
-
-Blender and Unity share many similarities. Example we could in theory have 3 mesh types: 
-
-    Blender.Mesh, UBlend.Mesh, Unity.Mesh
-
-This explicit naming will help avoid confusion.
-
-
-# Schema
-
-We will be using a verbose JSON schema in order to accurately transfer python data to c#.
-
-Json Already Supports the following data types:
-
-    - string
-    - number
-    - boolean
-    - null
-    - array
-
-and so these types can be inferred from the data. In the case of objects however, we will want more strict casting. As such, all object types must contain the Class Type as a property.
-
-```json 
-{
-    "type": "UGameObject",
-    "u_properties" : "etc..."
-}
-```
-
-Going further than that, we also want to be able to define the type of the property if it is an Object or array of Objects using a Dictionary with the type as the key.
+I've add some example of Serialized Unity Objects Below:
 
 ```json
 {
-    "type": "UGameObject",
-    "u_components" : {"UComponent":[]}
-}
-```
-To ensure correct serialisation, the python code will look like:
-
-```python
-    class Component():
-        def __init__(self):
-            self.type = type(self).__name__
-
-    class GameObject():
-        def __init__(self):
-            self.type = type(self).__name__
-            self.u_components = {Component.__name__: []}
-```
-
-When it comes to C#, we'll be using a JObject (Dictionary) to deserialize the Json ourselves. We achieve this by ensuring python - C# parity. For example, we can access a Json propert as follows:
-
-```csharp
-
-    jObject = JObject.Parse(uBlendFileContents);
-    var data = new UBlendData();
-
-    // To access the objects token we use name of. The field name is the key.
-    data.u_objects = jObject[nameof(data.u_objects)]
-
-    // So the above line is the equivilant to
-    data.u_objects = jObject["u_objects"];
-
-```
-
-## UPDATE 22/05/2022
-
-We need to make a change to the way components works, because a gameobject will (generally) only have a single component of a certain type. So Instead, we'll remove type as a class field, as well as removing type to lists (lists will be inferred from the types within them). 
-
-We'll then make the type the property key.
-
-I'm changing my mind. This should only be done on lists that are ambigous. 
-
-```json
-{
-    "type": "UGameObject",
-    "u_components" : {
-        "UComponent":[
-            {
-            "type" : "UTransform",
-            "parent_name" : ""
-            }
-        ]
+    "GameObject": {
+        "serializedVersion": "6",
+        "m_Layer": 0,
+        "m_Name": "Cube",
+        "m_TagString": "Untagged",
+        "m_Icon": {
+            "instanceID": 0
+        },
+        "m_NavMeshLayer": 0,
+        "m_StaticEditorFlags": 0,
+        "m_IsActive": true
     }
 }
 ```
 
-now becomes
+```json
+{
+    "BoxCollider": {
+        "m_Material": {
+            "instanceID": 0
+        },
+        "m_IsTrigger": false,
+        "m_Enabled": true,
+        "serializedVersion": "2",
+        "m_Size": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "m_Center": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    }
+}
+```
 
 ```json
 {
-    "type": "UGameObject",
-    "u_components" : [
-        {
-            "UTransform" : {
-                "parent_name" : ""
-            }
+    "Transform": {
+        "m_LocalRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "m_LocalPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "m_LocalScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "m_ConstrainProportionsScale": false,
+        "m_RootOrder": 0,
+        "m_LocalEulerAnglesHint": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
         }
-    ]
+    }
 }
 ```
+We don't want to deserialize directly into Unity Objects (good luck deserializing untyped image binaries). Instead will use UBlend as an intermediate that contains data we can easily convert over. 
+
+Getting JSON is easy, just serialize our intermediate UBlend Data type and ensure it's deserializable. Then just work in python to match the exact same format.
