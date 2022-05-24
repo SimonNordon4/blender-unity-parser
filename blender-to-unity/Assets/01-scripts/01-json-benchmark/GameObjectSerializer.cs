@@ -4,22 +4,15 @@ using Sirenix.OdinInspector;
 using System;
 using Newtonsoft.Json;
 using System.Diagnostics;
-using BlenderToUnity;
 
 namespace UBlend
 {
     [ExecuteInEditMode]
     public class GameObjectSerializer : MonoBehaviour
     {
-        // public GameObject input_go;
-        // public GameObject output_go;
-
-        // public Mesh input_mesh;
-        // public Mesh output_mesh;
-
-        public UBlend.Data input_ublend = new UBlend.Data();
+        public GameObject input_ublend;
         [ReadOnly]
-        public UBlend.Data output_ublend = new UBlend.Data();
+        public GameObject output_ublend;
         private string inputjson = "";
         private string outputjson = "";
 
@@ -57,7 +50,7 @@ namespace UBlend
         private void DeserialiseData()
         {
             var deserializeData = Stopwatch.StartNew();
-            Data data = new Data();
+            GameObject data = new GameObject();
             EditorJsonUtility.FromJsonOverwrite(outputjson, data);
             output_ublend = data;
 
@@ -81,7 +74,7 @@ namespace UBlend
 
         private void TestOutputData()
         {
-            UnityEngine.Debug.Log(output_ublend.u_objects.u_gameobjects[0].name);
+            
         }
 
     }
