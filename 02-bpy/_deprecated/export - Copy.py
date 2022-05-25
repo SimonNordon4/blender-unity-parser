@@ -1,14 +1,14 @@
-import ublend
 import importlib
 from sys import path
 import time
 path.append('E:\\repos\\blender-to-unity\\02-bpy')
+import ublend
 importlib.reload(ublend.ops)
 importlib.reload(ublend.data)
 
 FILE_NAME = "blender_export.ublend"
 UNITY_PROJECT = 'E:\\repos\\blender-to-unity\\blender-to-unity\\'
-UNITY_EXPORT = UNITY_PROJECT + 'Assets\\01-scripts\\ublend\\' + FILE_NAME
+UNITY_EXPORT = UNITY_PROJECT + 'Assets\\UBlend\\imports\\' + FILE_NAME
 
 
 class File():
@@ -18,7 +18,6 @@ class File():
         with open(filepath, 'w') as f:
             f.write(ublend_json)
         return
-
 
 start_time = time.time()
 ublenddata = ublend.ops.get_u_data()

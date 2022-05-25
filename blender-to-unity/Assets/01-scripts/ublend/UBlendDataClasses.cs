@@ -27,7 +27,7 @@ namespace UBlend
         public Vector2[] uv5 = new Vector2[0];
         public Vector2[] uv6 = new Vector2[0];
         public Vector2[] uv7 = new Vector2[0];
-        public USubMesh[] u_sub_meshes = new USubMesh[0];
+        public USubMesh[] submeshes = new USubMesh[0];
     }
 
     [Serializable]
@@ -47,12 +47,7 @@ namespace UBlend
         public int static_editor_flags = 0;
         public bool is_active = true;
 
-        public UTransform u_transform = new UTransform();
-    }
-
-    [Serializable]
-    public class UTransform
-    {
+        // Transform
         public string parent_name = string.Empty;
         public Vector3 position = Vector3.zero;
         public Quaternion rotation = Quaternion.identity;
