@@ -12,7 +12,7 @@ def get_u_data():
 def set_u_meshes(u_meshes):
     ''' Get all meshes from the Blender scene '''
     for mesh in bpy.data.meshes:
-        u_mesh = MeshToUMesh.convert(mesh)
+        u_mesh = MeshToUMesh.convert_new_vector3(mesh)
         u_meshes.append(u_mesh)
 
 
@@ -82,16 +82,18 @@ class MeshToUMesh:
         loops = mesh.loops
         len_loops = len(loops)
         u_mesh.vertices = u_mesh.normals = [data.Vector3()]*len_loops
+        mverts= mesh.vertices
         for i,loop in enumerate(loops):
             n = loop.normal
-            # now we have to do a tricky by getting vertices multiple times to match the split normals.
-            v = (mesh.vertices[loop.vertex_index].co)
-            u_mesh.vertices[i].x = v.x
-            u_mesh.vertices[i].y = v.y
-            u_mesh.vertices[i].z = v.z
             u_mesh.normals[i].x = n.x
             u_mesh.normals[i].y = n.y
             u_mesh.normals[i].z = n.z
+            # now we have to do a tricky by getting vertices multiple times to match the split normals.
+            v = (mverts[loop.vertex_index].co)
+            u_mesh.vertices[i].x = v.x
+            u_mesh.vertices[i].y = v.y
+            u_mesh.vertices[i].z = v.z
+
 
         # SUBMESH TRIANGLES
         # Get the submesh count, then use that to initialise the submesh_triangles list.

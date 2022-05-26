@@ -38,6 +38,6 @@ Serializer |Serialize | Write | Read | Deserialize |
 
 | Old_Vector3 | Old_List | New_Vector3 | New_List |
 |---|---|---|---|
-| 22.955 | 12.416 | 12.549s | 12.551s | 
+| 24.628s | 12.547 | 12.476s | 12.518s | 
 
 
