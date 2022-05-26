@@ -56,7 +56,7 @@ class MeshToUMesh:
             vert = data.Vector3(v.x,v.z,v.y)
             verts.append(vert)
             norms.append(norm)
-
+            
     @staticmethod
     def set_uvs(mesh,uv_maps):
         ''' Return up to the first 8 uv maps'''
