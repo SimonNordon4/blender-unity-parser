@@ -4,7 +4,6 @@ import bpy
 import bmesh
 import timeit
 import inspect
-
 from data import USubMesh
 path.append('E:\\repos\\blender-to-unity\\02-bpy')
 path.append('E:\\repos\\blender-to-unity\\02-bpy\\benchmarks')
@@ -59,8 +58,8 @@ mesh.calc_normals_split()
 u_mesh = ublend.data.UMesh()
 u_mesh.submeshes.append(ublend.data.USubMesh())
 
-
-benchmark(ops_bm.set_vertices_and_normals, mesh,u_mesh.vertices,u_mesh.normals)
+benchmark(ops_bm.set_vertices_and_normals, mesh,u_mesh.vertices,u_mesh.normals) #1.116
+benchmark(ops_bm.set_vn_iteration, mesh,u_mesh.vertices,u_mesh.normals) 
 benchmark(ops_bm.set_vertices_and_normals_list, mesh,u_mesh.vertices,u_mesh.normals)
 
 bpy.data.meshes.remove(mesh)
