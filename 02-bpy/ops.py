@@ -4,7 +4,6 @@ import data
 @staticmethod
 def get_u_data():
     ''' Get the data from the Blender scene '''
-    print("Getting Ublend Data")
     ublend = data.UData()
     set_u_meshes(ublend.u_meshes)
     return ublend
@@ -14,12 +13,6 @@ def set_u_meshes(u_meshes):
     for mesh in bpy.data.meshes:
         u_mesh = MeshToUMesh.convert(mesh)
         u_meshes.append(u_mesh)
-
-
-def set_u_objects(u_objects):
-    ''' Get All Blender Objects'''
-    # Convert Scene Objects to GameObjects. Remeber that the class type is the key
-    set_u_gameobjects(u_objects.u_gameobjects)
 
 
 def set_u_gameobjects(u_gameobjects):
@@ -78,7 +71,6 @@ class MeshToUMesh:
     def set_submeshes(loop_triangles,submeshes):
         ''' Set all relevent submeshes
         loop_triangles = b_mesh.loop_traingles, count = submeshcount, submeshes = submeshlist '''
-        print("Submesh Type: " + str(type(submeshes[0])))
         for tri in loop_triangles:
             submesh = submeshes[tri.material_index] # submesh is always related to the material index.
             submesh.triangles.append(tri.loops[0])
