@@ -28,10 +28,16 @@ Serializer |Serialize | Write | Read | Deserialize |
 
 ## Benchmark New set_vertices_and_normals method. (26/05/2022)
 
-1,572,866 vertices
+263,169 vertices
 
-| Old | New Float Only | New Vector3 |
-|---|---|---|
-| 18s! | 20.21087s | 20.28972s |
+| Old_Vector3 | Old_List | New_Vector3 | New_List |
+|---|---|---|---|
+| 22.955 | 12.416 | 12.549s | 12.551s | 
 
-Why did I even bother?!?!?!
+*with better variables assignment
+
+| Old_Vector3 | Old_List | New_Vector3 | New_List |
+|---|---|---|---|
+| 22.955 | 12.416 | 12.549s | 12.551s | 
+
+

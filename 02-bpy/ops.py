@@ -46,23 +46,6 @@ class MeshToUMesh:
     ''' Converts a Blender Mesh to a Json Mesh '''
     def __init__(self):
         MeshToUMesh.self = self
-        
-    @staticmethod
-    def set_vertices_and_normals(mesh,verts,norms):
-        '''Set verts and normals with Vector3'''
-        loops = mesh.loops
-        len_loops = len(loops)
-        verts = norms = [data.Vector3() for i in range(len_loops)]
-        for i,loop in enumerate(loops):
-            n = loop.normal
-            # now we have to do a tricky by getting vertices multiple times to match the split normals.
-            v = (mesh.vertices[loop.vertex_index].co)
-            verts[i].x = v.x
-            verts[i].y = v.y
-            verts[i].z = v.z
-            norms[i].x = n.x
-            norms[i].y = n.y
-            norms[i].z = n.z
             
     @staticmethod
     def set_uvs(mesh,uv_maps):
@@ -85,7 +68,7 @@ class MeshToUMesh:
             submesh.triangles.append(tri.loops[1])
        
     @staticmethod
-    def convert(mesh):
+    def convert_new_vector3(mesh):
         ''' Convert a Blender Mesh to a UMesh Class (Representation of Unity Mesh)'''
         u_mesh = data.UMesh()
         u_mesh.name = mesh.name
@@ -126,47 +109,9 @@ class MeshToUMesh:
 
         return u_mesh
     
-class MeshToUMesh2:
-    ''' Converts a Blender Mesh to a Json Mesh '''
-    def __init__(self):
-        MeshToUMesh.self = self
-        
+     
     @staticmethod
-    def set_vertices_and_normals(mesh,verts,norms):
-        '''Set verts and normals with Vector3'''
-        mverts = mesh.vertices
-        for loop in mesh.loops:
-            n = loop.normal
-            v = (mverts[loop.vertex_index].co)
-            verts.append(v.x)
-            verts.append(v.z)
-            verts.append(v.y)
-            norms.append(n.x)
-            norms.append(n.z)
-            norms.append(n.y)
-            
-    @staticmethod
-    def set_uvs(mesh,uv_maps):
-        ''' Return up to the first 8 uv maps'''
-        for uvlay in mesh.uv_layers:
-            uv_layer = []
-            for d in uvlay.data:
-                uv = [d.uv.x, d.uv.y]
-                uv_layer.append(uv)
-            uv_maps.append(uv_layer)
-
-    @staticmethod
-    def set_submeshes(loop_triangles,submeshes):
-        ''' Set all relevent submeshes
-        loop_triangles = b_mesh.loop_traingles, count = submeshcount, submeshes = submeshlist '''
-        for tri in loop_triangles:
-            submesh = submeshes[tri.material_index] # submesh is always related to the material index.
-            submesh.triangles.append(tri.loops[0])
-            submesh.triangles.append(tri.loops[2])
-            submesh.triangles.append(tri.loops[1])
-       
-    @staticmethod
-    def convert(mesh):
+    def convert_new_list(mesh):
         ''' Convert a Blender Mesh to a UMesh Class (Representation of Unity Mesh)'''
         u_mesh = data.UMesh()
         u_mesh.name = mesh.name
@@ -204,44 +149,8 @@ class MeshToUMesh2:
 
         return u_mesh
     
-class MeshToUMesh3:
-    ''' Converts a Blender Mesh to a Json Mesh '''
-    def __init__(self):
-        MeshToUMesh.self = self
-        
     @staticmethod
-    def set_vertices_and_normals(mesh,verts,norms):
-        '''Set verts and normals with Vector3'''
-        for loop in mesh.loops:
-            norm = data.Vector3(loop.normal.x, loop.normal.z, loop.normal.y)
-            v = (mesh.vertices[loop.vertex_index].co)
-            vert = data.Vector3(v.x,v.z,v.y)
-            verts.append(vert)
-            norms.append(norm)
-
-            
-    @staticmethod
-    def set_uvs(mesh,uv_maps):
-        ''' Return up to the first 8 uv maps'''
-        for uvlay in mesh.uv_layers:
-            uv_layer = []
-            for d in uvlay.data:
-                uv = [d.uv.x, d.uv.y]
-                uv_layer.append(uv)
-            uv_maps.append(uv_layer)
-
-    @staticmethod
-    def set_submeshes(loop_triangles,submeshes):
-        ''' Set all relevent submeshes
-        loop_triangles = b_mesh.loop_traingles, count = submeshcount, submeshes = submeshlist '''
-        for tri in loop_triangles:
-            submesh = submeshes[tri.material_index] # submesh is always related to the material index.
-            submesh.triangles.append(tri.loops[0])
-            submesh.triangles.append(tri.loops[2])
-            submesh.triangles.append(tri.loops[1])
-       
-    @staticmethod
-    def convert(mesh):
+    def convert_old_vector3(mesh):
         ''' Convert a Blender Mesh to a UMesh Class (Representation of Unity Mesh)'''
         u_mesh = data.UMesh()
         u_mesh.name = mesh.name
@@ -252,7 +161,12 @@ class MeshToUMesh3:
        
         # VERTICES & NORMALS
         # doing this in a functions doesn't work, probably because arrays are immutable but floats are not?
-        set_vertices_and_normals(mesh,u_mesh.vertices,u_mesh.normals)
+        for loop in mesh.loops:
+            norm = data.Vector3(loop.normal.x, loop.normal.z, loop.normal.y)
+            v = (mesh.vertices[loop.vertex_index].co)
+            vert = data.Vector3(v.x,v.z,v.y)
+            u_mesh.vertices.append(vert)
+            u_mesh.normals.append(norm)
 
         # SUBMESH TRIANGLES
         # Get the submesh count, then use that to initialise the submesh_triangles list.
@@ -269,3 +183,39 @@ class MeshToUMesh3:
         #MeshToUMesh.set_uvs(b_mesh,u_mesh.u_uvs)
 
         return u_mesh
+    
+    @staticmethod
+    def convert_old_list(mesh):
+        ''' Convert a Blender Mesh to a UMesh Class (Representation of Unity Mesh)'''
+        u_mesh = data.UMesh()
+        u_mesh.name = mesh.name
+
+        #fixme: apply modifiers and create virtual copy of the mesh.
+        mesh.calc_loop_triangles()
+        mesh.calc_normals_split()  # Split Normals are only accessible via loops (not verts)
+       
+        # VERTICES & NORMALS
+        # doing this in a functions doesn't work, probably because arrays are immutable but floats are not?
+        for loop in mesh.loops:
+            norm = [loop.normal.x, loop.normal.z, loop.normal.y]
+            v = (mesh.vertices[loop.vertex_index].co)
+            vert = [v.x,v.z,v.y]
+            u_mesh.vertices.append(vert)
+            u_mesh.normals.append(norm)
+
+        # SUBMESH TRIANGLES
+        # Get the submesh count, then use that to initialise the submesh_triangles list.
+        mat_num = len(mesh.materials)
+        if mat_num == 0:
+            mat_num = 1
+        for i in range(mat_num):
+            submesh = data.USubMesh()
+            u_mesh.submeshes.append(submesh)
+
+        MeshToUMesh.set_submeshes(mesh.loop_triangles, u_mesh.submeshes)
+        
+        # UV MAPS
+        #MeshToUMesh.set_uvs(b_mesh,u_mesh.u_uvs)
+
+        return u_mesh
+    

@@ -15,7 +15,7 @@ importlib.reload(ops_bm)
 
 # SPEED TESTS
 
-RUN_TIMES = 10000 # *8 vertices
+RUN_TIMES = 10 # *8 vertices
 
 def benchmark(func, *args):
     ''' Simpler way to benchmark a function, but very hacky hehe '''
@@ -42,7 +42,7 @@ def benchmark(func, *args):
             if i == len(names) - 1:
                 timeit_func += names[i] + ")"
     
-    print("Benchmarking " + func.__name__ +  ": " + str(timeit.timeit(timeit_func, number=RUN_TIMES,globals=globals())))
+    print("Benchmarking " +func.__name__ +   ": " + str(timeit.timeit(timeit_func, number=RUN_TIMES,globals=globals())))
 
 # Mesh ops.
 
@@ -62,11 +62,10 @@ u_mesh.submeshes.append(ublend.data.USubMesh())
 #benchmark(ops_bm.set_vertices_and_normals, mesh,u_mesh.vertices,u_mesh.normals) #1.116
 
 
-
-benchmark(ublend.ops.MeshToUMesh3.convert, bpy.data.meshes[0]) 
-benchmark(ublend.ops.MeshToUMesh2.convert, bpy.data.meshes[0]) 
-benchmark(ublend.ops.MeshToUMesh.convert, bpy.data.meshes[0]) 
-
+benchmark(ublend.ops.MeshToUMesh.convert_new_vector3, bpy.data.meshes[0]) 
+benchmark(ublend.ops.MeshToUMesh.convert_new_list, bpy.data.meshes[0]) 
+benchmark(ublend.ops.MeshToUMesh.convert_old_vector3, bpy.data.meshes[0]) 
+benchmark(ublend.ops.MeshToUMesh.convert_old_list, bpy.data.meshes[0]) 
 
 bpy.data.meshes.remove(mesh)
 
