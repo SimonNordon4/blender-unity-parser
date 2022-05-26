@@ -276,29 +276,37 @@ MonoBehaviour:
       uv5: []
       uv6: []
       uv7: []
-      u_sub_meshes:
-      - triangles: 000000000000000000000000000000000000000000000000
+      submeshes: []
+    - name: dasfsadf
+      vertices: []
+      normals: []
+      uv: []
+      uv2: []
+      uv3: []
+      uv4: []
+      uv5: []
+      uv6: []
+      uv7: []
+      submeshes: []
     u_gameobjects:
     - name: MyObj1
       layer: 0
       tag_string: 
       static_editor_flags: 0
       is_active: 1
-      u_transform:
-        parent_name: MyObj2
-        position: {x: 3, y: 12, z: 3}
-        rotation: {x: 0.03524537, y: 0.04328689, z: 0.007190683, w: 0.99841493}
-        scale: {x: 2, y: 3, z: 1}
+      parent_name: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     - name: sdf
       layer: 0
       tag_string: 
       static_editor_flags: 0
       is_active: 1
-      u_transform:
-        parent_name: sadfasdf
-        position: {x: 0, y: 0, z: 0}
-        rotation: {x: 0, y: 0, z: 0, w: 1}
-        scale: {x: 1, y: 1, z: 1}
+      parent_name: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
   output_ublend:
     u_meshes:
     - name: TestMEsh
@@ -311,29 +319,37 @@ MonoBehaviour:
       uv5: []
       uv6: []
       uv7: []
-      u_sub_meshes:
-      - triangles: 000000000000000000000000000000000000000000000000
+      submeshes: []
+    - name: dasfsadf
+      vertices: []
+      normals: []
+      uv: []
+      uv2: []
+      uv3: []
+      uv4: []
+      uv5: []
+      uv6: []
+      uv7: []
+      submeshes: []
     u_gameobjects:
     - name: MyObj1
       layer: 0
       tag_string: 
       static_editor_flags: 0
       is_active: 1
-      u_transform:
-        parent_name: MyObj2
-        position: {x: 3, y: 12, z: 3}
-        rotation: {x: 0.03524537, y: 0.04328689, z: 0.007190683, w: 0.99841493}
-        scale: {x: 2, y: 3, z: 1}
+      parent_name: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     - name: sdf
       layer: 0
       tag_string: 
       static_editor_flags: 0
       is_active: 1
-      u_transform:
-        parent_name: sadfasdf
-        position: {x: 0, y: 0, z: 0}
-        rotation: {x: 0, y: 0, z: 0, w: 1}
-        scale: {x: 1, y: 1, z: 1}
+      parent_name: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
 --- !u!1 &1801861734
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,6 +360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1801861736}
   - component: {fileID: 1801861735}
+  - component: {fileID: 1801861737}
   m_Layer: 0
   m_Name: SerializeUnity
   m_TagString: Untagged
@@ -380,6 +397,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1801861737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801861734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb72f63a693e4a459dbb493ab49818f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2063384611
 GameObject:
   m_ObjectHideFlags: 0

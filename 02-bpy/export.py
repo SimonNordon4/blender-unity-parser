@@ -22,4 +22,5 @@ class File():
 
 ublenddata = ublend.ops.get_u_data()
 json = ublenddata.tojson()
+print(json)
 File.save_to_unity(UNITY_EXPORT, ublenddata.tojson())

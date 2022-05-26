@@ -18,6 +18,7 @@ namespace UBlend
     public class UMesh
     {
         public string name = string.Empty;
+        // for serialisation purposes, make Vector3 a list of floats 3 times in length.
         public Vector3[] vertices = new Vector3[0];
         public Vector3[] normals = new Vector3[0];
         public Vector2[] uv = new Vector2[0];
@@ -58,5 +59,11 @@ namespace UBlend
     public class UComponents
     {
         public string u_gameobject_name = string.Empty;
+    }
+
+    [Serializable]
+    public class Vec3
+    {
+        public float[] vec3 = new float[3];
     }
 }

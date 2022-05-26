@@ -25,3 +25,13 @@ Serializer |Serialize | Write | Read | Deserialize |
 |Create |Serialize |Write | Read | Deserialize |
 |---|---|---|---|---|
 | 0.613 | 0.055s | 0.068s | 0.046 | 0.240 |
+
+## Benchmark New set_vertices_and_normals method. (26/05/2022)
+
+1,572,866 vertices
+
+| Old | New Float Only | New Vector3 |
+|---|---|---|
+| 18s! | 20.21087s | 20.28972s |
+
+Why did I even bother?!?!?!
