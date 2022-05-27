@@ -60,10 +60,4 @@ namespace UBlend
     {
         public string u_gameobject_name = string.Empty;
     }
-
-    [Serializable]
-    public class Vec3
-    {
-        public float[] vec3 = new float[3];
-    }
 }
