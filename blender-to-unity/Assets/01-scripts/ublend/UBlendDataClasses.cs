@@ -5,8 +5,8 @@ using System;
 
 namespace UBlend
 {
-    public enum ShaderType {Standard = 0, Unlit = 1};
-    public enum RenderType {Opaque = 0, Transparent = 1};
+    public enum ShaderType {LIT = 0, UNLIT = 1};
+    public enum RenderType {OPAQUE = 0, TRANSPARENT = 1};
 
 
     [Serializable]
@@ -50,8 +50,8 @@ namespace UBlend
     public class UMaterial
     {
         public string name = string.Empty; 
-        public string shader = ShaderType.Standard.ToString();
-        public string rendertype = RenderType.Opaque.ToString();
+        public string shader = ShaderType.LIT.ToString();
+        public string rendertype = RenderType.OPAQUE.ToString();
         public Color base_color = Color.white;
         public float roughness = 1.0f;
         public float metallic = 0.0f;
@@ -76,6 +76,7 @@ namespace UBlend
 
         // Mesh
         public string mesh_name = string.Empty;
+        public string[] material_names = new string[0];
     }
 
     [Serializable]

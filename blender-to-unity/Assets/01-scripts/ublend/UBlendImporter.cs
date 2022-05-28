@@ -19,7 +19,10 @@ namespace UBlend
         public UBlend m_uBlend;
 
         private Dictionary<string, Mesh> _meshIdMap = new Dictionary<string, Mesh>();
+        private Dictionary<string, Material> _materialIdMap = new Dictionary<string, Material>();
         private Dictionary<string, GameObject> _gameobjectIdMap = new Dictionary<string, GameObject>();
+
+        
 
         public override void OnImportAsset(AssetImportContext ctx)
         {
@@ -106,7 +109,7 @@ namespace UBlend
             {
                 Material material = null;
                 Log($"SHADER TYPE {Enum.Parse<ShaderType>(u_mat.shader)}");
-                if(Enum.Parse<ShaderType>(u_mat.shader) == ShaderType.Standard)
+                if(Enum.Parse<ShaderType>(u_mat.shader) == ShaderType.LIT)
                 {
                     material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
                     material.name = u_mat.name;
@@ -118,6 +121,8 @@ namespace UBlend
                 }
 
                 if (material == null) return;
+                
+                _materialIdMap.Add(u_mat.name, material);
                 ctx.AddObjectToAsset(u_mat.name, material);
             }
 
@@ -136,9 +141,17 @@ namespace UBlend
                 go.transform.rotation = Quaternion.Euler(u_go.rotation * Mathf.Rad2Deg);
                 go.transform.localScale = u_go.scale;
                 var mf = go.AddComponent<MeshFilter>();
-                var mr = go.AddComponent<MeshRenderer>();
-                mr.sharedMaterial = debugMaterial;
                 mf.sharedMesh = _meshIdMap[u_go.mesh_name];
+                var mr = go.AddComponent<MeshRenderer>();
+
+                Material[] goMats = new Material[u_go.material_names.Length];
+                for (int i = 0; i < goMats.Length; i++)
+                {   
+                    var mat = _materialIdMap[u_go.material_names[i]];
+                    goMats[i] = mat;
+                }
+                
+                mr.sharedMaterials = goMats;
 
                 _gameobjectIdMap.Add(u_go.name, go);
                 ctx.AddObjectToAsset(u_go.name, go);

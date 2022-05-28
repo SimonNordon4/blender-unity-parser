@@ -1,9 +1,9 @@
-import ublend
 import importlib
 from sys import path
 import timeit
 import time
 path.append('E:\\repos\\blender-to-unity\\02-bpy')
+import ublend
 importlib.reload(ublend)
 importlib.reload(ublend.ops)
 importlib.reload(ublend.data)
@@ -13,8 +13,9 @@ FILE_NAME = "blender_export.ublend"
 UNITY_PROJECT = 'E:\\repos\\blender-to-unity\\blender-to-unity\\'
 UNITY_EXPORT = UNITY_PROJECT + 'Assets\\01-scripts\\ublend\\' + FILE_NAME
 
-#settings
+# settings
 ublend.settings.set_axis_up_y(False)
+
 
 class File():
     @staticmethod
