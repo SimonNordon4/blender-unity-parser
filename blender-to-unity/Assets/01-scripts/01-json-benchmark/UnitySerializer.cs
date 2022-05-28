@@ -16,9 +16,13 @@ namespace UBlend
         private string outputjson = "";
 
         private string fileName = "object";
+        [ReadOnly]
+        public string savePath = @$"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\01-json-benchmark\_jsondata\";
 
-
-
+        [Button]
+        public void SetSavePath(){
+            savePath = EditorUtility.OpenFolderPanel("Select folder to save", "", "");
+        }
 
         private void SerialiseData(){
 
@@ -33,8 +37,8 @@ namespace UBlend
         {
             var writeData = Stopwatch.StartNew();
             
-            System.IO.File.WriteAllText(@$"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\01-json-benchmark\_jsondata\" + fileName+".json", inputjson);
-            UnityEngine.Debug.Log(@$"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\01-json-benchmark\_jsondata\" + fileName +".json");
+            System.IO.File.WriteAllText(savePath + fileName+".json", inputjson);
+            UnityEngine.Debug.Log(savePath + fileName +".json");
             writeData.Stop();
             print($"Write time: {writeData.ElapsedMilliseconds}");
         }
@@ -42,7 +46,7 @@ namespace UBlend
         private void ReadData()
         {
             var readData = Stopwatch.StartNew();
-            outputjson = System.IO.File.ReadAllText(@$"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\01-json-benchmark\_jsondata\unity_new.json");
+            outputjson = System.IO.File.ReadAllText(savePath + "unity_new.json");
             readData.Stop();
             print($"Read time: {readData.ElapsedMilliseconds}");
         }
@@ -60,13 +64,13 @@ namespace UBlend
         [Button(ButtonSizes.Large)]
         private void Serialize()
         {
-            fileName = (input_unity.GetType().Name);
+            fileName = $"{(input_unity.GetType().Name)}_{input_unity.name}";
             SerialiseData();
             WriteData();
             AssetDatabase.Refresh();
         }
 
-        [Button(ButtonSizes.Large)]
+
         private void SerializeDeserialize()
         {
             SerialiseData();
@@ -76,7 +80,7 @@ namespace UBlend
             AssetDatabase.Refresh();
         }
 
-        [Button(ButtonSizes.Large)]
+
         private void SerializeDeserializeAgain()
         {
             input_unity = output_unity;

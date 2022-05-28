@@ -50,64 +50,66 @@ class MeshToUMesh:
     @staticmethod
     def set_uvs(mesh,u_mesh):
         ''' Return up to the first 8 uv maps'''
-        layer_uv = mesh.uv_layers[0]
-        if layer_uv:
+        uv_layers_length = len(mesh.uv_layers)
+        if uv_layers_length > 0:
+            layer_uv = mesh.uv_layers[0]
             u_mesh.uv = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv[j]
                 _uv = _data.uv
                 vec2.x = _uv.x
                 vec2.y = _uv.y
-        layer_uv = mesh.uv_layers[1]
-        if layer_uv:
+        
+        if uv_layers_length > 1:
+            layer_uv = mesh.uv_layers[1]
             u_mesh.uv2 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv2[j]
                 _uv = _data.uv
                 vec2.x = _uv.x
                 vec2.y = _uv.y
-        layer_uv = mesh.uv_layers[2]
-        if layer_uv:
+        if uv_layers_length > 2:
+            layer_uv = mesh.uv_layers[2]
             u_mesh.uv3 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv3[j]
                 _uv = _data.uv
                 vec2.x = _uv.x
                 vec2.y = _uv.y
-        layer_uv = mesh.uv_layers[3]
-        if layer_uv:
+        if uv_layers_length > 3:
+            layer_uv = mesh.uv_layers[3]
             u_mesh.uv4 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv4[j]
                 _uv = _data.uv
                 vec2.x = _uv.x
                 vec2.y = _uv.y
-        layer_uv = mesh.uv_layers[4]
-        if layer_uv:
+        if uv_layers_length > 4:
+            layer_uv = mesh.uv_layers[4]
             u_mesh.uv5 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv5[j]
                 _uv = _data.uv
                 vec2.x = _uv.x
                 vec2.y = _uv.y
-        layer_uv = mesh.uv_layers[5]
-        if layer_uv:
+        if uv_layers_length > 5:
+            layer_uv = mesh.uv_layers[5]
             u_mesh.uv6 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv6[j]
                 _uv = _data.uv
                 vec2.x = _uv.x
                 vec2.y = _uv.y
-        layer_uv = mesh.uv_layers[6]
-        if layer_uv:
+        if uv_layers_length > 6:
+            layer_uv = mesh.uv_layers[6]
             u_mesh.uv7 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv7[j]
                 _uv = _data.uv
                 vec2.x = _uv.x
                 vec2.y = _uv.y
-        layer_uv = mesh.uv_layers[7]
-        if layer_uv:
+        if uv_layers_length > 7:
+            layer_uv = mesh.uv_layers[7]
             u_mesh.uv8 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv8[j]
@@ -124,8 +126,7 @@ class MeshToUMesh:
 
     @staticmethod
     def set_submeshes(loop_triangles,submeshes):
-        ''' Set all relevent submeshes
-        loop_triangles = b_mesh.loop_traingles, count = submeshcount, submeshes = submeshlist '''
+        ''' Set all relevent submeshes '''
         for tri in loop_triangles:
             submesh = submeshes[tri.material_index] # submesh is always related to the material index.
             submesh.triangles.append(tri.loops[0])
@@ -146,19 +147,20 @@ class MeshToUMesh:
         # doing this in a functions doesn't work, probably because arrays are immutable but floats are not?
         loops = mesh.loops
         len_loops = len(loops)
-        u_mesh.vertices = u_mesh.normals = [data.Vector3()]*len_loops
+        u_mesh.normals = [data.Vector3() for i in range(len_loops)]
+        u_mesh.vertices = [data.Vector3() for i in range(len_loops)]
+        
         mverts= mesh.vertices
         for i,loop in enumerate(loops):
             n = loop.normal
             u_mesh.normals[i].x = n.x
-            u_mesh.normals[i].y = n.y
-            u_mesh.normals[i].z = n.z
+            u_mesh.normals[i].y = n.z
+            u_mesh.normals[i].z = n.y
             # now we have to do a tricky by getting vertices multiple times to match the split normals.
             v = (mverts[loop.vertex_index].co)
             u_mesh.vertices[i].x = v.x
-            u_mesh.vertices[i].y = v.y
-            u_mesh.vertices[i].z = v.z
-
+            u_mesh.vertices[i].y = v.z
+            u_mesh.vertices[i].z = v.y
 
         # SUBMESH TRIANGLES
         # Get the submesh count, then use that to initialise the submesh_triangles list.

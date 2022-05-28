@@ -2,6 +2,7 @@ import ublend
 import importlib
 from sys import path
 import timeit
+import time
 path.append('E:\\repos\\blender-to-unity\\02-bpy')
 importlib.reload(ublend.ops)
 importlib.reload(ublend.data)
@@ -20,6 +21,10 @@ class File():
         return
 
 
+startTime = time.time()
 ublenddata = ublend.ops.get_u_data()
+
 json = ublenddata.tojson()
 File.save_to_unity(UNITY_EXPORT, ublenddata.tojson())
+endTime = time.time()
+print("Export Completed in " + str(endTime - startTime) + " seconds")
