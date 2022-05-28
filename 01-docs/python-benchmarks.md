@@ -40,4 +40,13 @@ Serializer |Serialize | Write | Read | Deserialize |
 |---|---|---|---|
 | 24.628s | 12.547 | 12.476s | 12.518s | 
 
+## Benchmark New set_uvs method. (28/05/2022)
+
+Setting cube UV's 100,000 times
+
+| Old_set_uvs | New_set_uvs |
+|---|---|
+| 5.903s | 2.440s | 
+
+58.6% faster!
 

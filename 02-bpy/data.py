@@ -52,3 +52,10 @@ class Vector3:
         self.y = y
         self.z = z
         
+@dataclass
+class Vector2:
+    ''' Unity Vector '''
+    def __init__(self,x=0,y=0):
+        self.x = x
+        self.y = y
+        

@@ -37,3 +37,16 @@ class Vector3:
         self.x = x
         self.y = y
         self.z = z
+        
+class Vector2:
+    def __init__(self,x=0,y=0):
+        self.x = x
+        self.y = y
+        
+@staticmethod
+def set_uvs(mesh,u_mesh):
+    ''' Return up to the first 8 uv maps'''
+    if(mesh.uv_layers[0]):
+        u_mesh.uv = [Vector2]*len(mesh.uv_layers[0].data) #initialise Vector2 Array.
+        for i,d in enumerate(mesh.uv_layers[0].data):
+            u_mesh.d[i] = Vector2(d.uv[0],d.uv[1])

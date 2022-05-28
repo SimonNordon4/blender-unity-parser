@@ -12,7 +12,7 @@ def get_u_data():
 def set_u_meshes(u_meshes):
     ''' Get all meshes from the Blender scene '''
     for mesh in bpy.data.meshes:
-        u_mesh = MeshToUMesh.convert_new_vector3(mesh)
+        u_mesh = MeshToUMesh.convert(mesh)
         u_meshes.append(u_mesh)
 
 
@@ -48,14 +48,23 @@ class MeshToUMesh:
         MeshToUMesh.self = self
             
     @staticmethod
-    def set_uvs(mesh,uv_maps):
+    def set_uvs(mesh,u_mesh):
         ''' Return up to the first 8 uv maps'''
-        for uvlay in mesh.uv_layers:
-            uv_layer = []
-            for d in uvlay.data:
-                uv = [d.uv.x, d.uv.y]
-                uv_layer.append(uv)
-            uv_maps.append(uv_layer)
+        layer_uv = mesh.uv_layers[0]
+        if layer_uv:
+            u_mesh.uv = [data.Vector2]*len(layer_uv.data) #initialise Vector2 Array.
+            for j,_data in enumerate(layer_uv.data):
+                vec2 = u_mesh.uv[j]
+                _uv = _data.uv
+                vec2.x = _uv.x
+                vec2.y = _uv.y
+            
+    @staticmethod
+    def set_uvs_old(mesh,u_mesh):
+        ''' Return up to the first 8 uv maps'''
+        if(mesh.uv_layers[0]):
+            for d in mesh.uv_layers[0].data:
+                u_mesh.uv.append(data.Vector2(d.uv.x,d.uv.y))
 
     @staticmethod
     def set_submeshes(loop_triangles,submeshes):
@@ -68,7 +77,7 @@ class MeshToUMesh:
             submesh.triangles.append(tri.loops[1])
        
     @staticmethod
-    def convert_new_vector3(mesh):
+    def convert(mesh):
         ''' Convert a Blender Mesh to a UMesh Class (Representation of Unity Mesh)'''
         u_mesh = data.UMesh()
         u_mesh.name = mesh.name
@@ -107,117 +116,10 @@ class MeshToUMesh:
         MeshToUMesh.set_submeshes(mesh.loop_triangles, u_mesh.submeshes)
         
         # UV MAPS
-        #MeshToUMesh.set_uvs(b_mesh,u_mesh.u_uvs)
+        #MeshToUMesh.set_uvs(mesh,u_mesh)
+        
 
         return u_mesh
     
      
-    @staticmethod
-    def convert_new_list(mesh):
-        ''' Convert a Blender Mesh to a UMesh Class (Representation of Unity Mesh)'''
-        u_mesh = data.UMesh()
-        u_mesh.name = mesh.name
-
-        #fixme: apply modifiers and create virtual copy of the mesh.
-        mesh.calc_loop_triangles()
-        mesh.calc_normals_split()  # Split Normals are only accessible via loops (not verts)
-       
-        # VERTICES & NORMALS
-        # doing this in a functions doesn't work, probably because arrays are immutable but floats are not?
-        mverts = mesh.vertices
-        for loop in mesh.loops:
-            n = loop.normal
-            v = (mverts[loop.vertex_index].co)
-            u_mesh.vertices.append(v.x)
-            u_mesh.vertices.append(v.z)
-            u_mesh.vertices.append(v.y)
-            u_mesh.normals.append(n.x)
-            u_mesh.normals.append(n.z)
-            u_mesh.normals.append(n.y)
-
-        # SUBMESH TRIANGLES
-        # Get the submesh count, then use that to initialise the submesh_triangles list.
-        mat_num = len(mesh.materials)
-        if mat_num == 0:
-            mat_num = 1
-        for i in range(mat_num):
-            submesh = data.USubMesh()
-            u_mesh.submeshes.append(submesh)
-
-        MeshToUMesh.set_submeshes(mesh.loop_triangles, u_mesh.submeshes)
-        
-        # UV MAPS
-        #MeshToUMesh.set_uvs(b_mesh,u_mesh.u_uvs)
-
-        return u_mesh
-    
-    @staticmethod
-    def convert_old_vector3(mesh):
-        ''' Convert a Blender Mesh to a UMesh Class (Representation of Unity Mesh)'''
-        u_mesh = data.UMesh()
-        u_mesh.name = mesh.name
-
-        #fixme: apply modifiers and create virtual copy of the mesh.
-        mesh.calc_loop_triangles()
-        mesh.calc_normals_split()  # Split Normals are only accessible via loops (not verts)
-       
-        # VERTICES & NORMALS
-        # doing this in a functions doesn't work, probably because arrays are immutable but floats are not?
-        for loop in mesh.loops:
-            norm = data.Vector3(loop.normal.x, loop.normal.z, loop.normal.y)
-            v = (mesh.vertices[loop.vertex_index].co)
-            vert = data.Vector3(v.x,v.z,v.y)
-            u_mesh.vertices.append(vert)
-            u_mesh.normals.append(norm)
-
-        # SUBMESH TRIANGLES
-        # Get the submesh count, then use that to initialise the submesh_triangles list.
-        mat_num = len(mesh.materials)
-        if mat_num == 0:
-            mat_num = 1
-        for i in range(mat_num):
-            submesh = data.USubMesh()
-            u_mesh.submeshes.append(submesh)
-
-        MeshToUMesh.set_submeshes(mesh.loop_triangles, u_mesh.submeshes)
-        
-        # UV MAPS
-        #MeshToUMesh.set_uvs(b_mesh,u_mesh.u_uvs)
-
-        return u_mesh
-    
-    @staticmethod
-    def convert_old_list(mesh):
-        ''' Convert a Blender Mesh to a UMesh Class (Representation of Unity Mesh)'''
-        u_mesh = data.UMesh()
-        u_mesh.name = mesh.name
-
-        #fixme: apply modifiers and create virtual copy of the mesh.
-        mesh.calc_loop_triangles()
-        mesh.calc_normals_split()  # Split Normals are only accessible via loops (not verts)
-       
-        # VERTICES & NORMALS
-        # doing this in a functions doesn't work, probably because arrays are immutable but floats are not?
-        for loop in mesh.loops:
-            norm = [loop.normal.x, loop.normal.z, loop.normal.y]
-            v = (mesh.vertices[loop.vertex_index].co)
-            vert = [v.x,v.z,v.y]
-            u_mesh.vertices.append(vert)
-            u_mesh.normals.append(norm)
-
-        # SUBMESH TRIANGLES
-        # Get the submesh count, then use that to initialise the submesh_triangles list.
-        mat_num = len(mesh.materials)
-        if mat_num == 0:
-            mat_num = 1
-        for i in range(mat_num):
-            submesh = data.USubMesh()
-            u_mesh.submeshes.append(submesh)
-
-        MeshToUMesh.set_submeshes(mesh.loop_triangles, u_mesh.submeshes)
-        
-        # UV MAPS
-        #MeshToUMesh.set_uvs(b_mesh,u_mesh.u_uvs)
-
-        return u_mesh
     
