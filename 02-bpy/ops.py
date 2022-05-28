@@ -7,6 +7,7 @@ def get_u_data():
     ''' Get the data from the Blender scene '''
     ublend = data.UData()
     set_u_meshes(ublend.u_meshes)
+    set_u_gameobjects(ublend.u_gameobjects)
     return ublend
 
 def set_u_meshes(u_meshes):
@@ -23,18 +24,18 @@ def set_u_gameobjects(u_gameobjects):
         if obj.type == "MESH":
             go = data.UGameObject()
             go.name = obj.name
-            set_u_transform(go.u_transform, obj)
-            set_u_meshfilter(go.u_components, obj)
+            go.parent_name = obj.parent.name if obj.parent else None
+            pos = obj.location
+            go.position = data.Vector3(pos.x, pos.z,pos.y)
+            rot = obj.rotation_euler
+            go.rotation = data.Vector3(rot.x, rot.y, rot.z)
+            scale = obj.scale
+            go.scale = data.Vector3(scale.x, scale.z, scale.y)
+            
+            go.mesh_name = obj.data.name # We can do this because we are only looking at meshes
             u_gameobjects.append(go)
 
 
-def set_u_transform(u_transform, obj):
-    ''' Get the transform component of a gameobject'''
-    u_transform.position = [obj.location.x, obj.location.z, obj.location.y]
-    u_transform.rotation = [obj.rotation_euler.x,
-                          obj.rotation_euler.z, obj.rotation_euler.y]
-    u_transform.scale = [obj.scale.x, obj.scale.z, obj.scale.y]
-    u_transform.parent_name = obj.parent.name if obj.parent else None
    
 def set_u_meshfilter(u_components,obj):
     ''' Get the Mesh Filter component of a gameobject '''

@@ -40,9 +40,23 @@ class USubMesh:
 
 @dataclass
 class UGameObject:
-    ''' Unity GameObject Representation'''
+    ''' Unity GameObject Representation
+    https://docs.unity3d.com/ScriptReference/GameObject.html
+    We also append the transform properties (every gameobject has a transfrom)
+    https://docs.unity3d.com/ScriptReference/Transform.html
+    We also append the MeshFilter and MeshRenderer props (we only look at Mesh Objects)
+    https://docs.unity3d.com/ScriptReference/MeshFilter.html '''
     def __init__(self):
         self.name = ""
+        
+        #Transform props
+        parent_name = ""
+        position = Vector3()
+        rotation = Quarternion()
+        scale = Vector3()
+        
+        #Mesh props
+        mesh_name = ""
 
 @dataclass
 class Vector3:
@@ -58,4 +72,12 @@ class Vector2:
     def __init__(self,x=0,y=0):
         self.x = x
         self.y = y
-        
+
+@dataclass
+class Quarternion:
+    ''' Unity Quarternion '''
+    def __init__(self,x,y,z,w):
+        self.x = x
+        self.y = y
+        self.z = z
+        self.w = w

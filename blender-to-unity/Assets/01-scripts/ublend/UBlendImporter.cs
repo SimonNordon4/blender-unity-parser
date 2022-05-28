@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.AssetImporters;
+using System;
 using System.IO;
 using Sirenix.OdinInspector;
 using System.Diagnostics;
@@ -12,10 +13,13 @@ namespace UBlend
     [ScriptedImporter(1, "ublend")]
     public class UBlendImporter : ScriptedImporter
     {
+        public Material debugMaterial;
+
         [ReadOnly]
         public UBlend m_uBlend;
 
         private Dictionary<string, Mesh> _meshIdMap = new Dictionary<string, Mesh>();
+        private Dictionary<string, GameObject> _gameobjectIdMap = new Dictionary<string, GameObject>();
 
         public override void OnImportAsset(AssetImportContext ctx)
         {
@@ -23,27 +27,37 @@ namespace UBlend
             var json = File.ReadAllText(ctx.assetPath);
             readTime.Stop();
 
-            var deserializeTime = Stopwatch.StartNew();
+            var parseTime = Stopwatch.StartNew();
             if (m_uBlend == null) m_uBlend = new UBlend();
+            parseTime.Stop();
+            var deserializeTime = Stopwatch.StartNew();
             EditorJsonUtility.FromJsonOverwrite(json, m_uBlend);
             deserializeTime.Stop();
+            
 
             UnityEngine.Debug.Log($"Read time: {readTime.ElapsedMilliseconds}ms");
+            UnityEngine.Debug.Log($"Parse time: {parseTime.ElapsedMilliseconds}ms");
             UnityEngine.Debug.Log($"Deserialize time: {deserializeTime.ElapsedMilliseconds}ms");
 
             var name = Path.GetFileNameWithoutExtension(ctx.assetPath);
-            var go = new GameObject(name);
-            ctx.AddObjectToAsset(name, go);
-            ctx.SetMainObject(go);
+            var rootGameObject = new GameObject(name);
+            ctx.AddObjectToAsset(name, rootGameObject);
+            ctx.SetMainObject(rootGameObject);
 
-            var meshTime = Stopwatch.StartNew();
+
             CreateMeshes(ctx, m_uBlend);
-            meshTime.Stop();
-            UnityEngine.Debug.Log($"Mesh time: {meshTime.ElapsedMilliseconds}ms");
+            CreateGameObjects(ctx, m_uBlend);
+            CreateHierachy(m_uBlend,rootGameObject.transform);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+
         }
 
         public void CreateMeshes(AssetImportContext ctx, UBlend ublend)
         {
+            var meshTime = Stopwatch.StartNew();
+
             foreach (var u_mesh in ublend.u_meshes)
             {
                 Mesh mesh = new Mesh();
@@ -53,7 +67,6 @@ namespace UBlend
                 mesh.SetNormals(u_mesh.normals);
 
                 //Add all possible uvs
-                Log(u_mesh.uv.Length);
                 if (u_mesh.uv.Length > 0)
                     mesh.SetUVs(0, u_mesh.uv);
                 if (u_mesh.uv2.Length > 0)
@@ -74,12 +87,54 @@ namespace UBlend
                 mesh.subMeshCount = u_mesh.submeshes.Length;
                 for (int i = 0; i <  mesh.subMeshCount; i++)
                 {
-                    Log(i);
                     mesh.SetTriangles(u_mesh.submeshes[i].triangles, i);
                 }
                 _meshIdMap.Add(u_mesh.name, mesh);
                 ctx.AddObjectToAsset(u_mesh.name, mesh);
             }
+
+            meshTime.Stop();
+            UnityEngine.Debug.Log($"    Mesh created in: {meshTime.ElapsedMilliseconds}ms");
+        }
+
+        public void CreateGameObjects(AssetImportContext ctx, UBlend uBlend)
+        {
+            var gameObjectTime = Stopwatch.StartNew();
+
+            foreach(UGameObject u_go in uBlend.u_gameobjects)
+            {
+                GameObject go = new GameObject(u_go.name);
+                go.transform.position = u_go.position;
+                go.transform.rotation = Quaternion.Euler(u_go.rotation * Mathf.Rad2Deg);
+                go.transform.localScale = u_go.scale;
+                var mf = go.AddComponent<MeshFilter>();
+                var mr = go.AddComponent<MeshRenderer>();
+                mr.sharedMaterial = debugMaterial;
+                mf.sharedMesh = _meshIdMap[u_go.mesh_name];
+
+                _gameobjectIdMap.Add(u_go.name, go);
+                ctx.AddObjectToAsset(u_go.name, go);
+            }
+
+            gameObjectTime.Stop();
+            UnityEngine.Debug.Log($"    GameObject created in: {gameObjectTime.ElapsedMilliseconds}ms");
+            
+        }
+
+        public void CreateHierachy(UBlend uBlend,Transform root)
+        {
+            var hierarchyTime = Stopwatch.StartNew();
+
+            foreach(UGameObject u_go in uBlend.u_gameobjects)
+            {
+                if(u_go.parent_name == string.Empty || u_go.parent_name == null)
+                    _gameobjectIdMap[u_go.name].transform.SetParent(root);
+                else
+                    _gameobjectIdMap[u_go.name].transform.SetParent(_gameobjectIdMap[u_go.parent_name].transform);
+            }
+
+            hierarchyTime.Stop();
+            UnityEngine.Debug.Log($"    Hierarchy created in: {hierarchyTime.ElapsedMilliseconds}ms");
         }
 
         private void Log(object obj)

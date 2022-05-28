@@ -52,8 +52,11 @@ namespace UBlend
         // Transform
         public string parent_name = string.Empty;
         public Vector3 position = Vector3.zero;
-        public Quaternion rotation = Quaternion.identity;
+        public Vector3 rotation = Vector3.zero;
         public Vector3 scale = Vector3.one;
+
+        // Mesh
+        public string mesh_name = string.Empty;
     }
 
     [Serializable]
