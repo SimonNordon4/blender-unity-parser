@@ -53,7 +53,7 @@ class MeshToUMesh:
         uv_layers_length = len(mesh.uv_layers)
         if uv_layers_length > 0:
             layer_uv = mesh.uv_layers[0]
-            u_mesh.uv = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            u_mesh.uv = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv[j]
                 _uv = _data.uv
@@ -62,7 +62,7 @@ class MeshToUMesh:
         
         if uv_layers_length > 1:
             layer_uv = mesh.uv_layers[1]
-            u_mesh.uv2 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            u_mesh.uv2 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv2[j]
                 _uv = _data.uv
@@ -70,7 +70,7 @@ class MeshToUMesh:
                 vec2.y = _uv.y
         if uv_layers_length > 2:
             layer_uv = mesh.uv_layers[2]
-            u_mesh.uv3 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            u_mesh.uv3 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv3[j]
                 _uv = _data.uv
@@ -78,7 +78,7 @@ class MeshToUMesh:
                 vec2.y = _uv.y
         if uv_layers_length > 3:
             layer_uv = mesh.uv_layers[3]
-            u_mesh.uv4 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            u_mesh.uv4 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv4[j]
                 _uv = _data.uv
@@ -86,7 +86,7 @@ class MeshToUMesh:
                 vec2.y = _uv.y
         if uv_layers_length > 4:
             layer_uv = mesh.uv_layers[4]
-            u_mesh.uv5 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            u_mesh.uv5 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv5[j]
                 _uv = _data.uv
@@ -94,7 +94,7 @@ class MeshToUMesh:
                 vec2.y = _uv.y
         if uv_layers_length > 5:
             layer_uv = mesh.uv_layers[5]
-            u_mesh.uv6 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            u_mesh.uv6 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv6[j]
                 _uv = _data.uv
@@ -102,7 +102,7 @@ class MeshToUMesh:
                 vec2.y = _uv.y
         if uv_layers_length > 6:
             layer_uv = mesh.uv_layers[6]
-            u_mesh.uv7 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            u_mesh.uv7 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv7[j]
                 _uv = _data.uv
@@ -110,7 +110,7 @@ class MeshToUMesh:
                 vec2.y = _uv.y
         if uv_layers_length > 7:
             layer_uv = mesh.uv_layers[7]
-            u_mesh.uv8 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            u_mesh.uv8 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv8[j]
                 _uv = _data.uv

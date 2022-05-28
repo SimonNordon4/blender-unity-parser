@@ -48,10 +48,12 @@ namespace UBlend
             {
                 Mesh mesh = new Mesh();
                 mesh.name = u_mesh.name;
+                //TODO: If more than 65k verts we need to int32
                 mesh.SetVertices(u_mesh.vertices);
                 mesh.SetNormals(u_mesh.normals);
 
                 //Add all possible uvs
+                Log(u_mesh.uv.Length);
                 if (u_mesh.uv.Length > 0)
                     mesh.SetUVs(0, u_mesh.uv);
                 if (u_mesh.uv2.Length > 0)
@@ -69,11 +71,12 @@ namespace UBlend
                 if (u_mesh.uv8.Length > 0)
                     mesh.SetUVs(7, u_mesh.uv8);
 
-                for (int i = 0; i < u_mesh.submeshes.Length; i++)
+                mesh.subMeshCount = u_mesh.submeshes.Length;
+                for (int i = 0; i <  mesh.subMeshCount; i++)
                 {
+                    Log(i);
                     mesh.SetTriangles(u_mesh.submeshes[i].triangles, i);
                 }
-
                 _meshIdMap.Add(u_mesh.name, mesh);
                 ctx.AddObjectToAsset(u_mesh.name, mesh);
             }
