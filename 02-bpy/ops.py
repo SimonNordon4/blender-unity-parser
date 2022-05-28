@@ -52,9 +52,65 @@ class MeshToUMesh:
         ''' Return up to the first 8 uv maps'''
         layer_uv = mesh.uv_layers[0]
         if layer_uv:
-            u_mesh.uv = [data.Vector2]*len(layer_uv.data) #initialise Vector2 Array.
+            u_mesh.uv = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv[j]
+                _uv = _data.uv
+                vec2.x = _uv.x
+                vec2.y = _uv.y
+        layer_uv = mesh.uv_layers[1]
+        if layer_uv:
+            u_mesh.uv2 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            for j,_data in enumerate(layer_uv.data):
+                vec2 = u_mesh.uv2[j]
+                _uv = _data.uv
+                vec2.x = _uv.x
+                vec2.y = _uv.y
+        layer_uv = mesh.uv_layers[2]
+        if layer_uv:
+            u_mesh.uv3 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            for j,_data in enumerate(layer_uv.data):
+                vec2 = u_mesh.uv3[j]
+                _uv = _data.uv
+                vec2.x = _uv.x
+                vec2.y = _uv.y
+        layer_uv = mesh.uv_layers[3]
+        if layer_uv:
+            u_mesh.uv4 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            for j,_data in enumerate(layer_uv.data):
+                vec2 = u_mesh.uv4[j]
+                _uv = _data.uv
+                vec2.x = _uv.x
+                vec2.y = _uv.y
+        layer_uv = mesh.uv_layers[4]
+        if layer_uv:
+            u_mesh.uv5 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            for j,_data in enumerate(layer_uv.data):
+                vec2 = u_mesh.uv5[j]
+                _uv = _data.uv
+                vec2.x = _uv.x
+                vec2.y = _uv.y
+        layer_uv = mesh.uv_layers[5]
+        if layer_uv:
+            u_mesh.uv6 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            for j,_data in enumerate(layer_uv.data):
+                vec2 = u_mesh.uv6[j]
+                _uv = _data.uv
+                vec2.x = _uv.x
+                vec2.y = _uv.y
+        layer_uv = mesh.uv_layers[6]
+        if layer_uv:
+            u_mesh.uv7 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            for j,_data in enumerate(layer_uv.data):
+                vec2 = u_mesh.uv7[j]
+                _uv = _data.uv
+                vec2.x = _uv.x
+                vec2.y = _uv.y
+        layer_uv = mesh.uv_layers[7]
+        if layer_uv:
+            u_mesh.uv8 = [data.Vector2()]*len(layer_uv.data) #initialise Vector2 Array.
+            for j,_data in enumerate(layer_uv.data):
+                vec2 = u_mesh.uv8[j]
                 _uv = _data.uv
                 vec2.x = _uv.x
                 vec2.y = _uv.y
@@ -116,7 +172,7 @@ class MeshToUMesh:
         MeshToUMesh.set_submeshes(mesh.loop_triangles, u_mesh.submeshes)
         
         # UV MAPS
-        #MeshToUMesh.set_uvs(mesh,u_mesh)
+        MeshToUMesh.set_uvs(mesh,u_mesh)
         
 
         return u_mesh

@@ -28,6 +28,7 @@ namespace UBlend
         public Vector2[] uv5 = new Vector2[0];
         public Vector2[] uv6 = new Vector2[0];
         public Vector2[] uv7 = new Vector2[0];
+        public Vector2[] uv8 = new Vector2[0];
         public USubMesh[] submeshes = new USubMesh[0];
     }
 
