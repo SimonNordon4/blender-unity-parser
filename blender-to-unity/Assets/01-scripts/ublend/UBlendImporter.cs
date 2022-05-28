@@ -46,6 +46,7 @@ namespace UBlend
 
 
             CreateMeshes(ctx, m_uBlend);
+            CreateMaterials(ctx, m_uBlend);
             CreateGameObjects(ctx, m_uBlend);
             CreateHierachy(m_uBlend,rootGameObject.transform);
             AssetDatabase.SaveAssets();
@@ -95,6 +96,33 @@ namespace UBlend
 
             meshTime.Stop();
             UnityEngine.Debug.Log($"    Mesh created in: {meshTime.ElapsedMilliseconds}ms");
+        }
+
+        public void CreateMaterials(AssetImportContext ctx, UBlend ublend)
+        {   
+            var materialTime = Stopwatch.StartNew();
+
+            foreach(UMaterial u_mat in ublend.u_materials)
+            {
+                Material material = null;
+                Log($"SHADER TYPE {Enum.Parse<ShaderType>(u_mat.shader)}");
+                if(Enum.Parse<ShaderType>(u_mat.shader) == ShaderType.Standard)
+                {
+                    material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+                    material.name = u_mat.name;
+                    material.SetFloat("_Surface", (float)Enum.Parse<RenderType>(u_mat.rendertype));
+                    material.SetColor("_BaseColor", u_mat.base_color);
+                    material.SetFloat("_Smoothness", (1.0f - u_mat.roughness));
+                    material.SetFloat("_Metallic", u_mat.metallic);
+                    material.SetColor("_EmissionColor", u_mat.emission_color);
+                }
+
+                if (material == null) return;
+                ctx.AddObjectToAsset(u_mat.name, material);
+            }
+
+            materialTime.Stop();
+            UnityEngine.Debug.Log($"    Materials created in: {materialTime.ElapsedMilliseconds}ms");
         }
 
         public void CreateGameObjects(AssetImportContext ctx, UBlend uBlend)

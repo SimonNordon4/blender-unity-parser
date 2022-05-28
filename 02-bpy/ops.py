@@ -37,10 +37,6 @@ def set_u_gameobjects(u_gameobjects):
                 go.position = data.Vector3(pos.x, pos.z,pos.y)
                 go.rotation = data.Vector3(rot.x*-1, rot.z*-1, rot.y*-1)
                 go.scale = data.Vector3(scale.x, scale.z, scale.y)
-            else:
-                go.position = data.Vector3(pos.x, pos.y,pos.z)
-                go.rotation = data.Vector3(rot.x*-1, rot.y*-1, rot.z*-1)
-                go.scale = data.Vector3(scale.x, scale.y, scale.z)
             
             #Set Mesh Filter
             go.mesh_name = obj.data.name # We can do this because we are only looking at meshes
@@ -138,12 +134,6 @@ class MeshToUMesh:
                 submesh.triangles.append(tri.loops[0])
                 submesh.triangles.append(tri.loops[2])
                 submesh.triangles.append(tri.loops[1])
-        else:
-            for tri in loop_triangles:
-                submesh = submeshes[tri.material_index]
-                submesh.triangles.append(tri.loops[0])
-                submesh.triangles.append(tri.loops[1])
-                submesh.triangles.append(tri.loops[2])
        
     @staticmethod
     def convert(mesh):
@@ -173,16 +163,7 @@ class MeshToUMesh:
                 u_mesh.vertices[i].x = v.x
                 u_mesh.vertices[i].y = v.z
                 u_mesh.vertices[i].z = v.y
-        else:
-            for i,loop in enumerate(loops):
-                n = loop.normal
-                u_mesh.normals[i].x = n.x
-                u_mesh.normals[i].y = n.y
-                u_mesh.normals[i].z = n.z
-                v = (mverts[loop.vertex_index].co)
-                u_mesh.vertices[i].x = v.x
-                u_mesh.vertices[i].y = v.y
-                u_mesh.vertices[i].z = v.z
+
 
         # SUBMESH TRIANGLES
         # Get the submesh count, then use that to initialise the submesh_triangles list.

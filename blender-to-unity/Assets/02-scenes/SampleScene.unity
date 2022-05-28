@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 1623917798}
   - component: {fileID: 1623917799}
   m_Layer: 0
-  m_Name: SerializeUBlend
+  m_Name: CreateUBlends
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,99 +238,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input_ublend:
-    u_meshes:
-    - name: TestMEsh
-      vertices: []
-      normals: []
-      uv: []
-      uv2: []
-      uv3: []
-      uv4: []
-      uv5: []
-      uv6: []
-      uv7: []
-      uv8: []
-      submeshes: []
-    - name: dasfsadf
-      vertices: []
-      normals: []
-      uv: []
-      uv2: []
-      uv3: []
-      uv4: []
-      uv5: []
-      uv6: []
-      uv7: []
-      uv8: []
-      submeshes: []
-    u_gameobjects:
-    - name: MyObj1
-      layer: 0
-      tag_string: 
-      static_editor_flags: 0
-      is_active: 1
-      parent_name: 
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      scale: {x: 1, y: 1, z: 1}
-      mesh_name: 
-    - name: sdf
-      layer: 0
-      tag_string: 
-      static_editor_flags: 0
-      is_active: 1
-      parent_name: 
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      scale: {x: 1, y: 1, z: 1}
-      mesh_name: 
+    u_meshes: []
+    u_materials:
+    - name: New_Mat
+      shader: Standard
+      rendertype: Transparent
+      base_color: {r: 1, g: 1, b: 1, a: 1}
+      roughness: 0
+      metallic: 0
+      emission_color: {r: 0, g: 0, b: 0, a: 1}
+    u_gameobjects: []
   output_ublend:
-    u_meshes:
-    - name: TestMEsh
-      vertices: []
-      normals: []
-      uv: []
-      uv2: []
-      uv3: []
-      uv4: []
-      uv5: []
-      uv6: []
-      uv7: []
-      uv8: []
-      submeshes: []
-    - name: dasfsadf
-      vertices: []
-      normals: []
-      uv: []
-      uv2: []
-      uv3: []
-      uv4: []
-      uv5: []
-      uv6: []
-      uv7: []
-      uv8: []
-      submeshes: []
-    u_gameobjects:
-    - name: MyObj1
-      layer: 0
-      tag_string: 
-      static_editor_flags: 0
-      is_active: 1
-      parent_name: 
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      scale: {x: 1, y: 1, z: 1}
-      mesh_name: 
-    - name: sdf
-      layer: 0
-      tag_string: 
-      static_editor_flags: 0
-      is_active: 1
-      parent_name: 
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      scale: {x: 1, y: 1, z: 1}
-      mesh_name: 
+    u_meshes: []
+    u_materials:
+    - name: 
+      shader: Standard
+      rendertype: 
+      base_color: {r: 1, g: 1, b: 1, a: 1}
+      roughness: 0
+      metallic: 0
+      emission_color: {r: 0, g: 0, b: 0, a: 1}
+    u_gameobjects: []
+  uBlendFileName: new
+  savePath: E:/repos/blender-to-unity/blender-to-unity/Assets/01-scripts/ublend\
 --- !u!1 &1801861734
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,8 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64af34353e41cce4ab77ca58424c8592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input_unity: {fileID: -5495902117074765545, guid: 104db1ccbf26ecd4fb31f84efe631fb7,
-    type: 3}
+  input_unity: {fileID: 2100000, guid: 52db805a155f47c47860a965a9bfbf20, type: 2}
   output_unity: {fileID: 0}
   savePath: E:/repos/blender-to-unity/blender-to-unity/Assets/01-scripts/ublend
 --- !u!4 &1801861736

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 019647ccbf3a1ee45ba41a788ece10ea
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: a6efadcf90afb834fb71ed7a0a2473bf, type: 3}
+  debugMaterial: {instanceID: 0}
+  uBlend:
+    u_meshes: []
+    u_materials:
+    - name: 
+      shader: Standard
+      rendertype: 
+      base_color: {r: 1, g: 1, b: 1, a: 1}
+      roughness: 0
+      metallic: 0
+      emission_color: {r: 0, g: 0, b: 0, a: 1}
+    u_gameobjects: []

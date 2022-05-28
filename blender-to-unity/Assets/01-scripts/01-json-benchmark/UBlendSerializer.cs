@@ -15,9 +15,16 @@ namespace UBlend
         private string inputjson = "";
         private string outputjson = "";
 
-        private string jsonFileName = "mesh";
+        public string uBlendFileName = "new";
 
+        [ReadOnly]
+        public string savePath = @$"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\01-json-benchmark\";
 
+        [Button]
+        public void SetPath()
+        {
+            savePath = EditorUtility.OpenFolderPanel("Select folder to save uBlend", savePath, "") + "\\";
+        }
 
         private void SerialiseData(){
 
@@ -32,8 +39,8 @@ namespace UBlend
         {
             var writeData = Stopwatch.StartNew();
             
-            System.IO.File.WriteAllText(@$"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\01-json-benchmark\_jsondata\ublend_new.json", inputjson);
-            UnityEngine.Debug.Log(@$"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\01-json-benchmark\_jsondata\ublend_new.json");
+            System.IO.File.WriteAllText(savePath + uBlendFileName + ".ublend", inputjson);
+            UnityEngine.Debug.Log(savePath + uBlendFileName + ".ublend");
             writeData.Stop();
             print($"Write time: {writeData.ElapsedMilliseconds}");
         }
@@ -57,25 +64,11 @@ namespace UBlend
         }
 
         [Button(ButtonSizes.Large)]
-        private void SerializeDeserialize()
+        private void CreateUBlend()
         {
             SerialiseData();
             WriteData();
-            ReadData();
-            DeserialiseData();
             AssetDatabase.Refresh();
         }
-
-        [Button(ButtonSizes.Large)]
-        private void SerializeDeserializeAgain()
-        {
-            input_ublend = output_ublend;
-            SerialiseData();
-            WriteData();
-            ReadData();
-            DeserialiseData();
-            AssetDatabase.Refresh();
-        }
-
     }
 }

@@ -5,10 +5,15 @@ using System;
 
 namespace UBlend
 {
+    public enum ShaderType {Standard = 0, Unlit = 1};
+    public enum RenderType {Opaque = 0, Transparent = 1};
+
+
     [Serializable]
     public class UBlend
     {
         public UMesh[] u_meshes = new UMesh[0];
+        public UMaterial[] u_materials = new UMaterial[0];
         public UGameObject[] u_gameobjects = new UGameObject[0];
     }
 
@@ -38,6 +43,20 @@ namespace UBlend
         public int[] triangles = new int[0];
     }
 
+    /// <summary>
+    /// packages -> URP
+    /// </summary>
+    [Serializable]
+    public class UMaterial
+    {
+        public string name = string.Empty; 
+        public string shader = ShaderType.Standard.ToString();
+        public string rendertype = RenderType.Opaque.ToString();
+        public Color base_color = Color.white;
+        public float roughness = 1.0f;
+        public float metallic = 0.0f;
+        public Color emission_color = Color.black;
+    }
     #endregion
 
     [Serializable]
