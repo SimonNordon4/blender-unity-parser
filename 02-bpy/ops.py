@@ -1,6 +1,7 @@
 import bpy
 from benchmarks.ops_bm import set_vertices_and_normals
 import data
+import settings
 
 @staticmethod
 def get_u_data():
@@ -22,16 +23,26 @@ def set_u_gameobjects(u_gameobjects):
         get_u_transform should be replaced with get_u_components at some point'''
     for obj in bpy.data.objects:
         if obj.type == "MESH":
+
             go = data.UGameObject()
             go.name = obj.name
+            
+            #Set Transform
+            #obj.rotation_mode = 'XYZ'
             go.parent_name = obj.parent.name if obj.parent else None
             pos = obj.location
-            go.position = data.Vector3(pos.x, pos.z,pos.y)
             rot = obj.rotation_euler
-            go.rotation = data.Vector3(rot.x, rot.y, rot.z)
             scale = obj.scale
-            go.scale = data.Vector3(scale.x, scale.z, scale.y)
+            if settings.AXIS_UP_Y:
+                go.position = data.Vector3(pos.x, pos.z,pos.y)
+                go.rotation = data.Vector3(rot.x*-1, rot.z*-1, rot.y*-1)
+                go.scale = data.Vector3(scale.x, scale.z, scale.y)
+            else:
+                go.position = data.Vector3(pos.x, pos.y,pos.z)
+                go.rotation = data.Vector3(rot.x*-1, rot.y*-1, rot.z*-1)
+                go.scale = data.Vector3(scale.x, scale.y, scale.z)
             
+            #Set Mesh Filter
             go.mesh_name = obj.data.name # We can do this because we are only looking at meshes
             u_gameobjects.append(go)
 
@@ -54,7 +65,7 @@ class MeshToUMesh:
         uv_layers_length = len(mesh.uv_layers)
         if uv_layers_length > 0:
             layer_uv = mesh.uv_layers[0]
-            u_mesh.uv = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
+            u_mesh.uv = [data.Vector2() for i in range(len(layer_uv.data))] 
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv[j]
                 _uv = _data.uv
@@ -63,7 +74,7 @@ class MeshToUMesh:
         
         if uv_layers_length > 1:
             layer_uv = mesh.uv_layers[1]
-            u_mesh.uv2 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
+            u_mesh.uv2 = [data.Vector2() for i in range(len(layer_uv.data))] 
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv2[j]
                 _uv = _data.uv
@@ -71,7 +82,7 @@ class MeshToUMesh:
                 vec2.y = _uv.y
         if uv_layers_length > 2:
             layer_uv = mesh.uv_layers[2]
-            u_mesh.uv3 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
+            u_mesh.uv3 = [data.Vector2() for i in range(len(layer_uv.data))]
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv3[j]
                 _uv = _data.uv
@@ -79,7 +90,7 @@ class MeshToUMesh:
                 vec2.y = _uv.y
         if uv_layers_length > 3:
             layer_uv = mesh.uv_layers[3]
-            u_mesh.uv4 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
+            u_mesh.uv4 = [data.Vector2() for i in range(len(layer_uv.data))] 
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv4[j]
                 _uv = _data.uv
@@ -87,7 +98,7 @@ class MeshToUMesh:
                 vec2.y = _uv.y
         if uv_layers_length > 4:
             layer_uv = mesh.uv_layers[4]
-            u_mesh.uv5 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
+            u_mesh.uv5 = [data.Vector2() for i in range(len(layer_uv.data))] 
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv5[j]
                 _uv = _data.uv
@@ -95,7 +106,7 @@ class MeshToUMesh:
                 vec2.y = _uv.y
         if uv_layers_length > 5:
             layer_uv = mesh.uv_layers[5]
-            u_mesh.uv6 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
+            u_mesh.uv6 = [data.Vector2() for i in range(len(layer_uv.data))] 
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv6[j]
                 _uv = _data.uv
@@ -103,7 +114,7 @@ class MeshToUMesh:
                 vec2.y = _uv.y
         if uv_layers_length > 6:
             layer_uv = mesh.uv_layers[6]
-            u_mesh.uv7 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
+            u_mesh.uv7 = [data.Vector2() for i in range(len(layer_uv.data))]
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv7[j]
                 _uv = _data.uv
@@ -111,7 +122,7 @@ class MeshToUMesh:
                 vec2.y = _uv.y
         if uv_layers_length > 7:
             layer_uv = mesh.uv_layers[7]
-            u_mesh.uv8 = [data.Vector2() for i in range(len(layer_uv.data))] #initialise Vector2 Array.
+            u_mesh.uv8 = [data.Vector2() for i in range(len(layer_uv.data))] 
             for j,_data in enumerate(layer_uv.data):
                 vec2 = u_mesh.uv8[j]
                 _uv = _data.uv
@@ -119,20 +130,20 @@ class MeshToUMesh:
                 vec2.y = _uv.y
             
     @staticmethod
-    def set_uvs_old(mesh,u_mesh):
-        ''' Return up to the first 8 uv maps'''
-        if(mesh.uv_layers[0]):
-            for d in mesh.uv_layers[0].data:
-                u_mesh.uv.append(data.Vector2(d.uv.x,d.uv.y))
-
-    @staticmethod
     def set_submeshes(loop_triangles,submeshes):
-        ''' Set all relevent submeshes '''
-        for tri in loop_triangles:
-            submesh = submeshes[tri.material_index] # submesh is always related to the material index.
-            submesh.triangles.append(tri.loops[0])
-            submesh.triangles.append(tri.loops[2])
-            submesh.triangles.append(tri.loops[1])
+        ''' Set all relevent submeshes. note that tri.material_index maps to the'''
+        if settings.AXIS_UP_Y:
+            for tri in loop_triangles:
+                submesh = submeshes[tri.material_index]
+                submesh.triangles.append(tri.loops[0])
+                submesh.triangles.append(tri.loops[2])
+                submesh.triangles.append(tri.loops[1])
+        else:
+            for tri in loop_triangles:
+                submesh = submeshes[tri.material_index]
+                submesh.triangles.append(tri.loops[0])
+                submesh.triangles.append(tri.loops[1])
+                submesh.triangles.append(tri.loops[2])
        
     @staticmethod
     def convert(mesh):
@@ -150,18 +161,28 @@ class MeshToUMesh:
         len_loops = len(loops)
         u_mesh.normals = [data.Vector3() for i in range(len_loops)]
         u_mesh.vertices = [data.Vector3() for i in range(len_loops)]
-        
         mverts= mesh.vertices
-        for i,loop in enumerate(loops):
-            n = loop.normal
-            u_mesh.normals[i].x = n.x
-            u_mesh.normals[i].y = n.z
-            u_mesh.normals[i].z = n.y
-            # now we have to do a tricky by getting vertices multiple times to match the split normals.
-            v = (mverts[loop.vertex_index].co)
-            u_mesh.vertices[i].x = v.x
-            u_mesh.vertices[i].y = v.z
-            u_mesh.vertices[i].z = v.y
+        
+        if settings.AXIS_UP_Y:
+            for i,loop in enumerate(loops):
+                n = loop.normal
+                u_mesh.normals[i].x = n.x
+                u_mesh.normals[i].y = n.z
+                u_mesh.normals[i].z = n.y
+                v = (mverts[loop.vertex_index].co)
+                u_mesh.vertices[i].x = v.x
+                u_mesh.vertices[i].y = v.z
+                u_mesh.vertices[i].z = v.y
+        else:
+            for i,loop in enumerate(loops):
+                n = loop.normal
+                u_mesh.normals[i].x = n.x
+                u_mesh.normals[i].y = n.y
+                u_mesh.normals[i].z = n.z
+                v = (mverts[loop.vertex_index].co)
+                u_mesh.vertices[i].x = v.x
+                u_mesh.vertices[i].y = v.y
+                u_mesh.vertices[i].z = v.z
 
         # SUBMESH TRIANGLES
         # Get the submesh count, then use that to initialise the submesh_triangles list.
