@@ -10,6 +10,7 @@ def get_u_data():
     ublend = data.UData()
     set_u_meshes(ublend.u_meshes)
     set_u_materials(ublend.u_materials)
+    set_u_texures(ublend.u_textures)
     set_u_gameobjects(ublend.u_gameobjects)
     return ublend
 
@@ -29,6 +30,13 @@ def set_u_materials(u_materials):
             u_material = MaterialToUMaterial.convert(material)
             u_materials.append(u_material)
 
+def set_u_texures(u_textures):
+    ''' Get All Textures in the scene '''
+    for image in bpy.data.images:
+        if image.file_format == 'PNG':
+            u_texture = ImageToUTexture2D.convert(image)
+            u_textures.append(u_texture)
+        
 
 def set_u_gameobjects(u_gameobjects):
     ''' Get All GameObjects
@@ -193,7 +201,6 @@ class MeshToUMesh:
 
         return u_mesh
 
-
 class MaterialToUMaterial:
     ''' Converts a Blender Material to a JSON Material '''
 
@@ -215,3 +222,15 @@ class MaterialToUMaterial:
         ec = bdsf.inputs[19].default_value
         u_material.emission_color = data.Color(ec[0], ec[1], ec[2], ec[3])
         return u_material
+
+class ImageToUTexture2D:
+    ''' Converts a Blender Material to a JSON Material '''
+    def __init__(self):
+        MaterialToUMaterial.self = self
+    @staticmethod
+    def convert(image):
+        u_texture2d = data.UTexture2D()
+        u_texture2d.name = image.name
+        u_texture2d.width = image.size[0]
+        u_texture2d.height = image.size[1]
+        u_texture2d.pixels = image.pixels

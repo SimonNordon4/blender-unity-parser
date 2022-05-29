@@ -21,6 +21,7 @@ class UData:
     def __init__ (self):
         self.u_meshes = []
         self.u_materials = []
+        self.u_textures = []
         self.u_gameobjects = []
     def tojson(self):
         return orjson.dumps(self).decode("utf-8")
@@ -59,6 +60,18 @@ class UMaterial:
         self.roughness = 1.0
         self.metallic = 0.0
         self.emission_color = Color()
+        
+@dataclass
+class UTexture2D:
+    ''' Data on Textures '''
+    def __init__(self):
+        self.name = ""
+        self.path = ""
+        self.width = 0
+        self.height = 0
+        self.pixels = []
+        self.foramt = ""
+        self.embedded_image_data = ""
 
 #region Objects
 
