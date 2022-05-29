@@ -37,7 +37,6 @@ def set_u_texures(u_textures):
             u_texture = ImageToUTexture2D.convert(image)
             u_textures.append(u_texture)
         
-
 def set_u_gameobjects(u_gameobjects):
     ''' Get All GameObjects
         get_u_transform should be replaced with get_u_components at some point'''
@@ -63,7 +62,6 @@ def set_u_gameobjects(u_gameobjects):
             # in blender mats are tied to meshes
             go.material_names = [mat.name for mat in obj.data.materials]
             u_gameobjects.append(go)
-
 
 def set_u_meshfilter(u_components, obj):
     ''' Get the Mesh Filter component of a gameobject '''
@@ -233,4 +231,5 @@ class ImageToUTexture2D:
         u_texture2d.name = image.name
         u_texture2d.width = image.size[0]
         u_texture2d.height = image.size[1]
-        u_texture2d.pixels = image.pixels
+        u_texture2d.pixels = [float(i) for i in image.pixels]
+        return u_texture2d
