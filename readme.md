@@ -31,7 +31,7 @@ You can export a GameObject from Blender to Unity, but Blender doesn't have Game
     }
 ```
 
-This could potentially get ugly as data lies across multiple classes. As an example, let's quickly go through Blend-File Data and possible Unity Equivilents.
+This could potentially get ugly as data lies across multiple classes. As an example, let's quickly go through Blend-File Data and possible Unity Equivalents.
 
 ```cs
         go.name = uo.name
@@ -191,7 +191,7 @@ Mesh:
 
 Materials:
 
-    Will Default to Standard or Lit for BDSF and similar. Unlit for Emission. We will then remap texture inputs to their Unity Equivilants.
+    Will Default to Standard or Lit for BDSF and similar. Unlit for Emission. We will then remap texture inputs to their Unity Equivalents.
 
 Textures:
 
