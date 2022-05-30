@@ -1,5 +1,8 @@
+import os
+import base64
+import zlib
+import struct
 import bpy
-from benchmarks.ops_bm import set_vertices_and_normals
 import data
 import settings
 
@@ -225,11 +228,25 @@ class ImageToUTexture2D:
     ''' Converts a Blender Material to a JSON Material '''
     def __init__(self):
         MaterialToUMaterial.self = self
+        
     @staticmethod
     def convert(image):
         u_texture2d = data.UTexture2D()
         u_texture2d.name = image.name
         u_texture2d.width = image.size[0]
         u_texture2d.height = image.size[1]
-        u_texture2d.pixels = [float(i) for i in image.pixels]
+
+        if settings.EMBED_TEXTURES:
+            save_path = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\01-scripts\\ublend\\' + image.name +  "." + image.file_format.lower()
+            print(save_path)
+            image.save_render(save_path)
+            with open(save_path, "rb") as image_file:
+                image64 = base64.b64encode(image_file.read())
+                u_texture2d.image64 = str(image64)
+            os.remove(save_path)
+            
+        else:
+            save_path = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\01-scripts\\ublend\\' + image.name + "." + image.file_format.lower()
+            image.save_render(save_path, scene= None)
+            u_texture2d.path = save_path
         return u_texture2d

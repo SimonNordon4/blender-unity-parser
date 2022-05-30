@@ -1,6 +1,5 @@
 import benchmarks.ops_bm as ops_bm
 import ublend
-from data import USubMesh
 import importlib
 from sys import path
 import bpy
@@ -15,7 +14,7 @@ importlib.reload(ops_bm)
 
 # SPEED TESTS
 
-RUN_TIMES = 10  # *8 vertices
+RUN_TIMES = 1  # *8 vertices
 
 
 def benchmark(func, *args):
@@ -50,8 +49,16 @@ def benchmark(func, *args):
 u_blend = ublend.data.UData()
 
 #benchmark(ublend.ops.MeshToUMesh.set_uvs, bpy.data.meshes[0],u_mesh)
-benchmark(ublend.ops.set_u_meshes, u_blend.u_meshes)
-benchmark(ublend.ops.set_u_materials, u_blend.u_materials)
-benchmark(ublend.ops.set_u_texures, u_blend.u_textures)
-benchmark(ublend.ops.set_u_gameobjects, u_blend.u_gameobjects)
+# benchmark(ublend.ops.set_u_meshes, u_blend.u_meshes)
+# benchmark(ublend.ops.set_u_materials, u_blend.u_materials)
+# benchmark(ublend.ops.set_u_texures, u_blend.u_textures)
+# benchmark(ublend.ops.set_u_gameobjects, u_blend.u_gameobjects)
 #benchmark(ublend.ops.MeshToUMesh.set_uvs_old, bpy.data.meshes[0],u_mesh)
+
+path = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\01-scripts\\ublend\\'
+image = bpy.data.images[0]
+
+benchmark(ops_bm.testjson,image, path,0) #save direct
+benchmark(ops_bm.testjson,image, path,1) #save and encode
+benchmark(ops_bm.testjson,image, path,2) #to pxiel
+benchmark(ops_bm.testjson,image, path,3) #to enxode in file

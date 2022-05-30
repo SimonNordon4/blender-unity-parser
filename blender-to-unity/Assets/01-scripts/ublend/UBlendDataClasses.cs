@@ -14,6 +14,7 @@ namespace UBlend
     {
         public UMesh[] u_meshes = new UMesh[0];
         public UMaterial[] u_materials = new UMaterial[0];
+        public UTexture2D[] u_textures = new UTexture2D[0];
         public UGameObject[] u_gameobjects = new UGameObject[0];
     }
 
@@ -58,6 +59,15 @@ namespace UBlend
         public Color emission_color = Color.black;
     }
     #endregion
+    [Serializable]
+    public class UTexture2D
+    {
+        public string name = string.Empty;
+        public int width = 0;
+        public int height = 0;
+        public string path = string.Empty;
+        public string image64 = string.Empty;
+    }
 
     [Serializable]
     public class UGameObject

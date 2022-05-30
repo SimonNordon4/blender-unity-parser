@@ -19,6 +19,7 @@ namespace UBlend
         public UBlend m_uBlend;
 
         private Dictionary<string, Mesh> _meshIdMap = new Dictionary<string, Mesh>();
+        private Dictionary<string, Texture2D> _textureIdMap = new Dictionary<string, Texture2D>();
         private Dictionary<string, Material> _materialIdMap = new Dictionary<string, Material>();
         private Dictionary<string, GameObject> _gameobjectIdMap = new Dictionary<string, GameObject>();
 
@@ -49,6 +50,7 @@ namespace UBlend
 
 
             CreateMeshes(ctx, m_uBlend);
+            CreateTextures(ctx, m_uBlend);
             CreateMaterials(ctx, m_uBlend);
             CreateGameObjects(ctx, m_uBlend);
             CreateHierachy(m_uBlend,rootGameObject.transform);
@@ -101,6 +103,23 @@ namespace UBlend
             UnityEngine.Debug.Log($"    Mesh created in: {meshTime.ElapsedMilliseconds}ms");
         }
 
+        public void CreateTextures(AssetImportContext ctx, UBlend ublend)
+        {
+            var textureTime = Stopwatch.StartNew();
+
+            foreach (var u_texture in ublend.u_textures)
+            {
+                string string64 = u_texture.image64.Remove(0, 2);
+                byte[] data = Convert.FromBase64String(u_texture.image64);
+                Texture2D texture = new Texture2D(1,1);
+                texture.LoadImage(data);
+                _textureIdMap.Add(u_texture.name, texture);
+                ctx.AddObjectToAsset(u_texture.name, texture);
+            }
+
+            textureTime.Stop();
+            UnityEngine.Debug.Log($"    Texture created in: {textureTime.ElapsedMilliseconds}ms");
+        }
         public void CreateMaterials(AssetImportContext ctx, UBlend ublend)
         {   
             var materialTime = Stopwatch.StartNew();

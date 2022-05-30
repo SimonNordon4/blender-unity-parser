@@ -69,9 +69,7 @@ class UTexture2D:
         self.path = ""
         self.width = 0
         self.height = 0
-        self.pixels = []
-        self.foramt = ""
-        self.embedded_image_data = ""
+        self.image64 = ""
 
 #region Objects
 
