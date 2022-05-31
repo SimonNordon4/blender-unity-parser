@@ -123,76 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &508351722
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -247323177039081133, guid: 22d542b3984e28843bb56ad8c1705935,
-        type: 3}
-      propertyPath: m_Name
-      value: blender_export (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5476529401124185201, guid: 22d542b3984e28843bb56ad8c1705935,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5476529401124185201, guid: 22d542b3984e28843bb56ad8c1705935,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5476529401124185201, guid: 22d542b3984e28843bb56ad8c1705935,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5476529401124185201, guid: 22d542b3984e28843bb56ad8c1705935,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5476529401124185201, guid: 22d542b3984e28843bb56ad8c1705935,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5476529401124185201, guid: 22d542b3984e28843bb56ad8c1705935,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5476529401124185201, guid: 22d542b3984e28843bb56ad8c1705935,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5476529401124185201, guid: 22d542b3984e28843bb56ad8c1705935,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5476529401124185201, guid: 22d542b3984e28843bb56ad8c1705935,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5476529401124185201, guid: 22d542b3984e28843bb56ad8c1705935,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5476529401124185201, guid: 22d542b3984e28843bb56ad8c1705935,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: -8708040055350989453, guid: 22d542b3984e28843bb56ad8c1705935,
-    type: 3}
 --- !u!1 &1623917796
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +153,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1623917799
 MonoBehaviour:
@@ -247,6 +177,7 @@ MonoBehaviour:
       roughness: 0
       metallic: 0
       emission_color: {r: 0, g: 0, b: 0, a: 1}
+    u_textures: []
     u_gameobjects: []
   output_ublend:
     u_meshes: []
@@ -258,6 +189,7 @@ MonoBehaviour:
       roughness: 0
       metallic: 0
       emission_color: {r: 0, g: 0, b: 0, a: 1}
+    u_textures: []
     u_gameobjects: []
   uBlendFileName: new
   savePath: E:/repos/blender-to-unity/blender-to-unity/Assets/01-scripts/ublend\
@@ -306,36 +238,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2123493600
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2123493601}
-  m_Layer: 0
-  m_Name: blender_export
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2123493601
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2123493600}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

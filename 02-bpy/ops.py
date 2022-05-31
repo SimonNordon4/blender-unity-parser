@@ -36,7 +36,7 @@ def set_u_materials(u_materials):
 def set_u_texures(u_textures):
     ''' Get All Textures in the scene '''
     for image in bpy.data.images:
-        if image.file_format == 'PNG':
+        if image.file_format in ['PNG','JPEG','BMP','JPEG 2000']:
             u_texture = ImageToUTexture2D.convert(image)
             u_textures.append(u_texture)
         
@@ -222,12 +222,21 @@ class MaterialToUMaterial:
         u_material.metallic = bdsf.inputs[6].default_value
         ec = bdsf.inputs[19].default_value
         u_material.emission_color = data.Color(ec[0], ec[1], ec[2], ec[3])
+        
+        # Now Check for texture inputs.
+        diffuse_input = bdsf.inputs[0].links[0].from_socket.node
+        # assume always image for now.
+        if diffuse_input is not None:
+            if diffuse_input is isinstance(diffuse_input, bpy.types.ShaderNodeTexImage):
+                u_material.diffuse_texture = diffuse_input.image.name
+                print(diffuse_input.image.name)
+        
         return u_material
 
 class ImageToUTexture2D:
     ''' Converts a Blender Material to a JSON Material '''
     def __init__(self):
-        MaterialToUMaterial.self = self
+        ImageToUTexture2D.self = self
         
     @staticmethod
     def convert(image):
@@ -238,11 +247,12 @@ class ImageToUTexture2D:
 
         if settings.EMBED_TEXTURES:
             save_path = 'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\01-scripts\\ublend\\' + image.name +  "." + image.file_format.lower()
-            print(save_path)
             image.save_render(save_path)
             with open(save_path, "rb") as image_file:
-                image64 = base64.b64encode(image_file.read())
-                u_texture2d.image64 = str(image64)
+                image_file_data = image_file.read()
+                image_file_encoded = base64.b64encode(image_file_data)
+                image_file_message = image_file_encoded.decode('utf-8')
+                u_texture2d.image64 = image_file_message
             os.remove(save_path)
             
         else:

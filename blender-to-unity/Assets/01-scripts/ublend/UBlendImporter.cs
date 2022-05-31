@@ -109,12 +109,14 @@ namespace UBlend
 
             foreach (var u_texture in ublend.u_textures)
             {
-                string string64 = u_texture.image64.Remove(0, 2);
+                UnityEngine.Debug.Log(u_texture.image64);
                 byte[] data = Convert.FromBase64String(u_texture.image64);
+                
                 Texture2D texture = new Texture2D(1,1);
                 texture.LoadImage(data);
                 _textureIdMap.Add(u_texture.name, texture);
-                ctx.AddObjectToAsset(u_texture.name, texture);
+                // We don't need to serialize it, just add it straigth to the material.
+                // ctx.AddObjectToAsset(u_texture.name, texture);
             }
 
             textureTime.Stop();
@@ -148,7 +150,6 @@ namespace UBlend
             materialTime.Stop();
             UnityEngine.Debug.Log($"    Materials created in: {materialTime.ElapsedMilliseconds}ms");
         }
-
         public void CreateGameObjects(AssetImportContext ctx, UBlend uBlend)
         {
             var gameObjectTime = Stopwatch.StartNew();

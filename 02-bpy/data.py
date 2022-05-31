@@ -61,6 +61,8 @@ class UMaterial:
         self.metallic = 0.0
         self.emission_color = Color()
         
+        self.diffuse_texture = ""
+        
 @dataclass
 class UTexture2D:
     ''' Data on Textures '''
@@ -70,6 +72,8 @@ class UTexture2D:
         self.width = 0
         self.height = 0
         self.image64 = ""
+        
+        # TODO add formatting (jpg, png etc)
 
 #region Objects
 
