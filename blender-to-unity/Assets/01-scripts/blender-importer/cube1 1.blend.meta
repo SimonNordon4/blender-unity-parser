@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 4842dfed5f2600840ae29245073f0eb0
-importerOverride: Assembly-CSharp::AssetDatabaseExamples/CubeImporter
+guid: 00bf265ed6ea26a48b826f890f4bc08b
+importerOverride: Assembly-CSharp::BlendImporter
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []

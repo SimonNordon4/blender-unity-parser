@@ -3,12 +3,13 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.AssetImporters;
 
+
 public class AssetDatabaseExamples : MonoBehaviour
 {
     [MenuItem("AssetDatabase/Available Importer Types for cube")]
     static void AvailableImporterTypeCube()
     {
-        var path = "Assets/cube.blend";
+        var path = "Assets/01-scripts/blender-importer/cube1.blend";
         // returns null because no Override Importer is set.
         AssetDatabase.ClearImporterOverride(path);
         // returns [CubeImporter].
