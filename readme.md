@@ -72,26 +72,42 @@ ___
 
 ## Strategy
 
-1. First we have to overwrite Unity's default 
-.blend importer. We achieve this with an AssetPostProcessor that
-Uses AssetDatabase.SetImporterOveride<BlendImporter> during the OnpreprocessAsset call.
+1. Overwrite Unity's default blend importer.
 
-2. We then will locate the systems blender executable and run 'blender -b -p unity_to_blender.py', launching a headless blender that exports the assets.
+2. Locate blender executable and run 'blender -b -p unity_to_blender.py'.
 
-3. After opening the .blend file, Blender will then send it's data back to unity via a JSON _(very fast with orjson.py)_
+3. Send .blend data as JSON.
 
-4. This JSON will be deserialized with EditorJsonUtility _(Unity's JSON utility is limited, but very fast, and supports Vector3, Vector2, Color etc)_
+4. Deserialize JSON into intermediate class.
 
-5. Finally, the JSON data will be used to rebuild the asset.
+5. Construct and Serialise Unity Assets from intermediate class.
 
-___
+FAQ's:
+_(Step 2) why not read .blend binary directly?_
+Blender data isn't usable, it needs to be transmuted into Unity compatible. Bpy already provided many useful methods for doing this.
+
+_(Step 3) why JSON?_
+Serialising python to C# in binary is not trivial. JSONUtility is extremely fast and supports Unity data types like Vector3. It's.much easier to get python to produce unity readable JSON.
+JSON has support like orjson and brotli. 
+
+_(Step 4) why an intermediate class?_
+We could deserialize directly to Unity data. However this data often carries a lot of blob we don't need. It's actually faster to not serialize it at all.
+__
 
 ## Features
 
 Phase 1 will support;
 
-- Gameobjects
+- Transform
 - Meshes
 - Materials
 - Textures 
+- ~Gameobjects (name, enabled)
+- Mesh Filter
+- Mesh Renderer
+- Box Collider
+- Mesh Collider
+
+It will also have the option to export collections as gameibjects and export procedural materials to textures.
+
 
