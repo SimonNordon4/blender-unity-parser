@@ -57,7 +57,6 @@ namespace UBlend
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
-
         }
 
         public void CreateMeshes(AssetImportContext ctx, UBlend ublend)

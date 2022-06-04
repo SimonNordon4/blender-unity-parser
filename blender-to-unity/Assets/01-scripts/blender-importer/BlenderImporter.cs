@@ -5,13 +5,17 @@ using UnityEditor;
 using UnityEditor.AssetImporters;
 using System.Diagnostics;
 using System.IO;
+using Sirenix.OdinInspector;
+using UBlend;
 
 //This is Example Importer for cube
 [ScriptedImporter(1, new[] { "cube1" }, new[] { "blend" })]
 public class BlendImporter : ScriptedImporter
 {
+    [ReadOnly]
+    public UBlend.UBlend m_blend = new UBlend.UBlend();
     private string pythonFile = @"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\python\get_blend_data.py";
-    private string pythonExport = @"E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\01-scripts\\blender-importer\\blend_data.json";
+    private string pythonExport = @"E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\01-scripts\\blender-importer\\blender_export.json";
     public override void OnImportAsset(AssetImportContext ctx)
     {
         // First write data from blend file.
@@ -32,7 +36,7 @@ public class BlendImporter : ScriptedImporter
     {
         var start = new ProcessStartInfo();
         start.FileName = GetBlenderExecutablePath();
-        start.Arguments = $"--background --python {scriptPath} {ctx.assetPath}";
+        start.Arguments = $"--background {ctx.assetPath} --python {scriptPath}";
         start.UseShellExecute = false;
         start.RedirectStandardOutput = true;
         start.CreateNoWindow = true;
@@ -43,6 +47,7 @@ public class BlendImporter : ScriptedImporter
             {
                 string result = reader.ReadToEnd();
                 print(result);
+                ParseResult(result);
                 process.WaitForExit();
                 //ReadBlenderOutput();
             }
@@ -52,8 +57,32 @@ public class BlendImporter : ScriptedImporter
     private void ReadBlenderOutput()
     {
         print($"Read from imported file {File.ReadAllText(pythonExport)}");
+        EditorJsonUtility.FromJsonOverwrite(File.ReadAllText(pythonExport),m_blend);
         File.Delete(pythonExport);
         AssetDatabase.Refresh();
+    }
+    void ParseResult(string result)
+    {
+        var vert = new List<float>();
+        var x = result.Split("VertStart")[1].Split("VertEnd")[0];
+        var vecs = x.Split("\n");
+        foreach (var v in vecs)
+        {
+            var vec = v.Split(" ");
+            foreach (var vv in vec)
+            {
+                if (vv != "")
+                {
+                    print(vv);
+                    //vert.Add(float.Parse(vv));
+                }
+            }
+        }
+
+        foreach (var v in vert)
+        {
+            print(v);
+        }
     }
 
     void print(object obj){ UnityEngine.Debug.Log(obj); }
