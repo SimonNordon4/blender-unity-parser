@@ -14,9 +14,8 @@ public class BlendImporter : ScriptedImporter
     private string pythonExport = @"E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\01-scripts\\blender-importer\\blend_data.json";
     public override void OnImportAsset(AssetImportContext ctx)
     {
-        print("This is completely new BLENDER importer!");
-        ExecutePython(pythonFile);
-        
+        // First write data from blend file.
+        ExecutePython(ctx,pythonFile);
 
         var cube = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         cube.transform.position = new Vector3(0, 0, 0);
@@ -29,11 +28,11 @@ public class BlendImporter : ScriptedImporter
         return @"C:\Program Files\Blender Foundation\Blender 3.1\blender.exe";
     }
 
-    private void ExecutePython(string scriptPath)
+    private void ExecutePython(AssetImportContext ctx,string scriptPath)
     {
         var start = new ProcessStartInfo();
         start.FileName = GetBlenderExecutablePath();
-        start.Arguments = $"--background --python {scriptPath}";
+        start.Arguments = $"--background --python {scriptPath} {ctx.assetPath}";
         start.UseShellExecute = false;
         start.RedirectStandardOutput = true;
         start.CreateNoWindow = true;
@@ -43,8 +42,9 @@ public class BlendImporter : ScriptedImporter
             using (StreamReader reader = process.StandardOutput)
             {
                 string result = reader.ReadToEnd();
+                print(result);
                 process.WaitForExit();
-                ReadBlenderOutput();
+                //ReadBlenderOutput();
             }
         }
     }
