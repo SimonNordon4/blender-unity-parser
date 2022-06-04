@@ -30,16 +30,37 @@ public class BlendImporter : ScriptedImporter
     }
 
     #endregion
-    [ReadOnly]
+    [ReadOnly] //TODO move this scriptable object settings.
     public UBlend.UBlend m_blend = new UBlend.UBlend();
     private string blenderExectuablePath = "";
     private string pythonExectuablePath = @"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\python\get_blend_data.py";
     private string pythonExport = @"E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\01-scripts\\blender-importer\\blender_export.json";
+
+
     public override void OnImportAsset(AssetImportContext ctx)
     {
+        // 1. Retrive Blender Executable Path on System.
+            // 1.1 If one can not be found, ask user to set it, and save it in a global import settings scriptable object.
+            // 1.2 Verify it's an actualy .exe file.
+            // 1.3 Ensure the supplied Blender Version is supported.
         blenderExectuablePath = GetBlenderExecutablePath();
+
+        // 2. Compile Import Arguments.
+
+        // 3. Run Blender Process.
         BlenderProcessHandler.RunBlender(blenderExectuablePath, pythonExectuablePath, ctx.assetPath, "true false true false yes no 1 0");
 
+        // 4. Deserialize the exported JSON Data.
+
+        // 5. Create Meshes.
+        
+        // 6. Create Textures.
+
+        // 7. Create Materials.
+
+        // 8. Create GameObjects.
+
+        // 9. Create Hierarchy.
         var go = new GameObject("BlenderImporter");
         ctx.AddObjectToAsset("BlenderImporter", go);
         ctx.SetMainObject(go);
@@ -54,6 +75,7 @@ public class BlendImporter : ScriptedImporter
     {
         f.print("blender imported");
         f.print(result);
+        ReadBlenderOutput();
     }
 
     private void ReadBlenderOutput()
