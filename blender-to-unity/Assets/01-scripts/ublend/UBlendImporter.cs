@@ -16,7 +16,7 @@ namespace UBlend
         public Material debugMaterial;
 
         [ReadOnly]
-        public UBlend m_uBlend;
+        public UBlendData m_uBlend;
 
         private Dictionary<string, Mesh> _meshIdMap = new Dictionary<string, Mesh>();
         private Dictionary<string, Texture2D> _textureIdMap = new Dictionary<string, Texture2D>();
@@ -32,7 +32,7 @@ namespace UBlend
             readTime.Stop();
 
             var parseTime = Stopwatch.StartNew();
-            if (m_uBlend == null) m_uBlend = new UBlend();
+            if (m_uBlend == null) m_uBlend = new UBlendData();
             parseTime.Stop();
             var deserializeTime = Stopwatch.StartNew();
             EditorJsonUtility.FromJsonOverwrite(json, m_uBlend);
@@ -59,7 +59,7 @@ namespace UBlend
 
         }
 
-        public void CreateMeshes(AssetImportContext ctx, UBlend ublend)
+        public void CreateMeshes(AssetImportContext ctx, UBlendData ublend)
         {
             var meshTime = Stopwatch.StartNew();
 
@@ -102,7 +102,7 @@ namespace UBlend
             UnityEngine.Debug.Log($"    Mesh created in: {meshTime.ElapsedMilliseconds}ms");
         }
 
-        public void CreateTextures(AssetImportContext ctx, UBlend ublend)
+        public void CreateTextures(AssetImportContext ctx, UBlendData ublend)
         {
             var textureTime = Stopwatch.StartNew();
 
@@ -121,7 +121,7 @@ namespace UBlend
             textureTime.Stop();
             UnityEngine.Debug.Log($"    Texture created in: {textureTime.ElapsedMilliseconds}ms");
         }
-        public void CreateMaterials(AssetImportContext ctx, UBlend ublend)
+        public void CreateMaterials(AssetImportContext ctx, UBlendData ublend)
         {   
             var materialTime = Stopwatch.StartNew();
 
@@ -149,7 +149,7 @@ namespace UBlend
             materialTime.Stop();
             UnityEngine.Debug.Log($"    Materials created in: {materialTime.ElapsedMilliseconds}ms");
         }
-        public void CreateGameObjects(AssetImportContext ctx, UBlend uBlend)
+        public void CreateGameObjects(AssetImportContext ctx, UBlendData uBlend)
         {
             var gameObjectTime = Stopwatch.StartNew();
 
@@ -181,7 +181,7 @@ namespace UBlend
             
         }
 
-        public void CreateHierachy(UBlend uBlend,Transform root)
+        public void CreateHierachy(UBlendData uBlend,Transform root)
         {
             var hierarchyTime = Stopwatch.StartNew();
 

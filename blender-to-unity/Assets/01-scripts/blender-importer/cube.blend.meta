@@ -8,10 +8,12 @@ ScriptedImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  script: {instanceID: 0}
+  script: {fileID: 11500000, guid: 89f8baf41f6ebf847bdaafec7f16fec0, type: 3}
+  BlendPath: E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\
+  BlendName: cube
   ImportCollectionsAsObjects: 0
   EmbedMaterialsAndTextures: 0
-  m_blend:
+  blend:
     u_meshes: []
     u_materials: []
     u_textures: []

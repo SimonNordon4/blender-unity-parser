@@ -7,11 +7,10 @@ namespace Blender.Importer
     /// <summary>
     /// Preprocess Blend Files, Used to override default asset importer.
     /// </summary>
-    public class BlenderPreProcessor : AssetPostprocessor
+    public class BlendPreProcessor : AssetPostprocessor
     {
         void OnPreprocessAsset()
         {
-            Debug.Log("Importing texture to: " + assetPath);
             var path = assetPath;
 
             if (path.Contains(".blend"))

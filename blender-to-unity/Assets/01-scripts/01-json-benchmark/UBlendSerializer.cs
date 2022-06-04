@@ -9,9 +9,9 @@ namespace UBlend
     [ExecuteInEditMode]
     public class UBlendSerializer : MonoBehaviour
     {
-        public UBlend input_ublend;
+        public UBlendData input_ublend;
         [ReadOnly]
-        public UBlend output_ublend;
+        public UBlendData output_ublend;
         private string inputjson = "";
         private string outputjson = "";
 

@@ -12,8 +12,8 @@ def get_u_data():
     ''' Get the data from the Blender scene '''
     ublend = data.UData()
     set_u_meshes(ublend.u_meshes)
-    set_u_materials(ublend.u_materials)
-    set_u_texures(ublend.u_textures)
+    #set_u_materials(ublend.u_materials)
+    #set_u_texures(ublend.u_textures)
     set_u_gameobjects(ublend.u_gameobjects)
     return ublend
 

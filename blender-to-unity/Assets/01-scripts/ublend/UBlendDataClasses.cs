@@ -10,7 +10,7 @@ namespace UBlend
 
 
     [Serializable]
-    public class UBlend
+    public class UBlendData
     {
         public UMesh[] u_meshes = new UMesh[0];
         public UMaterial[] u_materials = new UMaterial[0];

@@ -8,9 +8,9 @@ namespace Blender.Importer
         public delegate void BlenderProcessEvent(string result);
         public static event BlenderProcessEvent OnBlenderProcessFinished;
 
-        public static void RunBlender(string blenderExectuablePath, string pythonExectuablePath, string blendFilePath, string args)
+        public static string RunBlender(string blenderExectuablePath, string pythonExectuablePath, string blendFilePath, string args)
         {
-            if(!IsValidArguments(blenderExectuablePath, pythonExectuablePath, blendFilePath)) return;
+            if(!IsValidArguments(blenderExectuablePath, pythonExectuablePath, blendFilePath)) throw new System.ArgumentException("Invalid Arguments Supplied to Blender Process Handler.");
             
             var start = new ProcessStartInfo();
             start.FileName = blenderExectuablePath;
@@ -25,7 +25,7 @@ namespace Blender.Importer
                 {
                     string result = reader.ReadToEnd();
                     process.WaitForExit();
-                    OnBlenderProcessFinished?.Invoke(result);
+                    return result;
                 }
             }
         }
