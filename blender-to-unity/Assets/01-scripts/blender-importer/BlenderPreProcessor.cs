@@ -2,27 +2,27 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.AssetImporters;
 
-/// <summary>
-/// Preprocess Blend Files, Used to override default asset importer.
-/// </summary>
-public class BlenderPreProcessor : AssetPostprocessor
+namespace Blender.Importer
 {
-    void OnPreprocessAsset()
+    /// <summary>
+    /// Preprocess Blend Files, Used to override default asset importer.
+    /// </summary>
+    public class BlenderPreProcessor : AssetPostprocessor
     {
-        Debug.Log("Importing texture to: " + assetPath);
-        var path = assetPath;
-
-        if (path.Contains(".blend"))
+        void OnPreprocessAsset()
         {
-            var currentOveride = AssetDatabase.GetImporterOverride(path);
-            if (currentOveride == null)
+            Debug.Log("Importing texture to: " + assetPath);
+            var path = assetPath;
+
+            if (path.Contains(".blend"))
             {
-                // Set the importer to the new Blender Importer if it doesn't have one.
-                AssetDatabase.SetImporterOverride<BlendImporter>(path);
+                var currentOveride = AssetDatabase.GetImporterOverride(path);
+                if (currentOveride == null)
+                {
+                    // Set the importer to the new Blender Importer if it doesn't have one.
+                    AssetDatabase.SetImporterOverride<BlendImporter>(path);
+                }
             }
         }
     }
-
 }
-
-

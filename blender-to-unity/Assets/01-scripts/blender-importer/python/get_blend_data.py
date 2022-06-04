@@ -1,6 +1,6 @@
 import bpy
-print("VertStart")
-for mesh in bpy.data.meshes:
-    for v in mesh.vertices:
-        print(v.co.x, v.co.y, v.co.z)
-print("VertEnd")    
+import sys
+
+argv = sys.argv
+argv = argv[argv.index("--") + 1:]  # get all args after "--"
+print(argv)

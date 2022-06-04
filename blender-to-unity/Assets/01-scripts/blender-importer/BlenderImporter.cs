@@ -8,23 +8,41 @@ using System.IO;
 using Sirenix.OdinInspector;
 using UBlend;
 
+namespace Blender.Importer
+{
+
 //This is Example Importer for cube
 [ScriptedImporter(1, new[] { "cube1" }, new[] { "blend" })]
 public class BlendImporter : ScriptedImporter
 {
+    #region Import Args
+    public bool ImportCollectionsAsObjects = false;
+    public bool EmbedMaterialsAndTextures = false;
+
+    public BlendImporter()
+    {
+        BlenderProcessHandler.OnBlenderProcessFinished += this.OnBlenderImported;
+    }
+
+    ~BlendImporter()
+    {
+        BlenderProcessHandler.OnBlenderProcessFinished -= this.OnBlenderImported;
+    }
+
+    #endregion
     [ReadOnly]
     public UBlend.UBlend m_blend = new UBlend.UBlend();
-    private string pythonFile = @"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\python\get_blend_data.py";
+    private string blenderExectuablePath = "";
+    private string pythonExectuablePath = @"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\python\get_blend_data.py";
     private string pythonExport = @"E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\01-scripts\\blender-importer\\blender_export.json";
     public override void OnImportAsset(AssetImportContext ctx)
     {
-        // First write data from blend file.
-        ExecutePython(ctx,pythonFile);
+        blenderExectuablePath = GetBlenderExecutablePath();
+        BlenderProcessHandler.RunBlender(blenderExectuablePath, pythonExectuablePath, ctx.assetPath, "true false true false yes no 1 0");
 
-        var cube = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        cube.transform.position = new Vector3(0, 0, 0);
-        ctx.AddObjectToAsset("main obj", cube);
-        ctx.SetMainObject(cube);
+        var go = new GameObject("BlenderImporter");
+        ctx.AddObjectToAsset("BlenderImporter", go);
+        ctx.SetMainObject(go);
     }
 
     private string GetBlenderExecutablePath()
@@ -32,58 +50,23 @@ public class BlendImporter : ScriptedImporter
         return @"C:\Program Files\Blender Foundation\Blender 3.1\blender.exe";
     }
 
-    private void ExecutePython(AssetImportContext ctx,string scriptPath)
+    private void OnBlenderImported(string result)
     {
-        var start = new ProcessStartInfo();
-        start.FileName = GetBlenderExecutablePath();
-        start.Arguments = $"--background {ctx.assetPath} --python {scriptPath}";
-        start.UseShellExecute = false;
-        start.RedirectStandardOutput = true;
-        start.CreateNoWindow = true;
-
-        using (Process process = Process.Start(start))
-        {
-            using (StreamReader reader = process.StandardOutput)
-            {
-                string result = reader.ReadToEnd();
-                print(result);
-                ParseResult(result);
-                process.WaitForExit();
-                //ReadBlenderOutput();
-            }
-        }
+        f.print("blender imported");
+        f.print(result);
     }
 
     private void ReadBlenderOutput()
     {
-        print($"Read from imported file {File.ReadAllText(pythonExport)}");
         EditorJsonUtility.FromJsonOverwrite(File.ReadAllText(pythonExport),m_blend);
+
+        foreach (var v in m_blend.u_meshes[0].vertices)
+        {
+            f.print(v.x + " " + v.y + " " + v.z);
+        }
         File.Delete(pythonExport);
         AssetDatabase.Refresh();
     }
-    void ParseResult(string result)
-    {
-        var vert = new List<float>();
-        var x = result.Split("VertStart")[1].Split("VertEnd")[0];
-        var vecs = x.Split("\n");
-        foreach (var v in vecs)
-        {
-            var vec = v.Split(" ");
-            foreach (var vv in vec)
-            {
-                if (vv != "")
-                {
-                    print(vv);
-                    //vert.Add(float.Parse(vv));
-                }
-            }
-        }
 
-        foreach (var v in vert)
-        {
-            print(v);
-        }
-    }
-
-    void print(object obj){ UnityEngine.Debug.Log(obj); }
+}
 }
