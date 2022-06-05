@@ -1,8 +1,10 @@
+_WARNING: this codebase is extremely volatile right now.
+
 # Blender to Unity
 
-The goal is to create a Blender & Unity plugin that makes importing content from Blender to Unity seamless & easy. This will be achieved by exporting a .ublend _(UnityBlender)_ file format, a JSON file structured specifically for this task.
+The goal is to create a Blender & Unity plugin that makes importing content from Blender to Unity seamless & easy.
 
- _(Unity only allows custom importers on non reserved file types, hence creating a new one)_
+ _(Unity only 
 
 ___
 ## Goals
@@ -66,141 +68,46 @@ collections|gameObjects
 grease_pencil|-
 
 You get the idea. Each of these data types will need to be carefully considered and mapped to the correct Unity Context.
-
-___
- ## JSON Structure
-
-
-
-```json
-"Root" :
-{
-    "Scene" : {},
-    "GameObjects" : {},
-    "Assets" : {}
-}
-```
-___
-### Scene Data
-
-Scene data is where we'll want to store data for the Unity Scene. Initially this will just be the name
-of the root object and a Skybox Material Reference.
-
-```json
-"Scene" :
-{
-    "Name" : "SampleScene.Unity",
-    "isImportSkybox" : false,
-    "SkyBoxMaterial" : null,
-    "renderPipeline" : "URP"
-}
-```
-___
-### GameObject Data
-This will define a list of all gameobjects under the root.
-
-```json
-"GameObjects" :
-[{
-    "name" : "Cube001",
-    "activeInHeirachy" : true,
-    "isStatic" : false,
-    "layer" : 0,
-    "tag" : "Untagged",
-    "scene" : "Scene.Unity", // This will be implied from the Scene Data
-    "transform" : {},
-    "components" : {},
-}]
-```
-
-We define a custom transform Class
-
-```json
-"transform" :
-{
-    "parent" : null,
-    "position" : {}, 
-    "rotation" : {},
-    "lossyScale" : {}
-}
-```
-Finally we'll need a list of all components and their sub classes.
-
-```json
-"components" :
-[{
-    "MeshFilter" : {
-        "Mesh" : {} // Asset Reference
-    },
-    "MeshRenderer":{
-        "sharedMaterials" : [{}], // Asset Reference
-        "recieveShadows" : false
-        // etc
-    },
-    "BoxCollider":{
-        "isTrigger" : false,
-        "material": {},
-        "center": {},
-        "size" : {}
-    }
-}]
-```
-___
-### Asset Data
-Asset Data defines our usable assets. To begin this will include Mesh, Material & Texture. However can be expanded to AnimationClip, FontAsset, AudioClip etc
-
-```json
-"Assets" :
-{
-    "Meshes" : [{
-        "name" : "Cube001",
-        "vertices" : [{}],
-        "normals" : [{}],
-        "triangles" : [{}]
-    }],
-    "Textures" : [{
-        "name" : "Untitled",
-        "image" : "base64" // Should we embed to Texture Directly into the JSON?
-    }],
-    "Materials" : [{
-        "name" : "Material",
-        "color" : {},
-        "mainTexture" : null,
-        "shader" : {}
-    }]
-}
-```
-
 ___
 
-## Stratergies & Challenges
+## Strategy
 
-It's Blender Responsibility to ensure it produces a usable .ublend file. Unity simply reads the Data and maps it to it's relevant classes.
+1. Overwrite Unity's default blend importer.
 
-Scene:
-        
-    A Custom World Level Properties UILayout Panel for setting Scene Data. This can include Ambient Occlusion, Light Maps, Occlusion Data, etc.
+2. Locate blender executable and run 'blender -b -p unity_to_blender.py'.
 
-Object:
-        
-    A Custom Object Level Properties UILayout Panel for setting GameObject Data (Including Components)
+3. Send .blend data as JSON.
 
-Mesh:
-        
-    Mesh Serializer with support for multi-material (sub-meshes)
+4. Deserialize JSON into intermediate class.
 
-Materials:
+5. Construct and Serialise Unity Assets from intermediate class.
 
-    Will Default to Standard or Lit for BDSF and similar. Unlit for Emission. We will then remap texture inputs to their Unity Equivilants.
+FAQ's:
+_(Step 2) why not read .blend binary directly?_
+Blender data isn't usable, it needs to be transmuted into Unity compatible. Bpy already provided many useful methods for doing this.
 
-Textures:
+_(Step 3) why JSON?_
+Serialising python to C# in binary is not trivial. JSONUtility is extremely fast and supports Unity data types like Vector3. It's.much easier to get python to produce unity readable JSON.
+JSON has support like orjson and brotli. 
 
-    Use Bake-to-Node to capture all input data as a texture. Will need global bake settings, and the ability to avoid rebaking if possible.
+_(Step 4) why an intermediate class?_
+We could deserialize directly to Unity data. However this data often carries a lot of blob we don't need. It's actually faster to not serialize it at all.
+__
 
-## To Do
+## Features
 
-[x] Import Mesh (.ublend)
-[x] Import Gameobject (.ublend)
-[x] Import Transform (.ublend)
-[ ] Import MeshRenderer (.ublend)
-[ ] Link Mesh to GameObject.MeshFilter
+Phase 1 will support;
+
+- Transform
+- Meshes
+- Materials
+- Textures 
+- ~Gameobjects (name, enabled)
+- Mesh Filter
+- Mesh Renderer
+- Box Collider
+- Mesh Collider
+
+It will also have the option to export collections as gameibjects and export procedural materials to textures.
+
+
