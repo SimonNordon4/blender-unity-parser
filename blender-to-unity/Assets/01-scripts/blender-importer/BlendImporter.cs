@@ -67,13 +67,6 @@ namespace Blender.Importer
             var name = Path.GetFileNameWithoutExtension(ctx.assetPath);
             var rootGameObject = new GameObject(name);
 
-
-            var tempImport = new UBlendImporter();
-            //tempImport.CreateMeshes(ctx, m_blend);
-            // tempImport.CreateTextures(ctx, m_blend);
-            // tempImport.CreateMaterials(ctx, m_blend);
-            //tempImport.CreateGameObjects(ctx, m_blend);
-            //tempImport.CreateHierachy(m_blend,rootGameObject.transform);
             ctx.AddObjectToAsset(name, rootGameObject);
             ctx.SetMainObject(rootGameObject);
             AssetDatabase.SaveAssets();
