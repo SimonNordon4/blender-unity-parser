@@ -24,6 +24,7 @@ class BlendMesh:
         self.uv5 = list
         self.uv6 = list
         self.uv7 = list
+        self.uv8 = list
         self.sub_meshes = list
 
 
