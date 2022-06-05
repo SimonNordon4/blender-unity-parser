@@ -1,33 +1,44 @@
 using System.Diagnostics;
 using System.IO;
-
+using UnityEngine;
 namespace Blender.Importer
 {
+    /// <summary>
+    /// Manage a Blender Process from within Unity.
+    /// </summary>
     public static class BlenderProcessHandler
     {
-        public delegate void BlenderProcessEvent(string result);
-        public static event BlenderProcessEvent OnBlenderProcessFinished;
-
-        public static string RunBlender(string blenderExectuablePath, string pythonExectuablePath, string blendFilePath, string args)
+        public static void RunBlender(string blenderExectuablePath, string pythonExectuablePath, string blendFilePath, string args)
         {
             if(!IsValidArguments(blenderExectuablePath, pythonExectuablePath, blendFilePath)) throw new System.ArgumentException("Invalid Arguments Supplied to Blender Process Handler.");
             
+            // set initial process arguments.
             var start = new ProcessStartInfo();
             start.FileName = blenderExectuablePath;
+            // This is the command line argument for everything that comes after ../blender.exe
             start.Arguments = $"--background {blendFilePath} --python {pythonExectuablePath} -- {args}";
             start.UseShellExecute = false;
             start.RedirectStandardOutput = true;
             start.CreateNoWindow = true;
 
-            using (Process process = Process.Start(start))
+            // begin the blender process.
+            Process process = new Process();
+            process.StartInfo = start;
+            process.EnableRaisingEvents = true;
+            // We debug.log everytime a print line is registered in the blender process.
+            process.OutputDataReceived += (sender, args) =>
             {
-                using (StreamReader reader = process.StandardOutput)
+                if (args.Data != null)
                 {
-                    string result = reader.ReadToEnd();
-                    process.WaitForExit();
-                    return result;
+                    f.print(args.Data,BlendImporterGlobalSettings.instance.PythonConsoleTextColor,"python",BlendImporterGlobalSettings.instance.PythonConsoleLabelColor);
                 }
-            }
+            };
+            process.Start();
+            process.BeginOutputReadLine();
+            process.WaitForExit();
+            process.CancelOutputRead();
+
+            return;
         }
 
         public static bool IsValidArguments(string blenderExectuablePath, string pythonExectuablePath, string blendFilePath)

@@ -35,17 +35,16 @@ namespace Blender.Importer
                 // 1.1 If one can not be found, ask user to set it, and save it in a global import settings scriptable object.
                 // 1.2 Verify it's an actualy .exe file.
                 // 1.3 Ensure the supplied Blender Version is supported.
-            var blenderExectuablePath = GetBlenderExecutablePath();
+            var blenderExectuablePath = BlendImporterGlobalSettings.instance.BlenderExectuablePath;
             var args = $"{BlendPath} {BlendName} {ImportCollectionsAsObjects} {EmbedMaterialsAndTextures}";
 
             // 2. Compile Import Arguments.
 
             // 3. Run Blender Process.
-            var result = BlenderProcessHandler.RunBlender(blenderExectuablePath, pythonExectuablePath, ctx.assetPath, args);
-            f.print(result);
+            BlenderProcessHandler.RunBlender(blenderExectuablePath, pythonExectuablePath, ctx.assetPath, args);
             // 4. Deserialize the exported JSON Data.
                 //4.1 Ensure the JSON is valid.
-            DeserializeExportedJson();
+            //DeserializeExportedJson();
 
             // 5. Create Meshes.
 
@@ -61,20 +60,15 @@ namespace Blender.Importer
 
 
             var tempImport = new UBlendImporter();
-            tempImport.CreateMeshes(ctx, m_blend);
+            //tempImport.CreateMeshes(ctx, m_blend);
             // tempImport.CreateTextures(ctx, m_blend);
             // tempImport.CreateMaterials(ctx, m_blend);
-            tempImport.CreateGameObjects(ctx, m_blend);
-            tempImport.CreateHierachy(m_blend,rootGameObject.transform);
+            //tempImport.CreateGameObjects(ctx, m_blend);
+            //tempImport.CreateHierachy(m_blend,rootGameObject.transform);
             ctx.AddObjectToAsset(name, rootGameObject);
             ctx.SetMainObject(rootGameObject);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-        }
-
-        private string GetBlenderExecutablePath()
-        {
-            return @"C:\Program Files\Blender Foundation\Blender 3.1\blender.exe";
         }
 
         private void SetImportVariables(AssetImportContext ctx)
@@ -85,11 +79,6 @@ namespace Blender.Importer
             BlendName = Path.GetFileNameWithoutExtension(blendPath);
             ExportFilePath = fullPath.Replace(".blend", ".json");
             f.print(ExportFilePath);
-        }
-
-        private void OnBlenderImported(string result)
-        {
-
         }
 
         private void DeserializeExportedJson()

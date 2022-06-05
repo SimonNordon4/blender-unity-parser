@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 141098986}
   - component: {fileID: 141098987}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: FunctionTesting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,11 +164,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 141098985}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9c859f5b13d24041b955dd164c36a75, type: 3}
+  m_Script: {fileID: 11500000, guid: 55a4b3623a4bad64c94cb2133a31730a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blendExecutable: C:\Program Files\Blender Foundation\Blender 3.1\blender.exe
-  pyPrint: E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\TEST_py_print.py
-  pyWrite: E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\TEST_py_write.py
-  jsonOutput: E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\TEST_json.json
-  jsonPyOutput: E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\TEST_json_export.json
