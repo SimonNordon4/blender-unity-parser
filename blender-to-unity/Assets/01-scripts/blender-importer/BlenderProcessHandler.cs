@@ -19,24 +19,36 @@ namespace Blender.Importer
             start.Arguments = $"--background {blendFilePath} --python {pythonExectuablePath} -- {args}";
             start.UseShellExecute = false;
             start.RedirectStandardOutput = true;
+            start.RedirectStandardError = true;
             start.CreateNoWindow = true;
 
             // begin the blender process.
             Process process = new Process();
             process.StartInfo = start;
             process.EnableRaisingEvents = true;
+            
             // We debug.log everytime a print line is registered in the blender process.
             process.OutputDataReceived += (sender, args) =>
             {
                 if (args.Data != null)
                 {
-                    f.print(args.Data,BlendImporterGlobalSettings.instance.PythonConsoleTextColor,"python",BlendImporterGlobalSettings.instance.PythonConsoleLabelColor);
+                    f.print(args.Data,BlendImporterGlobalSettings.instance.PythonConsoleTextColor,"py",BlendImporterGlobalSettings.instance.PythonConsoleLabelColor);
+                }
+            };
+
+            process.ErrorDataReceived += (sender,args) =>
+            {
+                if (args.Data != null)
+                {
+                    f.printError(args.Data,"py");
                 }
             };
             process.Start();
             process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
             process.WaitForExit();
             process.CancelOutputRead();
+            process.CancelErrorRead();
 
             return;
         }

@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: BlendImporterGlobalSettings
   m_EditorClassIdentifier: 
   BlenderExectuablePath: C:\Program Files\Blender Foundation\Blender 3.1\blender.exe
-  PythonConsoleLabelColor: {r: 1, g: 0.53481376, b: 0, a: 1}
-  PythonConsoleTextColor: {r: 1, g: 0.8189593, b: 0.3915094, a: 1}
+  PythonScriptDirectory: 
+  PythonConsoleLabelColor: {r: 0.22821665, g: 1, b: 0, a: 1}
+  PythonConsoleTextColor: {r: 0.4476241, g: 1, b: 0.39215684, a: 1}
+  ErrorConsoleLabelColor: {r: 1, g: 0, b: 0, a: 1}
+  ErrorConsoleTextColor: {r: 1, g: 0.56, b: 0.56, a: 1}
   StopWatchColor: {r: 0.3537736, g: 0.7797494, b: 1, a: 1}
   BlendDataColor: {r: 1, g: 0.6084906, b: 0.8691692, a: 1}
   AssetCreationColor: {r: 0.83558154, g: 1, b: 0.5990566, a: 1}

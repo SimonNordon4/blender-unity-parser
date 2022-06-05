@@ -14,6 +14,8 @@ namespace Blender.Importer
         [Header("Console Logging")]
         public Color PythonConsoleLabelColor = Color.white;
         public Color PythonConsoleTextColor = Color.white;
+        public Color ErrorConsoleLabelColor = Color.red;
+        public Color ErrorConsoleTextColor = Color.red;
         public Color StopWatchColor = Color.white;
         public Color BlendDataColor = Color.white;
         public Color AssetCreationColor = Color.white;

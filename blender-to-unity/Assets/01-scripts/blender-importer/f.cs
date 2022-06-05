@@ -18,6 +18,16 @@ namespace Blender.Importer
         { 
             UnityEngine.Debug.Log($"<color=#{ColorUtility.ToHtmlStringRGB(labelColor)}><b>{label}: </b></color> <color=#{ColorUtility.ToHtmlStringRGB(color)}>{obj}</color>");
         }
-        public static void printError(object obj){ UnityEngine.Debug.LogError(obj);}
+        public static void printError(object obj)
+        { 
+            UnityEngine.Debug.LogError(obj);
+        }
+        public static void printError(object obj, string label)
+        {
+            var labelColor = ColorUtility.ToHtmlStringRGB(BlendImporterGlobalSettings.instance.ErrorConsoleLabelColor);
+            var textColor = ColorUtility.ToHtmlStringRGB(BlendImporterGlobalSettings.instance.ErrorConsoleTextColor);
+            UnityEngine.Debug.LogWarning($"<color=#{labelColor}><b>{label}: </b></color><color=#{textColor}>{obj}</color>");
+        }
+        
     }
 }
