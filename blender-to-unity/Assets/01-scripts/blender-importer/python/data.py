@@ -27,7 +27,6 @@ class BlendMesh:
         self.uv8 = list
         self.sub_meshes = list
 
-
 @dataclass
 class BlendSubMesh:
     ''' Blender To Unity Data Class: BlendSubMesh '''
