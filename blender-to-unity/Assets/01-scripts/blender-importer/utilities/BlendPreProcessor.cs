@@ -12,8 +12,8 @@ namespace Blender.Importer
         void OnPreprocessAsset()
         {
             var path = assetPath;
-
-            if (path.Contains(".blend"))
+            if(path.Contains(".blend1")) return;
+            if(path.Contains(".blend"))
             {
                 var currentOveride = AssetDatabase.GetImporterOverride(path);
                 if (currentOveride == null)

@@ -15,6 +15,8 @@ import b2u
 
 # Remove after development.
 importlib.reload(b2u)
+importlib.reload(b2u.ops.meshes)
+importlib.reload(b2u.data)
 
 argv = sys.argv
 if "--" in argv:
@@ -32,7 +34,8 @@ exportFile = assetPath + assetName + ".json"
 
 print("Export Blend Data to: " + exportFile)
 
-b2u.testb2u()
+blend_meshes = b2u.ops.meshes.get_blend_meshes()
+print(blend_meshes.tojson())
 
 startTime = time.time()
 # ublenddata = ublend.ops.get_u_data()

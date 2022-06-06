@@ -1,34 +1,40 @@
 ''' Blender To Unity Data Classes '''
 from dataclasses import dataclass
+from sys import path
+path.append('C:\\Users\\61426\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\orjson\\')
+import orjson
 
 
 @dataclass
 class BlendMeshes:
     '''Blender To Unity Data Class: BlendMeshes'''
     def __init__(self):
-        self.meshes = list
+        self.meshes = []
+
+    def tojson(self):
+        return orjson.dumps(self).decode("utf-8")
 
 
 @dataclass
 class BlendMesh:
     ''' Blender To Unity Data Class: BlendMesh '''
     def __init__(self):
-        self.name_id = str
-        self.vertices = list
-        self.normals = str
-        self.uv = list
-        self.uv1 = list
-        self.uv2 = list
-        self.uv3 = list
-        self.uv4 = list
-        self.uv5 = list
-        self.uv6 = list
-        self.uv7 = list
-        self.uv8 = list
-        self.sub_meshes = list
+        self.name_id = ""
+        self.vertices = []
+        self.normals = ""
+        self.uv = []
+        self.uv1 = []
+        self.uv2 = []
+        self.uv3 = []
+        self.uv4 = []
+        self.uv5 = []
+        self.uv6 = []
+        self.uv7 = []
+        self.uv8 = []
+        self.sub_meshes = []
 
 @dataclass
 class BlendSubMesh:
     ''' Blender To Unity Data Class: BlendSubMesh '''
     def __init__(self):
-        self.triangles = list
+        self.triangles = []
