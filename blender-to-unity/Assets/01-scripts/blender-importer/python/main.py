@@ -30,18 +30,14 @@ else:
 
 assetPath = argv[0]
 assetName = argv[1]
-exportFile = assetPath + assetName + ".json"
 
-print("Export Blend Data to: " + exportFile)
-
-blend_meshes = b2u.ops.meshes.get_blend_meshes()
-print(blend_meshes.tojson())
-
+# meshes
 startTime = time.time()
-# ublenddata = ublend.ops.get_u_data()
-# json = ublenddata.tojson()
+blend_meshes = b2u.ops.meshes.get_blend_meshes()
+meshes_json = blend_meshes.tojson()
+meshes_file = assetPath + assetName + "_meshes.json"
 
-# with open(exportFile, 'w') as f:
-#     f.write(json)
+with open(meshes_file, 'w') as f:
+    f.write(meshes_json)
 endTime = time.time()
 print("Export Completed in " + str(endTime - startTime) + " seconds")

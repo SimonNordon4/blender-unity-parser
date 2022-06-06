@@ -32,7 +32,7 @@ namespace Blender.Importer
             {
                 if (args.Data != null)
                 {
-                    f.print(args.Data,BlendImporterGlobalSettings.instance.PythonConsoleTextColor,"py",BlendImporterGlobalSettings.instance.PythonConsoleLabelColor);
+                    f.print(args.Data,BlendImporterGlobalSettings.instance.PythonConsoleTextColor,"\tpy",BlendImporterGlobalSettings.instance.PythonConsoleLabelColor);
                 }
             };
 
@@ -40,7 +40,7 @@ namespace Blender.Importer
             {
                 if (args.Data != null)
                 {
-                    f.printError(args.Data,"py");
+                    f.printError(args.Data,"\tpy");
                 }
             };
             process.Start();
