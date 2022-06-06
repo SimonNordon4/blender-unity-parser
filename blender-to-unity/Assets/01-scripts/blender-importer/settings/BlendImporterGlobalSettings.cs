@@ -8,8 +8,8 @@ namespace Blender.Importer
     [CreateAssetMenu(fileName = "BlendImporterGlobalSettings", menuName = "Blender/BlendImporterGlobalSettings")]
     public class BlendImporterGlobalSettings : ScriptableSingleton<BlendImporterGlobalSettings>
     {
-        public string BlenderExectuablePath = string.Empty;
-        public string PythonScriptDirectory = string.Empty;
+        public string BlenderExectuablePath = @"C:\Program Files\Blender Foundation\Blender 3.1\blender.exe";
+        public string PythonMainFile = @"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\python\main.py";
 
         [Header("Console Logging")]
         public Color PythonConsoleLabelColor = Color.white;

@@ -40,11 +40,30 @@ def convert(obj):
     for i, loop in enumerate(loops):
         n = loop.normal
         blend_mesh.normals[i * 3] = n.x
-        blend_mesh.normals[i * 3 + 1] = n.y
-        blend_mesh.normals[i * 3 + 2] = n.z
+        blend_mesh.normals[i * 3 + 1] = n.z  # zy flip
+        blend_mesh.normals[i * 3 + 2] = n.y
         v = mverts[loop.vertex_index].co
         blend_mesh.vertices[i * 3] = v.x
-        blend_mesh.vertices[i * 3 + 1] = v.y
-        blend_mesh.vertices[i * 3 + 2] = v.z
+        blend_mesh.vertices[i * 3 + 1] = v.z  # zy flip
+        blend_mesh.vertices[i * 3 + 2] = v.y
+
+    # get triangles
+    mat_num = len(evaluated_mesh.materials)
+    if(mat_num == 0):
+        mat_num = 1
+    for i in range(mat_num):
+        sub_mesh = data.BlendSubMesh()
+        blend_mesh.sub_meshes.append(sub_mesh)
+
+    loop_triangles = evaluated_mesh.loop_triangles
+    sub_meshes = blend_mesh.sub_meshes
+    for tri in loop_triangles:
+        sub_mesh = sub_meshes[tri.material_index]
+        sub_mesh.triangles.append(tri.loops[0])
+        sub_mesh.triangles.append(tri.loops[2])
+        sub_mesh.triangles.append(tri.loops[1])
+
+    # Clean Up
+    bpy.data.meshes.remove(evaluated_mesh)
 
     return blend_mesh
