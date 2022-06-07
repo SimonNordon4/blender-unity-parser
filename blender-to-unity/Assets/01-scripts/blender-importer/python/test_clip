@@ -1,0 +1,6 @@
+from b2u import settings
+
+f = 0.1387624981243
+p = 1 / 0.01
+
+print(int(f * p)/p)

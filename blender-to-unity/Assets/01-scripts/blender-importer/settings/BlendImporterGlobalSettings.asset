@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlenderExectuablePath: C:\Program Files\Blender Foundation\Blender 3.1\blender.exe
   PythonMainFile: E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\python\main.py
-  PythonConsoleLabelColor: {r: 0.22745085, g: 1, b: 0, a: 1}
-  PythonConsoleTextColor: {r: 0.4476241, g: 1, b: 0.39215684, a: 1}
-  ErrorConsoleLabelColor: {r: 1, g: 0.3820755, b: 0.3820755, a: 1}
-  ErrorConsoleTextColor: {r: 1, g: 0.56, b: 0.56, a: 1}
+  PythonConsoleLabelColor: {r: 0.7485571, g: 1, b: 0.6745283, a: 1}
+  PythonConsoleTextColor: {r: 0.92705417, g: 1, b: 0.9198113, a: 1}
+  ErrorConsoleLabelColor: {r: 0.9716981, g: 0.56376827, b: 0.56376827, a: 1}
+  ErrorConsoleTextColor: {r: 1, g: 0.8066038, b: 0.8066038, a: 1}
   StopWatchColor: {r: 0.3537736, g: 0.7797494, b: 1, a: 1}
   BlendDataColor: {r: 1, g: 0.740566, b: 0.9143868, a: 1}
   AssetCreationColor: {r: 0.83558154, g: 1, b: 0.5990566, a: 1}

@@ -13,11 +13,13 @@ sys.path.append(appendPath)
 
 # Now we can import our modules after appending the path the script belongs in.
 import b2u
+from b2u import settings
 
 # Remove after development.
 importlib.reload(b2u)
 importlib.reload(b2u.ops.meshes)
 importlib.reload(b2u.data)
+importlib.reload(b2u.settings)
 
 # METHODS
 
@@ -40,51 +42,24 @@ def resolve_arguments(argv):
             print("ERROR: find argument in non dictionary format: " + arg)
     return settings
 
-test_arg = [
-    'C:\\Program Files\\Blender Foundation\\Blender 3.1\\blender.exe',
-    '--background',
-    'Assets/01-scripts/blender-importer/cube1.blend',
-    '--python',
-    'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\01-scripts\\blender-importer\\python\\main.py',
-    '--',
-    'path=E:/repos/blender-to-unity/blender-to-unity/Assets/01-scripts/blender-importer/',
-    'name=cube1'
-    ]
-
-import_settings = resolve_arguments(test_arg)
-for key in import_settings:
-    print("Setting: " + key + " = " + import_settings[key])
-
-# MAIN
-# argv = sys.argv
-# if "--" in argv:
-#     argv = argv[argv.index("--") + 1:]  # get all args after "--"
-# else:
-#     argv = [
-#         'E:\\repos\\blender-to-unity\\blender-to-unity\\Assets\\01-scripts\\blender-importer',
-#         'test_export',
-#         "False",
-#         "False"]
-
-# print(argv[0])
-# print(argv[1])
+@staticmethod
+def apply_settings(import_settings):
+    ''' Apply settings to the script '''
+    settings.set_blend_path(import_settings["blend_path"])
+    settings.set_blend_name(import_settings["blend_name"])
+    settings.set_vec_precision(import_settings["vec_precision"])
 
 
-resolve_arguments(sys.argv)
-
-'''
-assetPath = argv[0]
-assetName = argv[1]
+import_settings = resolve_arguments(sys.argv)  # Get a dictionary from the cmd args
+apply_settings(import_settings)  # Apply those args as global settings.
 
 # meshes
 startTime = time.time()
 blend_meshes = b2u.ops.meshes.get_blend_meshes()
 meshes_json = blend_meshes.tojson()
-meshes_file = assetPath + assetName + "_meshes.json"
+meshes_file = settings.blend_path + settings.blend_name + "_meshes.json"
 
 with open(meshes_file, 'w') as f:
     f.write(meshes_json)
 endTime = time.time()
 print("Export Completed in " + str(endTime - startTime) + " seconds")
-'''
-

@@ -1,6 +1,7 @@
 ''' Operations for getting meshes from Blender '''
 import bpy
 import data
+import settings
 
 @staticmethod
 def get_blend_meshes():
@@ -9,13 +10,21 @@ def get_blend_meshes():
 
     for obj in bpy.data.objects:
         if obj and obj.type == 'MESH':
-            blend_mesh = convert(obj)
+            blend_mesh = convert_mesh(obj)
             blend_meshes.meshes.append(blend_mesh)
 
     return blend_meshes
 
+
+# TODO: Implement
 @staticmethod
-def convert(obj):
+def clip(float_value):
+    ''' Clip a float value to the vec_precision '''
+    p = 1 / settings.vec_precision
+    return int(float_value * p) / p
+
+@staticmethod
+def convert_mesh(obj):
     ''' Convert a Blender obj mesh to a Unity mesh '''
     blend_mesh = data.BlendMesh()
     original_mesh = obj.data
@@ -44,7 +53,7 @@ def convert(obj):
         blend_mesh.normals[i * 3 + 2] = n.y
         v = mverts[loop.vertex_index].co
         blend_mesh.vertices[i * 3] = v.x
-        blend_mesh.vertices[i * 3 + 1] = v.z  # zy flip
+        blend_mesh.vertices[i * 3 + 1] = v.z # zy flip)
         blend_mesh.vertices[i * 3 + 2] = v.y
 
     # get triangles
