@@ -32,7 +32,7 @@ namespace Blender.Importer
             // 3. Compile Import Arguments.
             var blendPath = GetBlendPath(ctx.assetPath);
             var blendName = GetBlendName(ctx.assetPath);
-            var args = $"{blendPath} {blendName}";
+            var args = $"path:{blendPath} name:{blendName}";
 
             // 4. Run Blender Process.
             BlenderProcessHandler.RunBlender(blendExe, py, ctx.assetPath, args);
