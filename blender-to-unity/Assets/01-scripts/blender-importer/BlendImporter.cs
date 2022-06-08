@@ -6,7 +6,6 @@ using UnityEditor.AssetImporters;
 using System.Diagnostics;
 using System.IO;
 using UBlend;
-using Blender.Importer.Operators;
 using Sirenix.OdinInspector;
 using System.Reflection;
 
@@ -18,10 +17,7 @@ namespace Blender.Importer
     {
         [FoldoutGroup("Blend Data")]
         [ReadOnly]
-        public BlendMeshes blendMeshes;
-
-        private string blend_path;
-        private string blend_name;
+        public BlendData blendData;
         [SerializeField]
         private float vec_precision = 0.001f; // higher numbers mean more compression
         
@@ -42,36 +38,23 @@ namespace Blender.Importer
             BlenderProcessHandler.RunBlender(blendExe, py, ctx.assetPath, args);
 
             // 5. Get blender json datas.
-            BlendOutputManager.GetOutputs(blend_path, blend_name);
+            var json = ReadJson(ctx.assetPath);
 
             // 6. Deserialize Data.
-            // TODO: Foreach in BledOutPutManager.
-            //EditorJsonUtility.FromJsonOverwrite(meshes_data.json, blendMeshes);
+            EditorJsonUtility.FromJsonOverwrite(json, blendData);
 
             // 7. Create Data.
-            // Meshes
-            var meshMap = new Dictionary<string, Mesh>();
-            foreach (var blendMesh in blendMeshes.meshes)
-            {
-                var mesh = MeshCreator.CreateMesh(blendMesh);
-                meshMap.Add(blendMesh.name_id, mesh);
-            }
 
-            // GameObjects (Temp) TODO - Add temp mesh objects.
-            foreach(var mesh in meshMap.Values)
-            {
-                var go = new GameObject();
-                go.AddComponent<MeshFilter>().mesh = mesh;
-                go.AddComponent<MeshRenderer>();
-            }
+
+            // 8. Build Data.
         }
 
         //3. Compile Import Arguments
         private string ResolveArguments(string assetPath)
         {
             var args = string.Empty;
-            blend_path = GetBlendPath(assetPath);
-            blend_name = GetBlendName(assetPath);
+            var blend_path = GetBlendPath(assetPath);
+            var blend_name = GetBlendName(assetPath);
             args += $" {nameof(blend_path)}={blend_path}";
             args += $" {nameof(blend_name)}={blend_name}";
             args += $" {nameof(vec_precision)}={vec_precision}";
@@ -90,8 +73,11 @@ namespace Blender.Importer
         }
 
         //5. Get Blender Outputs
-        private string ReadJson(string filePath)
+        private string ReadJson(string assetPath)
         {
+            var blendPath = GetBlendPath(assetPath);
+            var blendName = GetBlendName(assetPath);
+            var filePath = $"{blendPath}{blendName}.json";
             if(File.Exists(filePath))
             {
                 return File.ReadAllText(filePath);

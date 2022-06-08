@@ -4,16 +4,20 @@ from sys import path
 path.append('C:\\Users\\61426\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\orjson\\')
 import orjson
 
+@dataclass
+class BlendData:
+    ''' Blend Data Class '''
+    def __init__(self):
+        self.blend_meshes = []
+
+    def tojson(self):
+        return orjson.dumps(self).decode("utf-8")
 
 @dataclass
 class BlendMeshes:
     '''Blender To Unity Data Class: BlendMeshes'''
     def __init__(self):
         self.meshes = []
-
-    def tojson(self):
-        return orjson.dumps(self).decode("utf-8")
-
 
 @dataclass
 class BlendMesh:

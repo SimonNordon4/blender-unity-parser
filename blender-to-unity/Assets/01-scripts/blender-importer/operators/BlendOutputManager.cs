@@ -15,7 +15,7 @@ namespace Blender.Importer
         /// </summary>
         /// <param name="path"></param>
         /// <param name="name"></param>
-        public static void GetOutputs(string path, string name)
+        public void GetOutputs(string path, string name)
         {
             var meshes_path = $"{path}{name}_meshes.json";
 
@@ -25,11 +25,22 @@ namespace Blender.Importer
 
             var gameobjects_path = $"{path}{name}_gameobjects.json";
         }
+
+        private string ReadJson(string path)
+        {
+            var json = File.ReadAllText(path);
+            return json;
+        }
     }
 
     // Add path, json output here.
     public class BlendOutputData
     {
+        public string name;
+        // returns false if no json data can be found.
+        public bool isValid;
+        public string path;
+        public string json;
 
     }
 }

@@ -55,9 +55,9 @@ apply_settings(import_settings)  # Apply those args as global settings.
 
 # meshes
 startTime = time.time()
-blend_meshes = b2u.ops.meshes.get_blend_meshes()
-meshes_json = blend_meshes.tojson()
-meshes_file = settings.blend_path + settings.blend_name + "_meshes.json"
+blend_data = b2u.ops.get_blend_data()  # Get the blend data
+meshes_json = blend_data.tojson()
+meshes_file = settings.blend_path + settings.blend_name + ".json"
 
 with open(meshes_file, 'w') as f:
     f.write(meshes_json)

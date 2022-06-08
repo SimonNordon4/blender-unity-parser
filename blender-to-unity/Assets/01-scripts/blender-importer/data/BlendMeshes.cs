@@ -3,6 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[Serializable]
+public class BlendData
+{
+    public BlendMeshes blend_meshes;
+}
 /// <summary>
 /// Blend Meshes Data
 /// </summary>
