@@ -7,20 +7,11 @@ using UnityEngine;
 [Serializable]
 public class BlendData
 {
-    public BlendMeshes blend_meshes;
+    public BlendMesh[] blend_meshes;
 }
 /// <summary>
 /// Blend Meshes Data
 /// </summary>
-
-[Serializable]
-/// <summary>
-/// Top level class for blend meshes
-/// </summary>
-public class BlendMeshes
-{
-    public BlendMesh[] meshes;
-}
 
 [Serializable]
 public class BlendMesh

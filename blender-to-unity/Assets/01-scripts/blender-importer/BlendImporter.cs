@@ -44,9 +44,10 @@ namespace Blender.Importer
             EditorJsonUtility.FromJsonOverwrite(json, blendData);
 
             // 7. Create Data.
-
+            CreateData(blendData);
 
             // 8. Build Data.
+            TempBuildData();
         }
 
         //3. Compile Import Arguments
@@ -88,5 +89,39 @@ namespace Blender.Importer
                 return "";
             }
         }
+    
+        public Dictionary<string,Mesh> meshMap = new Dictionary<string, Mesh>();
+        // 7. Create Data
+        private void CreateData(BlendData blendData)
+        {
+            foreach(BlendMesh bMesh in blendData.blend_meshes)
+            {
+                Mesh mesh = MeshCreator.CreateMesh(bMesh);
+                meshMap.Add(bMesh.name_id, mesh);
+            }
+        }
+
+        public static List<GameObject> tempMesh = new List<GameObject>();
+        private void TempBuildData()
+        {
+            foreach(GameObject go in tempMesh){
+                DestroyImmediate(go);
+            }
+
+            tempMesh.Clear();
+            int i = 0;
+            foreach(var entry in meshMap)
+            {
+                var go = new GameObject(entry.Key);
+                go.AddComponent<MeshFilter>().mesh = entry.Value;
+                var mr = go.AddComponent<MeshRenderer>();
+                mr.sharedMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+                tempMesh.Add(go);
+
+                go.transform.position = new Vector3(i,0,0);
+                i++;
+            }
+        }
     }
+
 }

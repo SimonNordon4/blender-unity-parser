@@ -59,37 +59,17 @@ namespace Blender.Importer.Tests
             // 10.4 BlendCollections to Unity GameObjects
             // 10.5 BlendObjects to Unity GameObjects
     
-        [ReadOnly]
-        public BlendMeshes blendMeshes;
-        private List<GameObject> meshes;
+
 
         [Button]
         private void DeserializeBlendMeshes()
         {
-            string filePath = @"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\tests\test_export_meshes.json";
-            EditorJsonUtility.FromJsonOverwrite(File.ReadAllText(filePath), blendMeshes);
+
         }
 
         [Button]
         private void CreateMeshes()
         {
-            foreach(var go in meshes)
-            {
-                DestroyImmediate(go);
-            }
-
-            meshes = new List<GameObject>();
-
-            foreach (var blendMesh in blendMeshes.meshes)
-            {
-                Mesh mesh = MeshCreator.CreateMesh(blendMesh);
-                var go = new GameObject(blendMesh.name_id);
-                go.AddComponent<MeshFilter>();
-                go.AddComponent<MeshRenderer>();
-                go.GetComponent<MeshFilter>().sharedMesh = mesh;
-                go.GetComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-                meshes.Add(go);
-            }
 
         }
     }

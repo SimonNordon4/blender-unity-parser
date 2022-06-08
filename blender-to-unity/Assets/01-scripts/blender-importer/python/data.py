@@ -14,12 +14,6 @@ class BlendData:
         return orjson.dumps(self).decode("utf-8")
 
 @dataclass
-class BlendMeshes:
-    '''Blender To Unity Data Class: BlendMeshes'''
-    def __init__(self):
-        self.meshes = []
-
-@dataclass
 class BlendMesh:
     ''' Blender To Unity Data Class: BlendMesh '''
     def __init__(self):

@@ -6,12 +6,12 @@ import settings
 @staticmethod
 def get_blend_meshes():
     ''' Get meshes from the scene '''
-    blend_meshes = data.BlendMeshes()
+    blend_meshes = []
 
     for obj in bpy.data.objects:
         if obj and obj.type == 'MESH':
             blend_mesh = convert_mesh(obj)
-            blend_meshes.meshes.append(blend_mesh)
+            blend_meshes.append(blend_mesh)
 
     return blend_meshes
 
