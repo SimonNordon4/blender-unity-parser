@@ -58,7 +58,7 @@ class BlendGameObject:
 
         # Mesh props
         self.mesh_id = ""
-        self.material_ids = []
+        self.material_slots = 0
 
 @dataclass
 class Color:

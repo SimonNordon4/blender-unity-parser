@@ -35,7 +35,7 @@ def get_blend_gameobjects():
             # Set Mesh Filter/Renderer
             go.mesh_id = obj.data.name  # We can do this because we are only looking at meshes
             # in blender mats are tied to meshes
-            go.material_slots = len(obj.material_slots)
+            go.material_slots = len(obj.data.materials)
             # go.material_ids = [mat.name for mat in obj.data.materials]
             # TODO: append mats including empty slots :)
             blend_gameobjects.append(go)

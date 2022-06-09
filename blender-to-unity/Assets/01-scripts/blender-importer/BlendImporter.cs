@@ -144,8 +144,21 @@ namespace Blender.Importer
         {
             var mesh = new Mesh();
             mesh.name = blendMesh.name_id;
+
+            // Set Vertices
             mesh.SetVertices(FloatToVector3(blendMesh.vertices));
             mesh.SetNormals(FloatToVector3(blendMesh.normals));
+
+            // Set Uvs
+            if(blendMesh.uv.Length > 0) mesh.SetUVs(0, FloatToVector2(blendMesh.uv));
+            if(blendMesh.uv2.Length > 0) mesh.SetUVs(1, FloatToVector2(blendMesh.uv2));
+            if(blendMesh.uv3.Length > 0) mesh.SetUVs(2, FloatToVector2(blendMesh.uv3));
+            if(blendMesh.uv4.Length > 0) mesh.SetUVs(3, FloatToVector2(blendMesh.uv4));
+            if(blendMesh.uv5.Length > 0) mesh.SetUVs(4, FloatToVector2(blendMesh.uv5));
+            if(blendMesh.uv6.Length > 0) mesh.SetUVs(5, FloatToVector2(blendMesh.uv6));
+            if(blendMesh.uv7.Length > 0) mesh.SetUVs(6, FloatToVector2(blendMesh.uv7));
+            if(blendMesh.uv8.Length > 0) mesh.SetUVs(7, FloatToVector2(blendMesh.uv8));
+
             mesh.subMeshCount = blendMesh.sub_meshes.Length;
             for (int i = 0; i < blendMesh.sub_meshes.Length; i++)
             {
