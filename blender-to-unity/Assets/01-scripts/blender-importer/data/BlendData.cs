@@ -8,6 +8,8 @@ using UnityEngine;
 public class BlendData
 {
     public BlendMesh[] blend_meshes;
+
+    public BlendGameObject[] blend_gameobjects;
 }
 /// <summary>
 /// Blend Meshes Data
@@ -35,4 +37,21 @@ public class BlendMesh
 public class BlendSubMesh
 {
     public int[] triangles = new int[0];
+}
+
+[Serializable]
+public class BlendGameObject
+{
+    public string name_id = string.Empty;
+
+    // Transform
+    public string parent_id = string.Empty;
+    public Vector3 position = Vector3.zero;
+    public Vector3 rotation = Vector3.zero;
+    public Vector3 scale = Vector3.one;
+
+    // Mesh
+    public string mesh_id = string.Empty;
+    public int material_slots = 1;
+    public string[] material_ids = new string[0];
 }
