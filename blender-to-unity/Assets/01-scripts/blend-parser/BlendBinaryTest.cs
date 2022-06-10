@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Kaitai;
+using System.Runtime.Serialization.Formatters.Binary;
+using System;
+using System.IO;
 
 
 //MESH: SdnaStruct[71] OBJECT: SdnaStruct[172]
@@ -15,18 +18,23 @@ public class BlendBinaryTest : MonoBehaviour
     {
         var blend = BlenderBlend.FromFile(m_blendFilePath);
 
-        for (int i = 0; i < blend.SdnaStructs.Count; i++)
+
+        // Find all mesh Blocks.
+        for (int i = 0; i < blend.Blocks.Count; i++)
         {
-            var block = blend.SdnaStructs[i];
-            print(block.Type);
-            foreach (var field in block.Fields)
+            if(blend.Blocks[i].SdnaIndex == 71)
             {
-                print("\t"+field.Name);
-                print("\t"+field.Type);
+                var meshBlock = blend.Blocks[i];
+                print(meshBlock.Code);
+                print(i);
+                print(meshBlock.SdnaStruct.Fields[0]);
+                print(meshBlock.Body.ToString());
+
+                BinaryReader reader = new BinaryReader(new MemoryStream((byte[])meshBlock.Body));
+                print(reader.Read());
             }
         }
 
-        
     }
 }
 #endif
