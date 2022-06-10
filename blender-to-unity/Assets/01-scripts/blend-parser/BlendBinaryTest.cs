@@ -27,11 +27,17 @@ public class BlendBinaryTest : MonoBehaviour
                 var meshBlock = blend.Blocks[i];
                 print(meshBlock.Code);
                 print(i);
-                print(meshBlock.SdnaStruct.Fields[0]);
+                print(meshBlock.SdnaIndex);
+                foreach(var field in meshBlock.SdnaStruct.Fields)
+                {
+                    print($"\tfield.Name {field.Name} fieled.Type {field.Type}");
+                }
                 print(meshBlock.Body.ToString());
 
-                BinaryReader reader = new BinaryReader(new MemoryStream((byte[])meshBlock.Body));
-                print(reader.Read());
+
+                // https://wiki.blender.jp/Dev:Source/Architecture/File_Format
+                
+                print(meshBlock.M_RawBody);
             }
         }
 
