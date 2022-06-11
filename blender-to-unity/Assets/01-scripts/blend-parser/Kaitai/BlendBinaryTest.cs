@@ -13,9 +13,9 @@ using System.Text;
 //MESH: SdnaStruct[71] OBJECT: SdnaStruct[172]
 public class BlendBinaryTest : MonoBehaviour
 {
-    private string m_blendFilePath = @"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\cube1.blend";
+    private string m_blendFilePath = @"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blender-importer\cube1 - Copy.blend";
     [Button]
-    public void GetBlend()
+    public void GetBlendKaiti()
     {
         var blend = BlenderBlend.FromFile(m_blendFilePath);
 
@@ -34,7 +34,7 @@ public class BlendBinaryTest : MonoBehaviour
 
         var mesh_bytes = (byte[])mesh_cube.Body;
         
-        https://wiki.blender.jp/Dev:Source/Architecture/File_Format
+        //https://wiki.blender.jp/Dev:Source/Architecture/File_Format
         using (BinaryReader reader = new BinaryReader(new MemoryStream(mesh_bytes)))
         {
             print(reader.BaseStream.Position);
