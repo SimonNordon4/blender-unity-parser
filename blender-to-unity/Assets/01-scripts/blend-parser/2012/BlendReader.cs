@@ -3,12 +3,19 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
+[System.Serializable]
 public class BlenderFile
 {
     /// <summary>
     /// Describes the pointer size of the file.
     /// </summary>
-    public BlendHeader Header { get; private set; }
+    public Header Header {get; private set;}
+
+    public StructureDNA StructureDNA {get; private set;}
+
+
+    public List<FileBlock> FileBlocks {get; private set;}
+
 
     public BlenderFile(string filePath) : this(new BinaryReader(File.Open(filePath, FileMode.Open, FileAccess.Read)))
     {
@@ -18,10 +25,17 @@ public class BlenderFile
     public BlenderFile(BinaryReader reader)
     {   
         ReadHeader(reader);
-        p(reader.BaseStream.Position);
+        ReadFileBlocks(reader);
+
+        // create PopulatedStructures
+
+
         reader.Close();
     }
 
+    /// <summary>
+    /// Reads the first 12 bytes of the file [0..11] which makes upt he header.
+    /// </summary>
     private void ReadHeader(BinaryReader reader)
     {
         reader.ReadBytes(7);
@@ -37,26 +51,25 @@ public class BlenderFile
         var VersionNumber = new string(new[] { Convert.ToChar(reader.ReadByte()), '.', Convert.ToChar(reader.ReadByte()),
             Convert.ToChar(reader.ReadByte()) });
 
-        Header = new BlendHeader(PointerSize,endianness, VersionNumber);
+        Header = new Header(PointerSize,endianness, VersionNumber);
     }
 
     private void ReadFileBlocks(BinaryReader reader)
     {
-        do
+        string lastBlockCode = "";
+
+        while (lastBlockCode != "ENDB")
         {
             FileBlock block = FileBlock.Read(reader, Header.PointerSize);
+
             if(block.Code == "DNA1")
             {
-                // create the dna block
+                StructureDNA = (StructureDNA)block;
             }
 
-            if(block.Code == "ENDB")
-            {
-                break;
-            }
-            
+            FileBlocks.Add(block);
+            lastBlockCode = block.Code;
         }
-        while(reader.BaseStream.Position < reader.BaseStream.Length);
     }
 
     private void p(object obj)

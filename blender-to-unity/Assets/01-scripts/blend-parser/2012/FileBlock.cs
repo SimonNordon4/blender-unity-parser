@@ -3,35 +3,45 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
+[System.Serializable]
 public class FileBlock
 {
         /// <summary>
         /// Four-character code indicating the type of data in the FileBlock.
         /// </summary>
-        public string Code;
+        public string Code {get; private set;}
+
         /// <summary>
         /// Size of the FileBlock's data, in bytes.
         /// </summary>
-        public int Size;
+        public int Size {get; private set;}
+
         /// <summary>
         /// Index in the structures defined by SDNA used to decode the data in this FileBlock.
         /// </summary>
-        public int SDNAIndex;
+        public int SDNAIndex {get; private set;}
+
         /// <summary>
         /// Number of objects to decode.
         /// </summary>
-        public int Count;
+        public int Count {get; private set;}
+
 
         /// <summary>
         /// Raw data contained in the FileBlock.
         /// </summary>
-        public byte[] Data;
+        public byte[] Data {get; private set;}
+
 
         /// <summary>
         /// Old memory address of the FileBlock; used for lists and pointer references.
         /// </summary>
-        public ulong OldMemoryAddress;
+        public ulong OldMemoryAddress {get; private set;}
 
+        /// <summary>
+        /// 4 bytes for the code. 4 bytes for the length. 4 or 8 bytes for the address. 4 bytes for the sdnaIndex. 4 bytes for the count. n bytes for the data. 0-3 bytes for the padding.
+        /// Block info is always 20-24 bytes + the body + the padding.
+        /// </summary>
         public static FileBlock Read(BinaryReader reader, int pointerSize)
         {
             // Enforce PointerSize.
@@ -57,7 +67,6 @@ public class FileBlock
 
             return block;
         }
-
         public FileBlock(string code, int size, int sdnaIndex, int count, byte[] data)
         {
             Code = code;

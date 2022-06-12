@@ -3,15 +3,19 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
-public class BlendHeader
+[System.Serializable]
+public class Header
 {
-    public BlendHeader(int pointerSize, char endianness, string versionNumber)
+    public Header(int pointerSize, char endianness, string versionNumber)
     {
         PointerSize = pointerSize;
         Endian = endianness == 'v' ? "little" : "big";
         VersionNumber = versionNumber;
     }
-    public int PointerSize;
-    public string Endian;
-    public string VersionNumber;
+    public int PointerSize {get; private set;}
+
+    public string Endian {get; private set;}
+
+    public string VersionNumber {get; private set;}
+
 }
