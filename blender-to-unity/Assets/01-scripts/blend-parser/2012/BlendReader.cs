@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
-[System.Serializable]
 public class BlenderFile
 {
     /// <summary>
@@ -61,7 +60,7 @@ public class BlenderFile
         while (lastBlockCode != "ENDB")
         {
             FileBlock block = FileBlock.Read(reader, Header.PointerSize);
-
+            p(block.Code);
             if(block.Code == "DNA1")
             {
                 StructureDNA = (StructureDNA)block;
