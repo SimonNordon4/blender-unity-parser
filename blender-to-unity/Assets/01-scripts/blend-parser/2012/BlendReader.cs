@@ -2,19 +2,27 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class BlenderFile
 {
     /// <summary>
-    /// Describes the pointer size of the file.
+    /// Contains header info for the file.
     /// </summary>
-    public Header Header {get; private set;}
+    public Header Header { get; private set; }
 
-    public StructureDNA StructureDNA {get; private set;}
+    /// <summary>
+    /// Special 'DNA1' Structure that provides defintions for all other structures.
+    /// </summary>
+    /// <value></value>
+    public StructureDNA StructureDNA { get; private set; }
 
+    /// <summary>
+    /// Blocks contained within the file.
+    /// </summary>
+    public List<FileBlock> FileBlocks { get; private set; } = new List<FileBlock>();
 
-    public List<FileBlock> FileBlocks {get; private set;}
-
+    private Dictionary<ulong, Structure[]> memoryMap = new Dictionary<ulong, Structure[]>();
 
     public BlenderFile(string filePath) : this(new BinaryReader(File.Open(filePath, FileMode.Open, FileAccess.Read)))
     {
@@ -22,9 +30,11 @@ public class BlenderFile
     }
 
     public BlenderFile(BinaryReader reader)
-    {   
+    {
         ReadHeader(reader);
         ReadFileBlocks(reader);
+
+        memoryMap = CreateStructures();
 
         // create PopulatedStructures
 
@@ -50,7 +60,7 @@ public class BlenderFile
         var VersionNumber = new string(new[] { Convert.ToChar(reader.ReadByte()), '.', Convert.ToChar(reader.ReadByte()),
             Convert.ToChar(reader.ReadByte()) });
 
-        Header = new Header(PointerSize,endianness, VersionNumber);
+        Header = new Header(PointerSize, endianness, VersionNumber);
     }
 
     private void ReadFileBlocks(BinaryReader reader)
@@ -60,8 +70,7 @@ public class BlenderFile
         while (lastBlockCode != "ENDB")
         {
             FileBlock block = FileBlock.Read(reader, Header.PointerSize);
-            p(block.Code);
-            if(block.Code == "DNA1")
+            if (block.Code == "DNA1")
             {
                 StructureDNA = (StructureDNA)block;
             }
@@ -69,6 +78,24 @@ public class BlenderFile
             FileBlocks.Add(block);
             lastBlockCode = block.Code;
         }
+    }
+
+    /// <summary>
+    /// Parses the file blocks to create a map of memory addresses to populated structures.
+    /// </summary>
+    /// <returns>A dictionary mapping memory addresses to the structures held in the corresponding file block.</returns>
+    private Dictionary<ulong, Structure[]> CreateStructures()
+    {
+        Dictionary<ulong, Structure[]> structures = new Dictionary<ulong, Structure[]>();
+
+        int blocksParsed = 0;
+        foreach(FileBlock fileBlock in FileBlocks)
+        {
+            Structure[] temp = Structure.ParseFileBlock(fileBlock,blocksParsed,this);
+            blocksParsed++;
+        }
+
+        return structures;
     }
 
     private void p(object obj)

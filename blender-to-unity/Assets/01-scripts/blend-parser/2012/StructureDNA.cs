@@ -8,7 +8,7 @@ using System.Text;
 /// .blend file, which contains machine-readable specifications of
 /// all other structures used in this .blend file.
 /// </summary>
-[System.Serializable]
+
 public class StructureDNA : FileBlock
 {      
          /// <summary>

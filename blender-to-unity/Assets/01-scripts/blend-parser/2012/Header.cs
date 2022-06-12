@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
-[System.Serializable]
 public class Header
 {
     public Header(int pointerSize, char endianness, string versionNumber)
