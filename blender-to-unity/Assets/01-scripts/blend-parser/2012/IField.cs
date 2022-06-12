@@ -1,5 +1,10 @@
-    
-    
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace BlenderFileReader
+{
     /// <summary>
     /// Represents a single weakly-typed field in a structure. 
     /// </summary>
@@ -87,3 +92,40 @@
         /// <returns>An array of <pre>PopulatedStructure</pre>s.</returns>
         Structure[][] DereferenceAsArray();
     }
+
+    /// <summary>
+    /// Represents a single strongly-typed field in Blender. Use IStructField if the field contains a struct.
+    /// </summary>
+    /// <typeparam name="T">T should be specified as a primitive; where the type of <pre>string</pre> is a special case
+    /// denoting a Blender-defined struct; in which case the value should be the SDNA type name.</typeparam>
+    public interface IField<T> : IField
+    {
+        /// <summary>
+        /// Value contained in the field.
+        /// </summary>
+        new T Value { get; }
+    }
+
+    /// <summary>
+    /// Represents a field that contains a struct. The struct is represented as a list of <pre>IField</pre>s.
+    /// </summary>
+    public interface IStructField : IField<string>
+    {
+        /// <summary>
+        /// A list of fields contained in this structure.
+        /// </summary>
+        IField[] Fields { get; }
+
+        /// <summary>
+        /// Array-style access to fields.
+        /// </summary>
+        /// <param name="identifier">Name of the field you want to look up.</param>
+        /// <returns>IField object representing the field with that identifier</returns>
+        IField this[string identifier] { get; }
+
+        /// <summary>
+        /// A count of the number of fields in this structure and all contained structures.
+        /// </summary>
+        int NumFields { get; }
+    }
+}

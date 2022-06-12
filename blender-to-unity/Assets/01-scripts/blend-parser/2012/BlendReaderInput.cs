@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using BlenderFileReader;
 
 [ExecuteInEditMode]
 public class BlendReaderInput : MonoBehaviour
