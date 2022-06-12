@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public class BlenderFile
 {
-
     /// <summary>
     /// Describes the pointer size of the file.
     /// </summary>
@@ -19,6 +18,7 @@ public class BlenderFile
     public BlenderFile(BinaryReader reader)
     {   
         ReadHeader(reader);
+        p(reader.BaseStream.Position);
         reader.Close();
     }
 
@@ -39,19 +39,31 @@ public class BlenderFile
 
         Header = new BlendHeader(PointerSize,endianness, VersionNumber);
     }
+
+    private void ReadFileBlocks(BinaryReader reader)
+    {
+        do
+        {
+            FileBlock block = FileBlock.Read(reader, Header.PointerSize);
+            if(block.Code == "DNA1")
+            {
+                // create the dna block
+            }
+
+            if(block.Code == "ENDB")
+            {
+                break;
+            }
+            
+        }
+        while(reader.BaseStream.Position < reader.BaseStream.Length);
+    }
+
+    private void p(object obj)
+    {
+        UnityEngine.Debug.Log(obj);
+    }
 }
 
-[System.Serializable]
-public class BlendHeader
-{
-    public BlendHeader(int pointerSize, char endianness, string versionNumber)
-    {
-        PointerSize = pointerSize;
-        Endian = endianness == 'v' ? "little" : "big";
-        VersionNumber = versionNumber;
-    }
-    public int PointerSize;
-    public string Endian;
-    public string VersionNumber;
-}
+
 
