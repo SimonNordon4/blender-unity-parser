@@ -206,7 +206,7 @@ namespace BlenderToUnity
     
         private bool CreateStructureData(StructureDNA structureDNA)
         {
-            return StructureCreator.CreateSDNAStructures(ref structureDNA);
+            return StructureCreator.GenerateSDNAData(ref structureDNA);
         }
     }
 }

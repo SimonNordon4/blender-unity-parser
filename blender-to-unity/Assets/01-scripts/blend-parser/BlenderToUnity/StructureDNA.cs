@@ -249,6 +249,7 @@ namespace BlenderToUnity
                     structureTypeField.Name = name;
                     structureTypeFieldContainer.StructureTypeFields.Add(structureTypeField);
                 }
+                
                 structureTypeIndices.Add(structureTypeIndex);
                 structureTypeFieldContainers.Add(structureTypeFieldContainer);
                 
