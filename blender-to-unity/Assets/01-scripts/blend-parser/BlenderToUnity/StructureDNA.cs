@@ -1,12 +1,23 @@
 using System.IO;
 using System.Collections.Generic;
 using System;
+using Sirenix.OdinInspector;
 
 namespace BlenderToUnity
 {
+    /// <summary>
+    /// Contains data from a the special "DNA1" File Block. This block contains all the important information about the other file blocks in the .blend file.
+    /// </summary>
     [System.Serializable]
-    public class StructureDNA : FileBlock
+    public class StructureDNA
     {
+        #region Raw Data
+        [Title("Raw Data")]
+        /// <summary>
+        /// A reference to the Original File Block that this structure was parsed from.
+        /// </summary>
+        public FileBlock OriginalFileBlock = null;
+
         /// <summary>
         /// List of all the names contained in SDNA.
         /// Example: [x, y, z, quat[4], *description] etc.
@@ -22,17 +33,24 @@ namespace BlenderToUnity
         /// <summary>
         /// index matched byte length for each type in Types.
         /// </summary>
-        public List<short> TypeLengths = new List<short>();
+        public List<short> TypeSizes = new List<short>();
 
         /// <summary>
-        /// List of all DNA Types be index in Types / TypeDefinitions.
+        /// List of all DNA Types by index in Types / TypeDefinitions.
         /// </summary>
         public List<short> StructureTypeIndices = new List<short>();
 
         public List<StructureTypeField> StructureTypeFields = new List<StructureTypeField>();
 
+        #endregion
+
+        #region Generated Data
+        [Title("Generated Data")]
+        public List<TypeDefinition> TypeDefintions = new List<TypeDefinition>();
+        #endregion
+
         /// <summary>
-        /// Parse the "DNA1" FileBlock into a StructureDNA. Assume the reader is set to position 0.
+        /// Parse the "DNA1" FileBlock into a StructureDNA. Assume the reader is set to the start of the DNA1 block.
         /// </summary>
         public static StructureDNA CreateStructureDNA(BinaryReader reader)
         {
@@ -63,8 +81,8 @@ namespace BlenderToUnity
             }
 
             // Get Type Lengths.
-            structureDNA.TypeLengths = ReadTypeLengths(reader, structureDNA.Types.Count);
-            if (structureDNA.TypeLengths is null)
+            structureDNA.TypeSizes = ReadTypeLengths(reader, structureDNA.Types.Count);
+            if (structureDNA.TypeSizes is null)
             {
                 f.printError("Failed to get type length list.");
                 return null;
@@ -89,6 +107,18 @@ namespace BlenderToUnity
         }
 
 
+        public bool SetFileBlock(List<FileBlock> fileBlocks)
+        {
+            var dna1 = fileBlocks[fileBlocks.Count-2];
+            if(dna1.Code != "DNA1")
+            {
+                f.printError("Expected DNA1 but got: " + dna1.Code + " at position " + dna1.BlockStartPosition);
+                return false;
+            }
+
+            this.OriginalFileBlock = dna1;
+            return true;
+        }
         private static List<string> ReadNames(BinaryReader reader)
         {
             var type = new string(reader.ReadChars(4));

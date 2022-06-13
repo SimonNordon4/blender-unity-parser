@@ -37,6 +37,7 @@ namespace BlenderToUnity
             var watch = f.stopwatches[name];
             watch.Stop();
             UnityEngine.Debug.Log(name + ": " + watch.ElapsedMilliseconds + "ms");
+            stopwatches.Remove(name);
         }
 
     }

@@ -44,6 +44,8 @@ namespace BlenderToUnity
 
         public BlenderFile(BinaryReader reader)
         {
+            f.startwatch("Parse Blend");
+
             #region Get Header
             f.startwatch("Read Header");
 
@@ -84,10 +86,35 @@ namespace BlenderToUnity
                 return;
             }
 
+            // Give the structureDNA a reference to the block file it was parsed from. Not neccessary, but keeps things nicer.
+            var setDna = StructureDNA.SetFileBlock(FileBlocks);
+            if(!setDna)
+            {
+                f.printError("Failed to set FileBlocks in StructureDNA. Aborting.");
+                reader.Close();
+                return;
+            }
+
             f.stopwatch("Read SDNAStructure");
             #endregion
 
+            #region Parse SDNAStructure
+            f.startwatch("Generate SDNAStructure data");
+
+            var operationSuccess = CreateStructureData(StructureDNA);
+            if(operationSuccess == false)
+            {
+                f.printError("Failed to generate StructureData. Aborting.");
+                reader.Close();
+                return;
+            }
+
+            f.stopwatch("Generate SDNAStructure data");
+            #endregion
+
             reader.Close();
+
+            f.stopwatch("Parse Blend");
         }
 
         /// <summary>
@@ -175,6 +202,11 @@ namespace BlenderToUnity
             StructureDNA structureDNA = StructureDNA.CreateStructureDNA(reader);
 
             return structureDNA;
+        }
+    
+        private bool CreateStructureData(StructureDNA structureDNA)
+        {
+            return StructureCreator.CreateSDNAStructures(ref structureDNA);
         }
     }
 }
