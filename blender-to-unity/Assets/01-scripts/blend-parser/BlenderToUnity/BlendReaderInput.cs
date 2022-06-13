@@ -1,13 +1,13 @@
 using UnityEditor;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using BlenderFileReader;
+using BlenderToUnity;
 
 [ExecuteInEditMode]
 public class BlendReaderInput : MonoBehaviour
 {
     
-    private string blendFilePath = @"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blend-parser\2012\example.blend";
+    private string blendFilePath = @"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blend-parser\BlenderToUnity\example.blend";
 
     [ReadOnly]
     public BlenderFile blend;

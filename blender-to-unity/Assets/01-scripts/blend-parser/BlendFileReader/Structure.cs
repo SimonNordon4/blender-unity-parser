@@ -300,6 +300,11 @@ namespace BlenderFileReader
 
         private ulong toPointer(byte[] value)
         {
+            if(value.Length < 1)
+            {
+                UnityEngine.Debug.LogError("toPointer: byte[] is empty");
+                return 0;
+            }
             return toPointer(value, 0);
         }
 
@@ -421,6 +426,8 @@ namespace BlenderFileReader
                     return new Field<float>(BitConverter.ToSingle(value, 0), fieldName, fieldType, fieldSize, parent, pointerSize);
                 else if(fieldType == "double")
                     return new Field<double>(BitConverter.ToDouble(value, 0), fieldName, fieldType, fieldSize, parent, pointerSize);
+                else if(fieldType == "int8_t")
+                    return new Field<sbyte[]>(Array.ConvertAll(value, b => unchecked((sbyte)b)), fieldName, fieldType, fieldSize, parent, pointerSize); // Added int8_t support
                 else if(fieldType == "int64_t")
                     return new Field<long>(BitConverter.ToInt64(value, 0), fieldName, fieldType, fieldSize, parent, pointerSize);
                 else if(fieldType == "uint64_t")
@@ -429,7 +436,8 @@ namespace BlenderFileReader
                     return new Field<ulong>(toPointer(value), fieldName, fieldType, fieldSize, parent, pointerSize);
                     
             }
-            throw new ArgumentException("Bad type name.", "fieldType");
+            UnityEngine.Debug.Log($"Bad field type name. {fieldType}");
+            return null;
         }
 
         private T[] fieldFactoryArrayHelper<T>(byte[] value, int size, Func<int, T> converter)

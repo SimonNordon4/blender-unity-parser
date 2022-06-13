@@ -111,7 +111,9 @@ namespace BlenderFileReader
             StructureDNA dna = null;
             do
             {
+                
                 FileBlock b = FileBlock.ReadBlock(fileReader, PointerSize);
+                
                 if(b.Code == "DNA1")
                     dna = (StructureDNA)b;
                 fileBlocks.Add(b);
