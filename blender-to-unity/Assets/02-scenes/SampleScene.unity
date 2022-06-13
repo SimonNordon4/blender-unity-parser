@@ -19876,4 +19876,2807 @@ MonoBehaviour:
         Name: 18
       - TypeOfField: 4
         Name: 4942
-      TypeDefintions: []
+      TypeDefintions:
+      - Name: char
+        Size: 1
+        IsPrimitive: 1
+      - Name: uchar
+        Size: 1
+        IsPrimitive: 1
+      - Name: short
+        Size: 2
+        IsPrimitive: 1
+      - Name: ushort
+        Size: 2
+        IsPrimitive: 1
+      - Name: int
+        Size: 4
+        IsPrimitive: 1
+      - Name: long
+        Size: 4
+        IsPrimitive: 1
+      - Name: ulong
+        Size: 4
+        IsPrimitive: 1
+      - Name: float
+        Size: 4
+        IsPrimitive: 1
+      - Name: double
+        Size: 8
+        IsPrimitive: 1
+      - Name: int64_t
+        Size: 8
+        IsPrimitive: 1
+      - Name: uint64_t
+        Size: 8
+        IsPrimitive: 1
+      - Name: void
+        Size: 0
+        IsPrimitive: 1
+      - Name: int8_t
+        Size: 1
+        IsPrimitive: 1
+      - Name: Link
+        Size: 16
+        IsPrimitive: 0
+      - Name: LinkData
+        Size: 24
+        IsPrimitive: 0
+      - Name: ListBase
+        Size: 16
+        IsPrimitive: 0
+      - Name: vec2s
+        Size: 4
+        IsPrimitive: 0
+      - Name: vec2f
+        Size: 8
+        IsPrimitive: 0
+      - Name: vec3f
+        Size: 12
+        IsPrimitive: 0
+      - Name: rcti
+        Size: 16
+        IsPrimitive: 0
+      - Name: rctf
+        Size: 16
+        IsPrimitive: 0
+      - Name: DualQuat
+        Size: 100
+        IsPrimitive: 0
+      - Name: DrawDataList
+        Size: 16
+        IsPrimitive: 0
+      - Name: DrawData
+        Size: 0
+        IsPrimitive: 1
+      - Name: IDPropertyUIData
+        Size: 16
+        IsPrimitive: 0
+      - Name: IDPropertyUIDataInt
+        Size: 56
+        IsPrimitive: 0
+      - Name: IDPropertyUIDataFloat
+        Size: 80
+        IsPrimitive: 0
+      - Name: IDPropertyUIDataString
+        Size: 24
+        IsPrimitive: 0
+      - Name: IDPropertyUIDataID
+        Size: 16
+        IsPrimitive: 0
+      - Name: IDPropertyData
+        Size: 32
+        IsPrimitive: 0
+      - Name: IDProperty
+        Size: 136
+        IsPrimitive: 0
+      - Name: IDOverrideLibraryPropertyOperation
+        Size: 48
+        IsPrimitive: 0
+      - Name: IDOverrideLibraryProperty
+        Size: 48
+        IsPrimitive: 0
+      - Name: IDOverrideLibrary
+        Size: 56
+        IsPrimitive: 0
+      - Name: ID
+        Size: 176
+        IsPrimitive: 0
+      - Name: IDOverrideLibraryRuntime
+        Size: 0
+        IsPrimitive: 1
+      - Name: Library
+        Size: 2264
+        IsPrimitive: 0
+      - Name: AssetMetaData
+        Size: 136
+        IsPrimitive: 0
+      - Name: LibraryWeakReference
+        Size: 1092
+        IsPrimitive: 0
+      - Name: FileData
+        Size: 0
+        IsPrimitive: 1
+      - Name: PackedFile
+        Size: 16
+        IsPrimitive: 0
+      - Name: PreviewImage
+        Size: 64
+        IsPrimitive: 0
+      - Name: GPUTexture
+        Size: 0
+        IsPrimitive: 1
+      - Name: IpoDriver
+        Size: 144
+        IsPrimitive: 0
+      - Name: Object
+        Size: 1432
+        IsPrimitive: 0
+      - Name: IpoCurve
+        Size: 112
+        IsPrimitive: 0
+      - Name: BPoint
+        Size: 36
+        IsPrimitive: 0
+      - Name: BezTriple
+        Size: 72
+        IsPrimitive: 0
+      - Name: Ipo
+        Size: 216
+        IsPrimitive: 0
+      - Name: KeyBlock
+        Size: 184
+        IsPrimitive: 0
+      - Name: Key
+        Size: 280
+        IsPrimitive: 0
+      - Name: AnimData
+        Size: 104
+        IsPrimitive: 0
+      - Name: TextLine
+        Size: 40
+        IsPrimitive: 0
+      - Name: Text
+        Size: 248
+        IsPrimitive: 0
+      - Name: GPUDOFSettings
+        Size: 32
+        IsPrimitive: 0
+      - Name: CameraStereoSettings
+        Size: 24
+        IsPrimitive: 0
+      - Name: CameraBGImage
+        Size: 104
+        IsPrimitive: 0
+      - Name: Image
+        Size: 1584
+        IsPrimitive: 0
+      - Name: ImageUser
+        Size: 40
+        IsPrimitive: 0
+      - Name: MovieClip
+        Size: 2512
+        IsPrimitive: 0
+      - Name: MovieClipUser
+        Size: 8
+        IsPrimitive: 0
+      - Name: CameraDOFSettings
+        Size: 32
+        IsPrimitive: 0
+      - Name: Camera_Runtime
+        Size: 216
+        IsPrimitive: 0
+      - Name: Camera
+        Size: 576
+        IsPrimitive: 0
+      - Name: Scene
+        Size: 6528
+        IsPrimitive: 0
+      - Name: ImageAnim
+        Size: 24
+        IsPrimitive: 0
+      - Name: anim
+        Size: 0
+        IsPrimitive: 1
+      - Name: ImageView
+        Size: 1104
+        IsPrimitive: 0
+      - Name: ImagePackedFile
+        Size: 1048
+        IsPrimitive: 0
+      - Name: RenderSlot
+        Size: 88
+        IsPrimitive: 0
+      - Name: RenderResult
+        Size: 0
+        IsPrimitive: 1
+      - Name: ImageTile_RuntimeTextureSlot
+        Size: 24
+        IsPrimitive: 0
+      - Name: ImageTile_Runtime
+        Size: 48
+        IsPrimitive: 0
+      - Name: ImageTile
+        Size: 136
+        IsPrimitive: 0
+      - Name: Image_Runtime
+        Size: 24
+        IsPrimitive: 0
+      - Name: PartialUpdateRegister
+        Size: 0
+        IsPrimitive: 1
+      - Name: PartialUpdateUser
+        Size: 0
+        IsPrimitive: 1
+      - Name: MovieCache
+        Size: 0
+        IsPrimitive: 1
+      - Name: ColorManagedColorspaceSettings
+        Size: 64
+        IsPrimitive: 0
+      - Name: Stereo3dFormat
+        Size: 8
+        IsPrimitive: 0
+      - Name: MTex
+        Size: 312
+        IsPrimitive: 0
+      - Name: Tex
+        Size: 440
+        IsPrimitive: 0
+      - Name: CBData
+        Size: 24
+        IsPrimitive: 0
+      - Name: ColorBand
+        Size: 776
+        IsPrimitive: 0
+      - Name: PointDensity
+        Size: 168
+        IsPrimitive: 0
+      - Name: CurveMapping
+        Size: 392
+        IsPrimitive: 0
+      - Name: bNodeTree
+        Size: 504
+        IsPrimitive: 0
+      - Name: TexMapping
+        Size: 144
+        IsPrimitive: 0
+      - Name: ColorMapping
+        Size: 816
+        IsPrimitive: 0
+      - Name: Lamp
+        Size: 416
+        IsPrimitive: 0
+      - Name: TexPaintSlot
+        Size: 24
+        IsPrimitive: 0
+      - Name: MaterialGPencilStyle
+        Size: 152
+        IsPrimitive: 0
+      - Name: MaterialLineArt
+        Size: 8
+        IsPrimitive: 0
+      - Name: Material
+        Size: 352
+        IsPrimitive: 0
+      - Name: VFont
+        Size: 1224
+        IsPrimitive: 0
+      - Name: VFontData
+        Size: 0
+        IsPrimitive: 1
+      - Name: MetaElem
+        Size: 104
+        IsPrimitive: 0
+      - Name: BoundBox
+        Size: 104
+        IsPrimitive: 0
+      - Name: MetaBall
+        Size: 312
+        IsPrimitive: 0
+      - Name: Nurb
+        Size: 88
+        IsPrimitive: 0
+      - Name: CharInfo
+        Size: 8
+        IsPrimitive: 0
+      - Name: TextBox
+        Size: 16
+        IsPrimitive: 0
+      - Name: Curve
+        Size: 600
+        IsPrimitive: 0
+      - Name: EditNurb
+        Size: 0
+        IsPrimitive: 1
+      - Name: CurveProfile
+        Size: 72
+        IsPrimitive: 0
+      - Name: EditFont
+        Size: 0
+        IsPrimitive: 1
+      - Name: CurveEval
+        Size: 0
+        IsPrimitive: 1
+      - Name: MLoopTri_Store
+        Size: 24
+        IsPrimitive: 0
+      - Name: MLoopTri
+        Size: 16
+        IsPrimitive: 0
+      - Name: Mesh_Runtime
+        Size: 208
+        IsPrimitive: 0
+      - Name: Mesh
+        Size: 1888
+        IsPrimitive: 0
+      - Name: EditMeshData
+        Size: 0
+        IsPrimitive: 1
+      - Name: BVHCache
+        Size: 0
+        IsPrimitive: 1
+      - Name: ShrinkwrapBoundaryData
+        Size: 0
+        IsPrimitive: 1
+      - Name: CustomData_MeshMasks
+        Size: 40
+        IsPrimitive: 0
+      - Name: SubdivCCG
+        Size: 0
+        IsPrimitive: 1
+      - Name: MVert
+        Size: 16
+        IsPrimitive: 0
+      - Name: MEdge
+        Size: 12
+        IsPrimitive: 0
+      - Name: MPoly
+        Size: 12
+        IsPrimitive: 0
+      - Name: MLoop
+        Size: 8
+        IsPrimitive: 0
+      - Name: CustomData
+        Size: 248
+        IsPrimitive: 0
+      - Name: MDeformVert
+        Size: 16
+        IsPrimitive: 0
+      - Name: MLoopUV
+        Size: 12
+        IsPrimitive: 0
+      - Name: MLoopCol
+        Size: 4
+        IsPrimitive: 0
+      - Name: BMEditMesh
+        Size: 0
+        IsPrimitive: 1
+      - Name: MSelect
+        Size: 8
+        IsPrimitive: 0
+      - Name: MTFace
+        Size: 32
+        IsPrimitive: 0
+      - Name: TFace
+        Size: 64
+        IsPrimitive: 0
+      - Name: MCol
+        Size: 4
+        IsPrimitive: 0
+      - Name: MFace
+        Size: 20
+        IsPrimitive: 0
+      - Name: MFloatProperty
+        Size: 4
+        IsPrimitive: 0
+      - Name: MIntProperty
+        Size: 4
+        IsPrimitive: 0
+      - Name: MStringProperty
+        Size: 256
+        IsPrimitive: 0
+      - Name: MBoolProperty
+        Size: 1
+        IsPrimitive: 0
+      - Name: MDeformWeight
+        Size: 8
+        IsPrimitive: 0
+      - Name: MVertSkin
+        Size: 16
+        IsPrimitive: 0
+      - Name: MPropCol
+        Size: 16
+        IsPrimitive: 0
+      - Name: MDisps
+        Size: 24
+        IsPrimitive: 0
+      - Name: GridPaintMask
+        Size: 16
+        IsPrimitive: 0
+      - Name: FreestyleEdge
+        Size: 1
+        IsPrimitive: 0
+      - Name: FreestyleFace
+        Size: 1
+        IsPrimitive: 0
+      - Name: MRecast
+        Size: 4
+        IsPrimitive: 0
+      - Name: ModifierData
+        Size: 120
+        IsPrimitive: 0
+      - Name: SessionUUID
+        Size: 8
+        IsPrimitive: 0
+      - Name: MappingInfoModifierData
+        Size: 272
+        IsPrimitive: 0
+      - Name: SubsurfRuntimeData
+        Size: 16
+        IsPrimitive: 0
+      - Name: Subdiv
+        Size: 0
+        IsPrimitive: 1
+      - Name: SubsurfModifierData
+        Size: 152
+        IsPrimitive: 0
+      - Name: LatticeModifierData
+        Size: 208
+        IsPrimitive: 0
+      - Name: CurveModifierData
+        Size: 208
+        IsPrimitive: 0
+      - Name: BuildModifierData
+        Size: 136
+        IsPrimitive: 0
+      - Name: MaskModifierData
+        Size: 208
+        IsPrimitive: 0
+      - Name: ArrayModifierData
+        Size: 208
+        IsPrimitive: 0
+      - Name: MirrorModifierData
+        Size: 168
+        IsPrimitive: 0
+      - Name: EdgeSplitModifierData
+        Size: 128
+        IsPrimitive: 0
+      - Name: BevelModifierData
+        Size: 248
+        IsPrimitive: 0
+      - Name: FluidModifierData
+        Size: 160
+        IsPrimitive: 0
+      - Name: FluidDomainSettings
+        Size: 2288
+        IsPrimitive: 0
+      - Name: FluidFlowSettings
+        Size: 208
+        IsPrimitive: 0
+      - Name: FluidEffectorSettings
+        Size: 56
+        IsPrimitive: 0
+      - Name: DisplaceModifierData
+        Size: 360
+        IsPrimitive: 0
+      - Name: UVProjectModifierData
+        Size: 296
+        IsPrimitive: 0
+      - Name: DecimateModifierData
+        Size: 208
+        IsPrimitive: 0
+      - Name: SmoothModifierData
+        Size: 192
+        IsPrimitive: 0
+      - Name: CastModifierData
+        Size: 216
+        IsPrimitive: 0
+      - Name: WaveModifierData
+        Size: 400
+        IsPrimitive: 0
+      - Name: ArmatureModifierData
+        Size: 208
+        IsPrimitive: 0
+      - Name: HookModifierData
+        Size: 376
+        IsPrimitive: 0
+      - Name: SoftbodyModifierData
+        Size: 120
+        IsPrimitive: 0
+      - Name: ClothModifierData
+        Size: 224
+        IsPrimitive: 0
+      - Name: Cloth
+        Size: 0
+        IsPrimitive: 1
+      - Name: ClothSimSettings
+        Size: 272
+        IsPrimitive: 0
+      - Name: ClothCollSettings
+        Size: 72
+        IsPrimitive: 0
+      - Name: PointCache
+        Size: 1392
+        IsPrimitive: 0
+      - Name: ClothHairData
+        Size: 0
+        IsPrimitive: 1
+      - Name: ClothSolverResult
+        Size: 0
+        IsPrimitive: 1
+      - Name: CollisionModifierData
+        Size: 208
+        IsPrimitive: 0
+      - Name: MVertTri
+        Size: 0
+        IsPrimitive: 1
+      - Name: BVHTree
+        Size: 0
+        IsPrimitive: 1
+      - Name: SurfaceModifierData
+        Size: 160
+        IsPrimitive: 0
+      - Name: BVHTreeFromMesh
+        Size: 0
+        IsPrimitive: 1
+      - Name: BooleanModifierData
+        Size: 144
+        IsPrimitive: 0
+      - Name: Collection
+        Size: 312
+        IsPrimitive: 0
+      - Name: MDefInfluence
+        Size: 8
+        IsPrimitive: 0
+      - Name: MDefCell
+        Size: 8
+        IsPrimitive: 0
+      - Name: MeshDeformModifierData
+        Size: 368
+        IsPrimitive: 0
+      - Name: ParticleSystemModifierData
+        Size: 168
+        IsPrimitive: 0
+      - Name: ParticleSystem
+        Size: 680
+        IsPrimitive: 0
+      - Name: ParticleInstanceModifierData
+        Size: 296
+        IsPrimitive: 0
+      - Name: ExplodeModifierData
+        Size: 208
+        IsPrimitive: 0
+      - Name: MultiresModifierData
+        Size: 136
+        IsPrimitive: 0
+      - Name: FluidsimModifierData
+        Size: 136
+        IsPrimitive: 0
+      - Name: FluidsimSettings
+        Size: 1240
+        IsPrimitive: 0
+      - Name: SmokeModifierData
+        Size: 128
+        IsPrimitive: 0
+      - Name: ShrinkwrapModifierData
+        Size: 216
+        IsPrimitive: 0
+      - Name: SimpleDeformModifierData
+        Size: 216
+        IsPrimitive: 0
+      - Name: ShapeKeyModifierData
+        Size: 120
+        IsPrimitive: 0
+      - Name: SolidifyModifierData
+        Size: 360
+        IsPrimitive: 0
+      - Name: ScrewModifierData
+        Size: 168
+        IsPrimitive: 0
+      - Name: OceanModifierData
+        Size: 1384
+        IsPrimitive: 0
+      - Name: Ocean
+        Size: 0
+        IsPrimitive: 1
+      - Name: OceanCache
+        Size: 0
+        IsPrimitive: 1
+      - Name: WarpModifierData
+        Size: 512
+        IsPrimitive: 0
+      - Name: WeightVGEditModifierData
+        Size: 440
+        IsPrimitive: 0
+      - Name: WeightVGMixModifierData
+        Size: 488
+        IsPrimitive: 0
+      - Name: WeightVGProximityModifierData
+        Size: 440
+        IsPrimitive: 0
+      - Name: DynamicPaintModifierData
+        Size: 144
+        IsPrimitive: 0
+      - Name: DynamicPaintCanvasSettings
+        Size: 96
+        IsPrimitive: 0
+      - Name: DynamicPaintBrushSettings
+        Size: 96
+        IsPrimitive: 0
+      - Name: RemeshModifierData
+        Size: 144
+        IsPrimitive: 0
+      - Name: SkinModifierData
+        Size: 128
+        IsPrimitive: 0
+      - Name: TriangulateModifierData
+        Size: 136
+        IsPrimitive: 0
+      - Name: LaplacianSmoothModifierData
+        Size: 200
+        IsPrimitive: 0
+      - Name: CorrectiveSmoothDeltaCache
+        Size: 32
+        IsPrimitive: 0
+      - Name: CorrectiveSmoothModifierData
+        Size: 248
+        IsPrimitive: 0
+      - Name: UVWarpModifierData
+        Size: 424
+        IsPrimitive: 0
+      - Name: MeshCacheModifierData
+        Size: 1248
+        IsPrimitive: 0
+      - Name: LaplacianDeformModifierData
+        Size: 216
+        IsPrimitive: 0
+      - Name: WireframeModifierData
+        Size: 208
+        IsPrimitive: 0
+      - Name: WeldModifierData
+        Size: 192
+        IsPrimitive: 0
+      - Name: DataTransferModifierData
+        Size: 280
+        IsPrimitive: 0
+      - Name: NormalEditModifierData
+        Size: 232
+        IsPrimitive: 0
+      - Name: MeshSeqCacheModifierData
+        Size: 2192
+        IsPrimitive: 0
+      - Name: CacheFile
+        Size: 2384
+        IsPrimitive: 0
+      - Name: CacheReader
+        Size: 0
+        IsPrimitive: 1
+      - Name: SDefBind
+        Size: 32
+        IsPrimitive: 0
+      - Name: SDefVert
+        Size: 16
+        IsPrimitive: 0
+      - Name: SurfaceDeformModifierData
+        Size: 304
+        IsPrimitive: 0
+      - Name: Depsgraph
+        Size: 0
+        IsPrimitive: 1
+      - Name: WeightedNormalModifierData
+        Size: 192
+        IsPrimitive: 0
+      - Name: NodesModifierSettings
+        Size: 8
+        IsPrimitive: 0
+      - Name: NodesModifierData
+        Size: 152
+        IsPrimitive: 0
+      - Name: MeshToVolumeModifierData
+        Size: 168
+        IsPrimitive: 0
+      - Name: VolumeDisplaceModifierData
+        Size: 160
+        IsPrimitive: 0
+      - Name: VolumeToMeshModifierData
+        Size: 224
+        IsPrimitive: 0
+      - Name: Lattice
+        Size: 368
+        IsPrimitive: 0
+      - Name: EditLatt
+        Size: 0
+        IsPrimitive: 1
+      - Name: bDeformGroup
+        Size: 88
+        IsPrimitive: 0
+      - Name: bFaceMap
+        Size: 88
+        IsPrimitive: 0
+      - Name: Object_Runtime
+        Size: 208
+        IsPrimitive: 0
+      - Name: GeometrySet
+        Size: 0
+        IsPrimitive: 1
+      - Name: bGPdata
+        Size: 568
+        IsPrimitive: 0
+      - Name: CurveCache
+        Size: 0
+        IsPrimitive: 1
+      - Name: ObjectLineArt
+        Size: 8
+        IsPrimitive: 0
+      - Name: SculptSession
+        Size: 0
+        IsPrimitive: 1
+      - Name: bAction
+        Size: 272
+        IsPrimitive: 0
+      - Name: bPose
+        Size: 208
+        IsPrimitive: 0
+      - Name: bAnimVizSettings
+        Size: 32
+        IsPrimitive: 0
+      - Name: bMotionPath
+        Size: 72
+        IsPrimitive: 0
+      - Name: PartDeflect
+        Size: 240
+        IsPrimitive: 0
+      - Name: SoftBody
+        Size: 480
+        IsPrimitive: 0
+      - Name: RigidBodyOb
+        Size: 88
+        IsPrimitive: 0
+      - Name: RigidBodyCon
+        Size: 152
+        IsPrimitive: 0
+      - Name: ObHook
+        Size: 256
+        IsPrimitive: 0
+      - Name: RNG
+        Size: 0
+        IsPrimitive: 1
+      - Name: EffectorWeights
+        Size: 72
+        IsPrimitive: 0
+      - Name: SBVertex
+        Size: 16
+        IsPrimitive: 0
+      - Name: SoftBody_Shared
+        Size: 24
+        IsPrimitive: 0
+      - Name: BodyPoint
+        Size: 0
+        IsPrimitive: 1
+      - Name: BodySpring
+        Size: 0
+        IsPrimitive: 1
+      - Name: SBScratch
+        Size: 0
+        IsPrimitive: 1
+      - Name: FluidVertexVelocity
+        Size: 12
+        IsPrimitive: 0
+      - Name: World
+        Size: 320
+        IsPrimitive: 0
+      - Name: AviCodecData
+        Size: 184
+        IsPrimitive: 0
+      - Name: FFMpegCodecData
+        Size: 80
+        IsPrimitive: 0
+      - Name: AudioData
+        Size: 32
+        IsPrimitive: 0
+      - Name: SceneRenderLayer
+        Size: 184
+        IsPrimitive: 0
+      - Name: FreestyleConfig
+        Size: 56
+        IsPrimitive: 0
+      - Name: SceneRenderView
+        Size: 152
+        IsPrimitive: 0
+      - Name: ImageFormatData
+        Size: 256
+        IsPrimitive: 0
+      - Name: ColorManagedViewSettings
+        Size: 160
+        IsPrimitive: 0
+      - Name: ColorManagedDisplaySettings
+        Size: 64
+        IsPrimitive: 0
+      - Name: BakeData
+        Size: 1320
+        IsPrimitive: 0
+      - Name: RenderData
+        Size: 4168
+        IsPrimitive: 0
+      - Name: RenderProfile
+        Size: 64
+        IsPrimitive: 0
+      - Name: TimeMarker
+        Size: 104
+        IsPrimitive: 0
+      - Name: Paint_Runtime
+        Size: 8
+        IsPrimitive: 0
+      - Name: PaintToolSlot
+        Size: 8
+        IsPrimitive: 0
+      - Name: Brush
+        Size: 2336
+        IsPrimitive: 0
+      - Name: Paint
+        Size: 88
+        IsPrimitive: 0
+      - Name: Palette
+        Size: 200
+        IsPrimitive: 0
+      - Name: ImagePaintSettings
+        Size: 152
+        IsPrimitive: 0
+      - Name: ParticleBrushData
+        Size: 16
+        IsPrimitive: 0
+      - Name: ParticleEditSettings
+        Size: 176
+        IsPrimitive: 0
+      - Name: Sculpt
+        Size: 136
+        IsPrimitive: 0
+      - Name: UvSculpt
+        Size: 88
+        IsPrimitive: 0
+      - Name: GpPaint
+        Size: 96
+        IsPrimitive: 0
+      - Name: GpVertexPaint
+        Size: 96
+        IsPrimitive: 0
+      - Name: GpSculptPaint
+        Size: 96
+        IsPrimitive: 0
+      - Name: GpWeightPaint
+        Size: 96
+        IsPrimitive: 0
+      - Name: VPaint
+        Size: 104
+        IsPrimitive: 0
+      - Name: GP_Sculpt_Guide
+        Size: 40
+        IsPrimitive: 0
+      - Name: GP_Sculpt_Settings
+        Size: 80
+        IsPrimitive: 0
+      - Name: GP_Interpolate_Settings
+        Size: 8
+        IsPrimitive: 0
+      - Name: UnifiedPaintSettings
+        Size: 160
+        IsPrimitive: 0
+      - Name: ColorSpace
+        Size: 0
+        IsPrimitive: 1
+      - Name: CurvePaintSettings
+        Size: 32
+        IsPrimitive: 0
+      - Name: MeshStatVis
+        Size: 40
+        IsPrimitive: 0
+      - Name: SequencerToolSettings
+        Size: 20
+        IsPrimitive: 0
+      - Name: ToolSettings
+        Size: 832
+        IsPrimitive: 0
+      - Name: UnitSettings
+        Size: 16
+        IsPrimitive: 0
+      - Name: PhysicsSettings
+        Size: 24
+        IsPrimitive: 0
+      - Name: DisplaySafeAreas
+        Size: 32
+        IsPrimitive: 0
+      - Name: SceneDisplay
+        Size: 984
+        IsPrimitive: 0
+      - Name: View3DShading
+        Size: 944
+        IsPrimitive: 0
+      - Name: SceneEEVEE
+        Size: 288
+        IsPrimitive: 0
+      - Name: LightCache
+        Size: 128
+        IsPrimitive: 0
+      - Name: SceneGpencil
+        Size: 8
+        IsPrimitive: 0
+      - Name: TransformOrientationSlot
+        Size: 16
+        IsPrimitive: 0
+      - Name: Base
+        Size: 72
+        IsPrimitive: 0
+      - Name: View3DCursor
+        Size: 64
+        IsPrimitive: 0
+      - Name: Editing
+        Size: 3200
+        IsPrimitive: 0
+      - Name: GHash
+        Size: 0
+        IsPrimitive: 1
+      - Name: RigidBodyWorld
+        Size: 88
+        IsPrimitive: 0
+      - Name: SceneCollection
+        Size: 120
+        IsPrimitive: 0
+      - Name: RegionView3D
+        Size: 928
+        IsPrimitive: 0
+      - Name: RenderEngine
+        Size: 0
+        IsPrimitive: 1
+      - Name: SmoothView3DStore
+        Size: 0
+        IsPrimitive: 1
+      - Name: wmTimer
+        Size: 0
+        IsPrimitive: 1
+      - Name: View3DOverlay
+        Size: 96
+        IsPrimitive: 0
+      - Name: View3D_Runtime
+        Size: 24
+        IsPrimitive: 0
+      - Name: SceneStats
+        Size: 0
+        IsPrimitive: 1
+      - Name: View3D
+        Size: 1344
+        IsPrimitive: 0
+      - Name: SpaceLink
+        Size: 40
+        IsPrimitive: 0
+      - Name: View2D
+        Size: 152
+        IsPrimitive: 0
+      - Name: SmoothView2DStore
+        Size: 0
+        IsPrimitive: 1
+      - Name: SpaceInfo
+        Size: 48
+        IsPrimitive: 0
+      - Name: SpaceButs
+        Size: 248
+        IsPrimitive: 0
+      - Name: SpaceProperties_Runtime
+        Size: 0
+        IsPrimitive: 1
+      - Name: SpaceOops
+        Size: 320
+        IsPrimitive: 0
+      - Name: BLI_mempool
+        Size: 0
+        IsPrimitive: 1
+      - Name: TreeStoreElem
+        Size: 16
+        IsPrimitive: 0
+      - Name: SpaceOutliner_Runtime
+        Size: 0
+        IsPrimitive: 1
+      - Name: SpaceGraph_Runtime
+        Size: 24
+        IsPrimitive: 0
+      - Name: SpaceIpo
+        Size: 248
+        IsPrimitive: 0
+      - Name: bDopeSheet
+        Size: 112
+        IsPrimitive: 0
+      - Name: SpaceNla
+        Size: 208
+        IsPrimitive: 0
+      - Name: SequencerPreviewOverlay
+        Size: 8
+        IsPrimitive: 0
+      - Name: SequencerTimelineOverlay
+        Size: 8
+        IsPrimitive: 0
+      - Name: SpaceSeqRuntime
+        Size: 24
+        IsPrimitive: 0
+      - Name: SpaceSeq
+        Size: 336
+        IsPrimitive: 0
+      - Name: SequencerScopes
+        Size: 48
+        IsPrimitive: 0
+      - Name: MaskSpaceInfo
+        Size: 16
+        IsPrimitive: 0
+      - Name: Mask
+        Size: 224
+        IsPrimitive: 0
+      - Name: FileSelectParams
+        Size: 2088
+        IsPrimitive: 0
+      - Name: FileAssetSelectParams
+        Size: 2128
+        IsPrimitive: 0
+      - Name: AssetLibraryReference
+        Size: 8
+        IsPrimitive: 0
+      - Name: bUUID
+        Size: 16
+        IsPrimitive: 0
+      - Name: FileFolderHistory
+        Size: 56
+        IsPrimitive: 0
+      - Name: FileFolderLists
+        Size: 0
+        IsPrimitive: 1
+      - Name: SpaceFile
+        Size: 160
+        IsPrimitive: 0
+      - Name: FileList
+        Size: 0
+        IsPrimitive: 1
+      - Name: wmOperator
+        Size: 168
+        IsPrimitive: 0
+      - Name: FileLayout
+        Size: 0
+        IsPrimitive: 1
+      - Name: SpaceFile_Runtime
+        Size: 0
+        IsPrimitive: 1
+      - Name: SpaceImageOverlay
+        Size: 8
+        IsPrimitive: 0
+      - Name: SpaceImage
+        Size: 10608
+        IsPrimitive: 0
+      - Name: Scopes
+        Size: 5264
+        IsPrimitive: 0
+      - Name: Histogram
+        Size: 5160
+        IsPrimitive: 0
+      - Name: SpaceText_Runtime
+        Size: 72
+        IsPrimitive: 0
+      - Name: SpaceText
+        Size: 664
+        IsPrimitive: 0
+      - Name: Script
+        Size: 1504
+        IsPrimitive: 0
+      - Name: SpaceScript
+        Size: 64
+        IsPrimitive: 0
+      - Name: bNodeTreePath
+        Size: 168
+        IsPrimitive: 0
+      - Name: bNodeInstanceKey
+        Size: 4
+        IsPrimitive: 0
+      - Name: SpaceNodeOverlay
+        Size: 4
+        IsPrimitive: 0
+      - Name: SpaceNode
+        Size: 352
+        IsPrimitive: 0
+      - Name: SpaceNode_Runtime
+        Size: 0
+        IsPrimitive: 1
+      - Name: ConsoleLine
+        Size: 40
+        IsPrimitive: 0
+      - Name: SpaceConsole
+        Size: 376
+        IsPrimitive: 0
+      - Name: SpaceUserPref
+        Size: 112
+        IsPrimitive: 0
+      - Name: SpaceClip
+        Size: 416
+        IsPrimitive: 0
+      - Name: MovieClipScopes
+        Size: 136
+        IsPrimitive: 0
+      - Name: SpaceTopBar
+        Size: 40
+        IsPrimitive: 0
+      - Name: SpaceStatusBar
+        Size: 40
+        IsPrimitive: 0
+      - Name: SpreadsheetColumnID
+        Size: 8
+        IsPrimitive: 0
+      - Name: SpreadsheetColumn
+        Size: 40
+        IsPrimitive: 0
+      - Name: SpreadsheetContext
+        Size: 24
+        IsPrimitive: 0
+      - Name: SpreadsheetContextObject
+        Size: 32
+        IsPrimitive: 0
+      - Name: SpreadsheetContextModifier
+        Size: 32
+        IsPrimitive: 0
+      - Name: SpreadsheetContextNode
+        Size: 32
+        IsPrimitive: 0
+      - Name: SpaceSpreadsheet
+        Size: 104
+        IsPrimitive: 0
+      - Name: SpaceSpreadsheet_Runtime
+        Size: 0
+        IsPrimitive: 1
+      - Name: SpreadsheetRowFilter
+        Size: 144
+        IsPrimitive: 0
+      - Name: uiFontStyle
+        Size: 32
+        IsPrimitive: 0
+      - Name: uiStyle
+        Size: 232
+        IsPrimitive: 0
+      - Name: uiWidgetColors
+        Size: 40
+        IsPrimitive: 0
+      - Name: uiWidgetStateColors
+        Size: 48
+        IsPrimitive: 0
+      - Name: uiPanelColors
+        Size: 16
+        IsPrimitive: 0
+      - Name: ThemeUI
+        Size: 960
+        IsPrimitive: 0
+      - Name: ThemeSpace
+        Size: 888
+        IsPrimitive: 0
+      - Name: ThemeWireColor
+        Size: 16
+        IsPrimitive: 0
+      - Name: ThemeCollectionColor
+        Size: 4
+        IsPrimitive: 0
+      - Name: ThemeStripColor
+        Size: 4
+        IsPrimitive: 0
+      - Name: bTheme
+        Size: 17384
+        IsPrimitive: 0
+      - Name: bAddon
+        Size: 88
+        IsPrimitive: 0
+      - Name: bPathCompare
+        Size: 792
+        IsPrimitive: 0
+      - Name: bUserMenu
+        Size: 104
+        IsPrimitive: 0
+      - Name: bUserMenuItem
+        Size: 88
+        IsPrimitive: 0
+      - Name: bUserMenuItem_Op
+        Size: 168
+        IsPrimitive: 0
+      - Name: bUserMenuItem_Menu
+        Size: 152
+        IsPrimitive: 0
+      - Name: bUserMenuItem_Prop
+        Size: 416
+        IsPrimitive: 0
+      - Name: bUserAssetLibrary
+        Size: 1104
+        IsPrimitive: 0
+      - Name: SolidLight
+        Size: 64
+        IsPrimitive: 0
+      - Name: WalkNavigation
+        Size: 32
+        IsPrimitive: 0
+      - Name: UserDef_Runtime
+        Size: 8
+        IsPrimitive: 0
+      - Name: UserDef_SpaceData
+        Size: 8
+        IsPrimitive: 0
+      - Name: UserDef_FileSpaceData
+        Size: 40
+        IsPrimitive: 0
+      - Name: UserDef_Experimental
+        Size: 16
+        IsPrimitive: 0
+      - Name: UserDef
+        Size: 13280
+        IsPrimitive: 0
+      - Name: bScreen
+        Size: 304
+        IsPrimitive: 0
+      - Name: ARegion
+        Size: 424
+        IsPrimitive: 0
+      - Name: wmTooltipState
+        Size: 0
+        IsPrimitive: 1
+      - Name: ScrVert
+        Size: 32
+        IsPrimitive: 0
+      - Name: ScrEdge
+        Size: 40
+        IsPrimitive: 0
+      - Name: ScrAreaMap
+        Size: 48
+        IsPrimitive: 0
+      - Name: Panel_Runtime
+        Size: 32
+        IsPrimitive: 0
+      - Name: PointerRNA
+        Size: 0
+        IsPrimitive: 1
+      - Name: uiBlock
+        Size: 0
+        IsPrimitive: 1
+      - Name: bContextStore
+        Size: 0
+        IsPrimitive: 1
+      - Name: Panel
+        Size: 256
+        IsPrimitive: 0
+      - Name: PanelType
+        Size: 0
+        IsPrimitive: 1
+      - Name: uiLayout
+        Size: 0
+        IsPrimitive: 1
+      - Name: PanelCategoryStack
+        Size: 80
+        IsPrimitive: 0
+      - Name: uiList
+        Size: 216
+        IsPrimitive: 0
+      - Name: uiListType
+        Size: 0
+        IsPrimitive: 1
+      - Name: uiListDyn
+        Size: 0
+        IsPrimitive: 1
+      - Name: TransformOrientation
+        Size: 120
+        IsPrimitive: 0
+      - Name: uiPreview
+        Size: 88
+        IsPrimitive: 0
+      - Name: ScrGlobalAreaData
+        Size: 12
+        IsPrimitive: 0
+      - Name: ScrArea_Runtime
+        Size: 16
+        IsPrimitive: 0
+      - Name: bToolRef
+        Size: 168
+        IsPrimitive: 0
+      - Name: ScrArea
+        Size: 184
+        IsPrimitive: 0
+      - Name: SpaceType
+        Size: 0
+        IsPrimitive: 1
+      - Name: ARegion_Runtime
+        Size: 40
+        IsPrimitive: 0
+      - Name: ARegionType
+        Size: 0
+        IsPrimitive: 1
+      - Name: wmGizmoMap
+        Size: 0
+        IsPrimitive: 1
+      - Name: wmDrawBuffer
+        Size: 0
+        IsPrimitive: 1
+      - Name: FileGlobal
+        Size: 1104
+        IsPrimitive: 0
+      - Name: ViewLayer
+        Size: 304
+        IsPrimitive: 0
+      - Name: StripAnim
+        Size: 24
+        IsPrimitive: 0
+      - Name: StripElem
+        Size: 268
+        IsPrimitive: 0
+      - Name: StripCrop
+        Size: 16
+        IsPrimitive: 0
+      - Name: StripTransform
+        Size: 28
+        IsPrimitive: 0
+      - Name: StripColorBalance
+        Size: 84
+        IsPrimitive: 0
+      - Name: StripProxy
+        Size: 1048
+        IsPrimitive: 0
+      - Name: Strip
+        Size: 904
+        IsPrimitive: 0
+      - Name: SequenceRuntime
+        Size: 8
+        IsPrimitive: 0
+      - Name: Sequence
+        Size: 392
+        IsPrimitive: 0
+      - Name: bSound
+        Size: 1304
+        IsPrimitive: 0
+      - Name: MetaStack
+        Size: 40
+        IsPrimitive: 0
+      - Name: EditingRuntime
+        Size: 8
+        IsPrimitive: 0
+      - Name: SequenceLookup
+        Size: 0
+        IsPrimitive: 1
+      - Name: SeqCache
+        Size: 0
+        IsPrimitive: 1
+      - Name: PrefetchJob
+        Size: 0
+        IsPrimitive: 1
+      - Name: WipeVars
+        Size: 12
+        IsPrimitive: 0
+      - Name: GlowVars
+        Size: 24
+        IsPrimitive: 0
+      - Name: TransformVars
+        Size: 32
+        IsPrimitive: 0
+      - Name: SolidColorVars
+        Size: 16
+        IsPrimitive: 0
+      - Name: SpeedControlVars
+        Size: 32
+        IsPrimitive: 0
+      - Name: GaussianBlurVars
+        Size: 8
+        IsPrimitive: 0
+      - Name: TextVars
+        Size: 600
+        IsPrimitive: 0
+      - Name: ColorMixVars
+        Size: 8
+        IsPrimitive: 0
+      - Name: SequenceModifierData
+        Size: 112
+        IsPrimitive: 0
+      - Name: ColorBalanceModifierData
+        Size: 200
+        IsPrimitive: 0
+      - Name: CurvesModifierData
+        Size: 504
+        IsPrimitive: 0
+      - Name: HueCorrectModifierData
+        Size: 504
+        IsPrimitive: 0
+      - Name: BrightContrastModifierData
+        Size: 120
+        IsPrimitive: 0
+      - Name: SequencerMaskModifierData
+        Size: 112
+        IsPrimitive: 0
+      - Name: WhiteBalanceModifierData
+        Size: 128
+        IsPrimitive: 0
+      - Name: SequencerTonemapModifierData
+        Size: 144
+        IsPrimitive: 0
+      - Name: ImBuf
+        Size: 0
+        IsPrimitive: 1
+      - Name: Effect
+        Size: 24
+        IsPrimitive: 0
+      - Name: BuildEff
+        Size: 32
+        IsPrimitive: 0
+      - Name: PartEff
+        Size: 392
+        IsPrimitive: 0
+      - Name: Particle
+        Size: 0
+        IsPrimitive: 1
+      - Name: WaveEff
+        Size: 64
+        IsPrimitive: 0
+      - Name: TreeStore
+        Size: 16
+        IsPrimitive: 0
+      - Name: CollectionObject
+        Size: 24
+        IsPrimitive: 0
+      - Name: CollectionChild
+        Size: 24
+        IsPrimitive: 0
+      - Name: Bone
+        Size: 424
+        IsPrimitive: 0
+      - Name: bArmature
+        Size: 272
+        IsPrimitive: 0
+      - Name: EditBone
+        Size: 0
+        IsPrimitive: 1
+      - Name: bMotionPathVert
+        Size: 16
+        IsPrimitive: 0
+      - Name: GPUVertBuf
+        Size: 0
+        IsPrimitive: 1
+      - Name: GPUBatch
+        Size: 0
+        IsPrimitive: 1
+      - Name: bPoseChannel_Runtime
+        Size: 144
+        IsPrimitive: 0
+      - Name: Mat4
+        Size: 0
+        IsPrimitive: 1
+      - Name: bPoseChannel
+        Size: 960
+        IsPrimitive: 0
+      - Name: bPoseChannelDrawData
+        Size: 0
+        IsPrimitive: 1
+      - Name: bIKParam
+        Size: 4
+        IsPrimitive: 0
+      - Name: bItasc
+        Size: 40
+        IsPrimitive: 0
+      - Name: bActionGroup
+        Size: 120
+        IsPrimitive: 0
+      - Name: SpaceAction_Runtime
+        Size: 8
+        IsPrimitive: 0
+      - Name: SpaceAction
+        Size: 336
+        IsPrimitive: 0
+      - Name: bActionChannel
+        Size: 120
+        IsPrimitive: 0
+      - Name: bConstraintChannel
+        Size: 56
+        IsPrimitive: 0
+      - Name: bConstraint
+        Size: 192
+        IsPrimitive: 0
+      - Name: bConstraintTarget
+        Size: 168
+        IsPrimitive: 0
+      - Name: bPythonConstraint
+        Size: 112
+        IsPrimitive: 0
+      - Name: bKinematicConstraint
+        Size: 184
+        IsPrimitive: 0
+      - Name: bSplineIKConstraint
+        Size: 48
+        IsPrimitive: 0
+      - Name: bArmatureConstraint
+        Size: 24
+        IsPrimitive: 0
+      - Name: bTrackToConstraint
+        Size: 88
+        IsPrimitive: 0
+      - Name: bRotateLikeConstraint
+        Size: 80
+        IsPrimitive: 0
+      - Name: bLocateLikeConstraint
+        Size: 80
+        IsPrimitive: 0
+      - Name: bSizeLikeConstraint
+        Size: 80
+        IsPrimitive: 0
+      - Name: bSameVolumeConstraint
+        Size: 8
+        IsPrimitive: 0
+      - Name: bTransLikeConstraint
+        Size: 80
+        IsPrimitive: 0
+      - Name: bMinMaxConstraint
+        Size: 88
+        IsPrimitive: 0
+      - Name: bActionConstraint
+        Size: 112
+        IsPrimitive: 0
+      - Name: bLockTrackConstraint
+        Size: 80
+        IsPrimitive: 0
+      - Name: bDampTrackConstraint
+        Size: 80
+        IsPrimitive: 0
+      - Name: bFollowPathConstraint
+        Size: 24
+        IsPrimitive: 0
+      - Name: bStretchToConstraint
+        Size: 104
+        IsPrimitive: 0
+      - Name: bRigidBodyJointConstraint
+        Size: 104
+        IsPrimitive: 0
+      - Name: bClampToConstraint
+        Size: 16
+        IsPrimitive: 0
+      - Name: bChildOfConstraint
+        Size: 144
+        IsPrimitive: 0
+      - Name: bTransformConstraint
+        Size: 232
+        IsPrimitive: 0
+      - Name: bPivotConstraint
+        Size: 88
+        IsPrimitive: 0
+      - Name: bLocLimitConstraint
+        Size: 28
+        IsPrimitive: 0
+      - Name: bRotLimitConstraint
+        Size: 32
+        IsPrimitive: 0
+      - Name: bSizeLimitConstraint
+        Size: 28
+        IsPrimitive: 0
+      - Name: bDistLimitConstraint
+        Size: 88
+        IsPrimitive: 0
+      - Name: bShrinkwrapConstraint
+        Size: 24
+        IsPrimitive: 0
+      - Name: bFollowTrackConstraint
+        Size: 160
+        IsPrimitive: 0
+      - Name: bCameraSolverConstraint
+        Size: 16
+        IsPrimitive: 0
+      - Name: bObjectSolverConstraint
+        Size: 152
+        IsPrimitive: 0
+      - Name: bTransformCacheConstraint
+        Size: 2064
+        IsPrimitive: 0
+      - Name: bActionModifier
+        Size: 72
+        IsPrimitive: 0
+      - Name: bActionStrip
+        Size: 168
+        IsPrimitive: 0
+      - Name: bNodeStack
+        Size: 48
+        IsPrimitive: 0
+      - Name: bNodeSocket
+        Size: 488
+        IsPrimitive: 0
+      - Name: bNodeSocketType
+        Size: 0
+        IsPrimitive: 1
+      - Name: bNodeLink
+        Size: 56
+        IsPrimitive: 0
+      - Name: SocketDeclarationHandle
+        Size: 0
+        IsPrimitive: 1
+      - Name: bNode
+        Size: 448
+        IsPrimitive: 0
+      - Name: bNodeType
+        Size: 0
+        IsPrimitive: 1
+      - Name: NodeDeclarationHandle
+        Size: 0
+        IsPrimitive: 1
+      - Name: bNodeTreeType
+        Size: 0
+        IsPrimitive: 1
+      - Name: StructRNA
+        Size: 0
+        IsPrimitive: 1
+      - Name: FieldInferencingInterfaceHandle
+        Size: 0
+        IsPrimitive: 1
+      - Name: bNodeInstanceHash
+        Size: 0
+        IsPrimitive: 1
+      - Name: bNodeTreeExec
+        Size: 0
+        IsPrimitive: 1
+      - Name: bNodeSocketValueInt
+        Size: 16
+        IsPrimitive: 0
+      - Name: bNodeSocketValueFloat
+        Size: 16
+        IsPrimitive: 0
+      - Name: bNodeSocketValueBoolean
+        Size: 1
+        IsPrimitive: 0
+      - Name: bNodeSocketValueVector
+        Size: 24
+        IsPrimitive: 0
+      - Name: bNodeSocketValueRGBA
+        Size: 16
+        IsPrimitive: 0
+      - Name: bNodeSocketValueString
+        Size: 1032
+        IsPrimitive: 0
+      - Name: bNodeSocketValueObject
+        Size: 8
+        IsPrimitive: 0
+      - Name: bNodeSocketValueImage
+        Size: 8
+        IsPrimitive: 0
+      - Name: bNodeSocketValueCollection
+        Size: 8
+        IsPrimitive: 0
+      - Name: bNodeSocketValueTexture
+        Size: 8
+        IsPrimitive: 0
+      - Name: bNodeSocketValueMaterial
+        Size: 8
+        IsPrimitive: 0
+      - Name: NodeFrame
+        Size: 4
+        IsPrimitive: 0
+      - Name: NodeImageAnim
+        Size: 16
+        IsPrimitive: 0
+      - Name: ColorCorrectionData
+        Size: 24
+        IsPrimitive: 0
+      - Name: NodeColorCorrection
+        Size: 104
+        IsPrimitive: 0
+      - Name: NodeBokehImage
+        Size: 20
+        IsPrimitive: 0
+      - Name: NodeBoxMask
+        Size: 24
+        IsPrimitive: 0
+      - Name: NodeEllipseMask
+        Size: 24
+        IsPrimitive: 0
+      - Name: NodeImageLayer
+        Size: 68
+        IsPrimitive: 0
+      - Name: NodeBlurData
+        Size: 40
+        IsPrimitive: 0
+      - Name: NodeDBlurData
+        Size: 28
+        IsPrimitive: 0
+      - Name: NodeBilateralBlurData
+        Size: 12
+        IsPrimitive: 0
+      - Name: NodeAntiAliasingData
+        Size: 12
+        IsPrimitive: 0
+      - Name: NodeHueSat
+        Size: 12
+        IsPrimitive: 0
+      - Name: NodeImageFile
+        Size: 1288
+        IsPrimitive: 0
+      - Name: NodeImageMultiFile
+        Size: 1296
+        IsPrimitive: 0
+      - Name: NodeImageMultiFileSocket
+        Size: 1320
+        IsPrimitive: 0
+      - Name: NodeChroma
+        Size: 44
+        IsPrimitive: 0
+      - Name: NodeTwoXYs
+        Size: 24
+        IsPrimitive: 0
+      - Name: NodeTwoFloats
+        Size: 8
+        IsPrimitive: 0
+      - Name: NodeVertexCol
+        Size: 64
+        IsPrimitive: 0
+      - Name: NodeDefocus
+        Size: 32
+        IsPrimitive: 0
+      - Name: NodeScriptDict
+        Size: 16
+        IsPrimitive: 0
+      - Name: NodeGlare
+        Size: 32
+        IsPrimitive: 0
+      - Name: NodeTonemap
+        Size: 32
+        IsPrimitive: 0
+      - Name: NodeLensDist
+        Size: 8
+        IsPrimitive: 0
+      - Name: NodeColorBalance
+        Size: 80
+        IsPrimitive: 0
+      - Name: NodeColorspill
+        Size: 20
+        IsPrimitive: 0
+      - Name: NodeConvertColorSpace
+        Size: 128
+        IsPrimitive: 0
+      - Name: NodeDilateErode
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeMask
+        Size: 8
+        IsPrimitive: 0
+      - Name: NodeSetAlpha
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeTexBase
+        Size: 960
+        IsPrimitive: 0
+      - Name: NodeTexSky
+        Size: 1024
+        IsPrimitive: 0
+      - Name: NodeTexImage
+        Size: 1024
+        IsPrimitive: 0
+      - Name: NodeTexChecker
+        Size: 960
+        IsPrimitive: 0
+      - Name: NodeTexBrick
+        Size: 976
+        IsPrimitive: 0
+      - Name: NodeTexEnvironment
+        Size: 1016
+        IsPrimitive: 0
+      - Name: NodeTexGradient
+        Size: 968
+        IsPrimitive: 0
+      - Name: NodeTexNoise
+        Size: 968
+        IsPrimitive: 0
+      - Name: NodeTexVoronoi
+        Size: 976
+        IsPrimitive: 0
+      - Name: NodeTexMusgrave
+        Size: 968
+        IsPrimitive: 0
+      - Name: NodeTexWave
+        Size: 976
+        IsPrimitive: 0
+      - Name: NodeTexMagic
+        Size: 968
+        IsPrimitive: 0
+      - Name: NodeShaderAttribute
+        Size: 72
+        IsPrimitive: 0
+      - Name: NodeShaderVectTransform
+        Size: 16
+        IsPrimitive: 0
+      - Name: NodeShaderTexPointDensity
+        Size: 1224
+        IsPrimitive: 0
+      - Name: NodeShaderPrincipled
+        Size: 4
+        IsPrimitive: 0
+      - Name: TexNodeOutput
+        Size: 64
+        IsPrimitive: 0
+      - Name: NodeKeyingScreenData
+        Size: 64
+        IsPrimitive: 0
+      - Name: NodeKeyingData
+        Size: 48
+        IsPrimitive: 0
+      - Name: NodeTrackPosData
+        Size: 128
+        IsPrimitive: 0
+      - Name: NodeTranslateData
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodePlaneTrackDeformData
+        Size: 136
+        IsPrimitive: 0
+      - Name: NodeShaderScript
+        Size: 1104
+        IsPrimitive: 0
+      - Name: NodeShaderTangent
+        Size: 72
+        IsPrimitive: 0
+      - Name: NodeShaderNormalMap
+        Size: 68
+        IsPrimitive: 0
+      - Name: NodeShaderUVMap
+        Size: 64
+        IsPrimitive: 0
+      - Name: NodeShaderVertexColor
+        Size: 64
+        IsPrimitive: 0
+      - Name: NodeShaderTexIES
+        Size: 1028
+        IsPrimitive: 0
+      - Name: NodeShaderOutputAOV
+        Size: 64
+        IsPrimitive: 0
+      - Name: NodeSunBeams
+        Size: 12
+        IsPrimitive: 0
+      - Name: CryptomatteEntry
+        Size: 88
+        IsPrimitive: 0
+      - Name: CryptomatteLayer
+        Size: 80
+        IsPrimitive: 0
+      - Name: NodeCryptomatte_Runtime
+        Size: 40
+        IsPrimitive: 0
+      - Name: NodeCryptomatte
+        Size: 176
+        IsPrimitive: 0
+      - Name: NodeDenoise
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeMapRange
+        Size: 8
+        IsPrimitive: 0
+      - Name: NodeAttributeClamp
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeAttributeCompare
+        Size: 8
+        IsPrimitive: 0
+      - Name: NodeAttributeMapRange
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeAttributeMath
+        Size: 4
+        IsPrimitive: 0
+      - Name: NodeAttributeMix
+        Size: 4
+        IsPrimitive: 0
+      - Name: NodeRandomValue
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeAccumulateField
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeAttributeRandomize
+        Size: 4
+        IsPrimitive: 0
+      - Name: NodeAttributeVectorMath
+        Size: 4
+        IsPrimitive: 0
+      - Name: NodeAttributeVectorRotate
+        Size: 8
+        IsPrimitive: 0
+      - Name: NodeAttributeColorRamp
+        Size: 776
+        IsPrimitive: 0
+      - Name: NodeAttributeCurveMap
+        Size: 24
+        IsPrimitive: 0
+      - Name: NodeInputBool
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeInputInt
+        Size: 4
+        IsPrimitive: 0
+      - Name: NodeInputVector
+        Size: 12
+        IsPrimitive: 0
+      - Name: NodeInputColor
+        Size: 16
+        IsPrimitive: 0
+      - Name: NodeInputString
+        Size: 8
+        IsPrimitive: 0
+      - Name: NodeGeometryRotatePoints
+        Size: 8
+        IsPrimitive: 0
+      - Name: NodeGeometryAlignRotationToVector
+        Size: 4
+        IsPrimitive: 0
+      - Name: NodeGeometryPointScale
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryPointTranslate
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryExtrudeMesh
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryObjectInfo
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryPointInstance
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeGeometryPointsToVolume
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeGeometryCollectionInfo
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryAttributeProximity
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryProximity
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryVolumeToMesh
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeAttributeCombineXYZ
+        Size: 4
+        IsPrimitive: 0
+      - Name: NodeAttributeSeparateXYZ
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeAttributeConvert
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeGeometrySubdivisionSurface
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeGeometryMeshCircle
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryMeshCylinder
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryMeshCone
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryMeshLine
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeSwitch
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryCurveSplineType
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometrySetCurveHandlePositions
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryCurveSetHandles
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeGeometryCurveSelectHandles
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeGeometryCurvePrimitiveArc
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryCurvePrimitiveLine
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryCurvePrimitiveBezierSegment
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryCurvePrimitiveCircle
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryCurvePrimitiveQuad
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryCurveResample
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryCurveSubdivide
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryCurveFillet
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryCurveTrim
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryCurveToPoints
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryCurveSample
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryAttributeTransfer
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeGeometryTransferAttribute
+        Size: 4
+        IsPrimitive: 0
+      - Name: NodeGeometryRaycast
+        Size: 4
+        IsPrimitive: 0
+      - Name: NodeGeometryCurveFill
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryMeshToPoints
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryAttributeCapture
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeGeometryStringToCurves
+        Size: 4
+        IsPrimitive: 0
+      - Name: NodeGeometryDeleteGeometry
+        Size: 2
+        IsPrimitive: 0
+      - Name: NodeGeometrySeparateGeometry
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeGeometryImageTexture
+        Size: 8
+        IsPrimitive: 0
+      - Name: NodeGeometryViewer
+        Size: 1
+        IsPrimitive: 0
+      - Name: NodeFunctionCompare
+        Size: 4
+        IsPrimitive: 0
+      - Name: CurveMapPoint
+        Size: 12
+        IsPrimitive: 0
+      - Name: CurveMap
+        Size: 72
+        IsPrimitive: 0
+      - Name: BrushClone
+        Size: 24
+        IsPrimitive: 0
+      - Name: BrushGpencilSettings
+        Size: 232
+        IsPrimitive: 0
+      - Name: PaintCurve
+        Size: 192
+        IsPrimitive: 0
+      - Name: tPaletteColorHSV
+        Size: 28
+        IsPrimitive: 0
+      - Name: PaletteColor
+        Size: 32
+        IsPrimitive: 0
+      - Name: PaintCurvePoint
+        Size: 76
+        IsPrimitive: 0
+      - Name: CustomDataLayer
+        Size: 112
+        IsPrimitive: 0
+      - Name: AnonymousAttributeID
+        Size: 0
+        IsPrimitive: 1
+      - Name: CustomDataExternal
+        Size: 1024
+        IsPrimitive: 0
+      - Name: HairKey
+        Size: 36
+        IsPrimitive: 0
+      - Name: ParticleKey
+        Size: 56
+        IsPrimitive: 0
+      - Name: BoidParticle
+        Size: 56
+        IsPrimitive: 0
+      - Name: BoidData
+        Size: 20
+        IsPrimitive: 0
+      - Name: ParticleSpring
+        Size: 16
+        IsPrimitive: 0
+      - Name: ChildParticle
+        Size: 64
+        IsPrimitive: 0
+      - Name: ParticleTarget
+        Size: 40
+        IsPrimitive: 0
+      - Name: ParticleDupliWeight
+        Size: 32
+        IsPrimitive: 0
+      - Name: ParticleData
+        Size: 200
+        IsPrimitive: 0
+      - Name: SPHFluidSettings
+        Size: 68
+        IsPrimitive: 0
+      - Name: ParticleSettings
+        Size: 936
+        IsPrimitive: 0
+      - Name: BoidSettings
+        Size: 104
+        IsPrimitive: 0
+      - Name: PTCacheEdit
+        Size: 0
+        IsPrimitive: 1
+      - Name: ParticleCacheKey
+        Size: 0
+        IsPrimitive: 1
+      - Name: LatticeDeformData
+        Size: 0
+        IsPrimitive: 1
+      - Name: KDTree_3d
+        Size: 0
+        IsPrimitive: 1
+      - Name: ParticleDrawData
+        Size: 0
+        IsPrimitive: 1
+      - Name: LinkNode
+        Size: 0
+        IsPrimitive: 1
+      - Name: bGPDcontrolpoint
+        Size: 32
+        IsPrimitive: 0
+      - Name: bGPDspoint_Runtime
+        Size: 16
+        IsPrimitive: 0
+      - Name: bGPDspoint
+        Size: 80
+        IsPrimitive: 0
+      - Name: bGPDtriangle
+        Size: 12
+        IsPrimitive: 0
+      - Name: bGPDpalettecolor
+        Size: 120
+        IsPrimitive: 0
+      - Name: bGPDpalette
+        Size: 104
+        IsPrimitive: 0
+      - Name: bGPDcurve_point
+        Size: 124
+        IsPrimitive: 0
+      - Name: bGPDcurve
+        Size: 16
+        IsPrimitive: 0
+      - Name: bGPDstroke_Runtime
+        Size: 160
+        IsPrimitive: 0
+      - Name: bGPDstroke
+        Size: 464
+        IsPrimitive: 0
+      - Name: bGPDframe_Runtime
+        Size: 16
+        IsPrimitive: 0
+      - Name: bGPDframe
+        Size: 56
+        IsPrimitive: 0
+      - Name: bGPDlayer_Mask
+        Size: 152
+        IsPrimitive: 0
+      - Name: bGPDlayer_Runtime
+        Size: 16
+        IsPrimitive: 0
+      - Name: bGPDlayer
+        Size: 680
+        IsPrimitive: 0
+      - Name: bGPdata_Runtime
+        Size: 176
+        IsPrimitive: 0
+      - Name: GpencilBatchCache
+        Size: 0
+        IsPrimitive: 1
+      - Name: LineartCache
+        Size: 0
+        IsPrimitive: 1
+      - Name: bGPgrid
+        Size: 40
+        IsPrimitive: 0
+      - Name: GpencilModifierData
+        Size: 104
+        IsPrimitive: 0
+      - Name: NoiseGpencilModifierData
+        Size: 360
+        IsPrimitive: 0
+      - Name: SubdivGpencilModifierData
+        Size: 264
+        IsPrimitive: 0
+      - Name: ThickGpencilModifierData
+        Size: 336
+        IsPrimitive: 0
+      - Name: TimeGpencilModifierData
+        Size: 200
+        IsPrimitive: 0
+      - Name: ColorGpencilModifierData
+        Size: 280
+        IsPrimitive: 0
+      - Name: OpacityGpencilModifierData
+        Size: 336
+        IsPrimitive: 0
+      - Name: ArrayGpencilModifierData
+        Size: 336
+        IsPrimitive: 0
+      - Name: BuildGpencilModifierData
+        Size: 280
+        IsPrimitive: 0
+      - Name: LatticeGpencilModifierData
+        Size: 336
+        IsPrimitive: 0
+      - Name: LengthGpencilModifierData
+        Size: 240
+        IsPrimitive: 0
+      - Name: DashGpencilModifierSegment
+        Size: 96
+        IsPrimitive: 0
+      - Name: DashGpencilModifierData
+        Size: 208
+        IsPrimitive: 0
+      - Name: MirrorGpencilModifierData
+        Size: 264
+        IsPrimitive: 0
+      - Name: HookGpencilModifierData
+        Size: 488
+        IsPrimitive: 0
+      - Name: SimplifyGpencilModifierData
+        Size: 272
+        IsPrimitive: 0
+      - Name: OffsetGpencilModifierData
+        Size: 392
+        IsPrimitive: 0
+      - Name: SmoothGpencilModifierData
+        Size: 336
+        IsPrimitive: 0
+      - Name: ArmatureGpencilModifierData
+        Size: 192
+        IsPrimitive: 0
+      - Name: MultiplyGpencilModifierData
+        Size: 280
+        IsPrimitive: 0
+      - Name: TintGpencilModifierData
+        Size: 368
+        IsPrimitive: 0
+      - Name: TextureGpencilModifierData
+        Size: 352
+        IsPrimitive: 0
+      - Name: WeightProxGpencilModifierData
+        Size: 336
+        IsPrimitive: 0
+      - Name: WeightAngleGpencilModifierData
+        Size: 328
+        IsPrimitive: 0
+      - Name: LineartGpencilModifierData
+        Size: 400
+        IsPrimitive: 0
+      - Name: LineartRenderBuffer
+        Size: 0
+        IsPrimitive: 1
+      - Name: ShrinkwrapGpencilModifierData
+        Size: 304
+        IsPrimitive: 0
+      - Name: ShrinkwrapTreeData
+        Size: 0
+        IsPrimitive: 1
+      - Name: ShaderFxData
+        Size: 104
+        IsPrimitive: 0
+      - Name: ShaderFxData_Runtime
+        Size: 40
+        IsPrimitive: 0
+      - Name: DRWShadingGroup
+        Size: 0
+        IsPrimitive: 1
+      - Name: BlurShaderFxData
+        Size: 168
+        IsPrimitive: 0
+      - Name: ColorizeShaderFxData
+        Size: 192
+        IsPrimitive: 0
+      - Name: FlipShaderFxData
+        Size: 152
+        IsPrimitive: 0
+      - Name: GlowShaderFxData
+        Size: 208
+        IsPrimitive: 0
+      - Name: PixelShaderFxData
+        Size: 176
+        IsPrimitive: 0
+      - Name: RimShaderFxData
+        Size: 200
+        IsPrimitive: 0
+      - Name: ShadowShaderFxData
+        Size: 224
+        IsPrimitive: 0
+      - Name: SwirlShaderFxData
+        Size: 168
+        IsPrimitive: 0
+      - Name: WaveShaderFxData
+        Size: 168
+        IsPrimitive: 0
+      - Name: ReportList
+        Size: 40
+        IsPrimitive: 0
+      - Name: wmXrData
+        Size: 1000
+        IsPrimitive: 0
+      - Name: wmXrRuntimeData
+        Size: 0
+        IsPrimitive: 1
+      - Name: XrSessionSettings
+        Size: 992
+        IsPrimitive: 0
+      - Name: wmWindowManager
+        Size: 1424
+        IsPrimitive: 0
+      - Name: wmWindow
+        Size: 336
+        IsPrimitive: 0
+      - Name: wmKeyConfig
+        Size: 168
+        IsPrimitive: 0
+      - Name: UndoStack
+        Size: 0
+        IsPrimitive: 1
+      - Name: wmMsgBus
+        Size: 0
+        IsPrimitive: 1
+      - Name: WorkSpaceInstanceHook
+        Size: 32
+        IsPrimitive: 0
+      - Name: wmEvent
+        Size: 0
+        IsPrimitive: 1
+      - Name: wmGesture
+        Size: 0
+        IsPrimitive: 1
+      - Name: wmIMEData
+        Size: 0
+        IsPrimitive: 1
+      - Name: wmKeyMapItem
+        Size: 184
+        IsPrimitive: 0
+      - Name: wmKeyMapDiffItem
+        Size: 32
+        IsPrimitive: 0
+      - Name: wmKeyMap
+        Size: 208
+        IsPrimitive: 0
+      - Name: bool
+        Size: 0
+        IsPrimitive: 1
+      - Name: wmKeyConfigPref
+        Size: 88
+        IsPrimitive: 0
+      - Name: wmOperatorType
+        Size: 0
+        IsPrimitive: 1
+      - Name: FModifier
+        Size: 128
+        IsPrimitive: 0
+      - Name: FCurve
+        Size: 120
+        IsPrimitive: 0
+      - Name: FMod_Generator
+        Size: 24
+        IsPrimitive: 0
+      - Name: FMod_FunctionGenerator
+        Size: 24
+        IsPrimitive: 0
+      - Name: FCM_EnvelopeData
+        Size: 16
+        IsPrimitive: 0
+      - Name: FMod_Envelope
+        Size: 24
+        IsPrimitive: 0
+      - Name: FMod_Cycles
+        Size: 8
+        IsPrimitive: 0
+      - Name: FMod_Python
+        Size: 16
+        IsPrimitive: 0
+      - Name: FMod_Limits
+        Size: 24
+        IsPrimitive: 0
+      - Name: FMod_Noise
+        Size: 20
+        IsPrimitive: 0
+      - Name: FMod_Stepped
+        Size: 20
+        IsPrimitive: 0
+      - Name: DriverTarget
+        Size: 96
+        IsPrimitive: 0
+      - Name: DriverVar
+        Size: 856
+        IsPrimitive: 0
+      - Name: ChannelDriver
+        Size: 304
+        IsPrimitive: 0
+      - Name: ExprPyLike_Parsed
+        Size: 0
+        IsPrimitive: 1
+      - Name: FPoint
+        Size: 16
+        IsPrimitive: 0
+      - Name: NlaStrip
+        Size: 216
+        IsPrimitive: 0
+      - Name: NlaTrack
+        Size: 104
+        IsPrimitive: 0
+      - Name: KS_Path
+        Size: 112
+        IsPrimitive: 0
+      - Name: KeyingSet
+        Size: 480
+        IsPrimitive: 0
+      - Name: AnimOverride
+        Size: 32
+        IsPrimitive: 0
+      - Name: IdAdtTemplate
+        Size: 184
+        IsPrimitive: 0
+      - Name: BoidRule
+        Size: 56
+        IsPrimitive: 0
+      - Name: BoidRuleGoalAvoid
+        Size: 80
+        IsPrimitive: 0
+      - Name: BoidRuleAvoidCollision
+        Size: 64
+        IsPrimitive: 0
+      - Name: BoidRuleFollowLeader
+        Size: 104
+        IsPrimitive: 0
+      - Name: BoidRuleAverageSpeed
+        Size: 72
+        IsPrimitive: 0
+      - Name: BoidRuleFight
+        Size: 64
+        IsPrimitive: 0
+      - Name: BoidState
+        Size: 128
+        IsPrimitive: 0
+      - Name: MANTA
+        Size: 0
+        IsPrimitive: 1
+      - Name: Speaker
+        Size: 240
+        IsPrimitive: 0
+      - Name: MovieClipProxy
+        Size: 776
+        IsPrimitive: 0
+      - Name: MovieClip_RuntimeGPUTexture
+        Size: 48
+        IsPrimitive: 0
+      - Name: MovieClip_Runtime
+        Size: 16
+        IsPrimitive: 0
+      - Name: MovieClipCache
+        Size: 0
+        IsPrimitive: 1
+      - Name: MovieTracking
+        Size: 376
+        IsPrimitive: 0
+      - Name: MovieTrackingMarker
+        Size: 64
+        IsPrimitive: 0
+      - Name: MovieTrackingTrack
+        Size: 208
+        IsPrimitive: 0
+      - Name: MovieReconstructedCamera
+        Size: 72
+        IsPrimitive: 0
+      - Name: MovieTrackingCamera
+        Size: 88
+        IsPrimitive: 0
+      - Name: MovieTrackingPlaneMarker
+        Size: 40
+        IsPrimitive: 0
+      - Name: MovieTrackingPlaneTrack
+        Size: 128
+        IsPrimitive: 0
+      - Name: MovieTrackingSettings
+        Size: 64
+        IsPrimitive: 0
+      - Name: MovieTrackingStabilization
+        Size: 72
+        IsPrimitive: 0
+      - Name: MovieTrackingReconstruction
+        Size: 24
+        IsPrimitive: 0
+      - Name: MovieTrackingObject
+        Size: 152
+        IsPrimitive: 0
+      - Name: MovieTrackingStats
+        Size: 256
+        IsPrimitive: 0
+      - Name: MovieTrackingDopesheetChannel
+        Size: 120
+        IsPrimitive: 0
+      - Name: MovieTrackingDopesheetCoverageSegment
+        Size: 32
+        IsPrimitive: 0
+      - Name: MovieTrackingDopesheet
+        Size: 48
+        IsPrimitive: 0
+      - Name: DynamicPaintSurface
+        Size: 1552
+        IsPrimitive: 0
+      - Name: PaintSurfaceData
+        Size: 0
+        IsPrimitive: 1
+      - Name: MaskParent
+        Size: 184
+        IsPrimitive: 0
+      - Name: MaskSplinePointUW
+        Size: 12
+        IsPrimitive: 0
+      - Name: MaskSplinePoint
+        Size: 272
+        IsPrimitive: 0
+      - Name: MaskSpline
+        Size: 224
+        IsPrimitive: 0
+      - Name: MaskLayerShape
+        Size: 40
+        IsPrimitive: 0
+      - Name: MaskLayer
+        Size: 144
+        IsPrimitive: 0
+      - Name: RigidBodyWorld_Shared
+        Size: 32
+        IsPrimitive: 0
+      - Name: RigidBodyOb_Shared
+        Size: 0
+        IsPrimitive: 1
+      - Name: FreestyleLineSet
+        Size: 128
+        IsPrimitive: 0
+      - Name: FreestyleLineStyle
+        Size: 520
+        IsPrimitive: 0
+      - Name: FreestyleModuleConfig
+        Size: 32
+        IsPrimitive: 0
+      - Name: LineStyleModifier
+        Size: 96
+        IsPrimitive: 0
+      - Name: LineStyleColorModifier_AlongStroke
+        Size: 104
+        IsPrimitive: 0
+      - Name: LineStyleAlphaModifier_AlongStroke
+        Size: 112
+        IsPrimitive: 0
+      - Name: LineStyleThicknessModifier_AlongStroke
+        Size: 120
+        IsPrimitive: 0
+      - Name: LineStyleColorModifier_DistanceFromCamera
+        Size: 112
+        IsPrimitive: 0
+      - Name: LineStyleAlphaModifier_DistanceFromCamera
+        Size: 120
+        IsPrimitive: 0
+      - Name: LineStyleThicknessModifier_DistanceFromCamera
+        Size: 128
+        IsPrimitive: 0
+      - Name: LineStyleColorModifier_DistanceFromObject
+        Size: 120
+        IsPrimitive: 0
+      - Name: LineStyleAlphaModifier_DistanceFromObject
+        Size: 128
+        IsPrimitive: 0
+      - Name: LineStyleThicknessModifier_DistanceFromObject
+        Size: 136
+        IsPrimitive: 0
+      - Name: LineStyleColorModifier_Curvature_3D
+        Size: 120
+        IsPrimitive: 0
+      - Name: LineStyleAlphaModifier_Curvature_3D
+        Size: 120
+        IsPrimitive: 0
+      - Name: LineStyleThicknessModifier_Curvature_3D
+        Size: 128
+        IsPrimitive: 0
+      - Name: LineStyleColorModifier_Noise
+        Size: 120
+        IsPrimitive: 0
+      - Name: LineStyleAlphaModifier_Noise
+        Size: 120
+        IsPrimitive: 0
+      - Name: LineStyleThicknessModifier_Noise
+        Size: 112
+        IsPrimitive: 0
+      - Name: LineStyleColorModifier_CreaseAngle
+        Size: 112
+        IsPrimitive: 0
+      - Name: LineStyleAlphaModifier_CreaseAngle
+        Size: 120
+        IsPrimitive: 0
+      - Name: LineStyleThicknessModifier_CreaseAngle
+        Size: 128
+        IsPrimitive: 0
+      - Name: LineStyleColorModifier_Tangent
+        Size: 104
+        IsPrimitive: 0
+      - Name: LineStyleAlphaModifier_Tangent
+        Size: 112
+        IsPrimitive: 0
+      - Name: LineStyleThicknessModifier_Tangent
+        Size: 120
+        IsPrimitive: 0
+      - Name: LineStyleColorModifier_Material
+        Size: 112
+        IsPrimitive: 0
+      - Name: LineStyleAlphaModifier_Material
+        Size: 112
+        IsPrimitive: 0
+      - Name: LineStyleThicknessModifier_Material
+        Size: 120
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_Sampling
+        Size: 104
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_BezierCurve
+        Size: 104
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_SinusDisplacement
+        Size: 112
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_SpatialNoise
+        Size: 112
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_PerlinNoise1D
+        Size: 120
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_PerlinNoise2D
+        Size: 120
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_BackboneStretcher
+        Size: 104
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_TipRemover
+        Size: 104
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_Polygonalization
+        Size: 104
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_GuidingLines
+        Size: 104
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_Blueprint
+        Size: 120
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_2DOffset
+        Size: 112
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_2DTransform
+        Size: 128
+        IsPrimitive: 0
+      - Name: LineStyleGeometryModifier_Simplification
+        Size: 104
+        IsPrimitive: 0
+      - Name: LineStyleThicknessModifier_Calligraphy
+        Size: 112
+        IsPrimitive: 0
+      - Name: CacheObjectPath
+        Size: 4112
+        IsPrimitive: 0
+      - Name: CacheFileLayer
+        Size: 1048
+        IsPrimitive: 0
+      - Name: CacheArchiveHandle
+        Size: 0
+        IsPrimitive: 1
+      - Name: GSet
+        Size: 0
+        IsPrimitive: 1
+      - Name: ViewLayerEngineData
+        Size: 40
+        IsPrimitive: 0
+      - Name: DrawEngineType
+        Size: 0
+        IsPrimitive: 1
+      - Name: LayerCollection
+        Size: 64
+        IsPrimitive: 0
+      - Name: ViewLayerEEVEE
+        Size: 8
+        IsPrimitive: 0
+      - Name: ViewLayerAOV
+        Size: 88
+        IsPrimitive: 0
+      - Name: bToolRef_Runtime
+        Size: 0
+        IsPrimitive: 1
+      - Name: WorkSpaceLayout
+        Size: 88
+        IsPrimitive: 0
+      - Name: wmOwnerID
+        Size: 80
+        IsPrimitive: 0
+      - Name: WorkSpace
+        Size: 272
+        IsPrimitive: 0
+      - Name: WorkSpaceDataRelation
+        Size: 40
+        IsPrimitive: 0
+      - Name: LightProbe
+        Size: 280
+        IsPrimitive: 0
+      - Name: LightProbeCache
+        Size: 160
+        IsPrimitive: 0
+      - Name: LightGridCache
+        Size: 160
+        IsPrimitive: 0
+      - Name: LightCacheTexture
+        Size: 32
+        IsPrimitive: 0
+      - Name: CurveProfilePoint
+        Size: 40
+        IsPrimitive: 0
+      - Name: XrActionMapBinding
+        Size: 752
+        IsPrimitive: 0
+      - Name: XrActionMapItem
+        Size: 400
+        IsPrimitive: 0
+      - Name: XrActionMap
+        Size: 104
+        IsPrimitive: 0
+      - Name: HairCurve
+        Size: 8
+        IsPrimitive: 0
+      - Name: HairMapping
+        Size: 12
+        IsPrimitive: 0
+      - Name: Hair
+        Size: 760
+        IsPrimitive: 0
+      - Name: HairMaping
+        Size: 0
+        IsPrimitive: 1
+      - Name: PointCloud
+        Size: 496
+        IsPrimitive: 0
+      - Name: Volume_Runtime
+        Size: 16
+        IsPrimitive: 0
+      - Name: VolumeGridVector
+        Size: 0
+        IsPrimitive: 1
+      - Name: VolumeDisplay
+        Size: 32
+        IsPrimitive: 0
+      - Name: VolumeRender
+        Size: 16
+        IsPrimitive: 0
+      - Name: Volume
+        Size: 1328
+        IsPrimitive: 0
+      - Name: Simulation
+        Size: 200
+        IsPrimitive: 0
+      - Name: PTCacheExtra
+        Size: 32
+        IsPrimitive: 0
+      - Name: PTCacheMem
+        Size: 112
+        IsPrimitive: 0
+      - Name: AssetTag
+        Size: 80
+        IsPrimitive: 0
+      - Name: AssetTypeInfo
+        Size: 0
+        IsPrimitive: 1
+      StructureDefinitions: []

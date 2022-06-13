@@ -199,7 +199,7 @@ namespace BlenderToUnity
             var headerSize = Header.PointerSize == 4 ? 20 : 24;
             reader.BaseStream.Position = sdnaBlock.BlockStartPosition + headerSize;
 
-            StructureDNA structureDNA = StructureDNA.CreateStructureDNA(reader);
+            StructureDNA structureDNA = StructureDNA.ReadStructureDNA(reader);
 
             return structureDNA;
         }

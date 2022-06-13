@@ -40,19 +40,26 @@ namespace BlenderToUnity
         /// </summary>
         public List<short> StructureTypeIndices = new List<short>();
 
-        public List<StructureTypeField> StructureTypeFields = new List<StructureTypeField>();
+        /// <summary>
+        /// Usually this would be a List<List<StructureTypeField>> but Unity wouldn't be able to serialize that, so we use a container class.
+        /// </summary>
+        /// <typeparam name="StructureTypeFieldContainer">Serializable class containg a list of StructureTypeField</typeparam>
+        /// <returns></returns>
+        public List<StructureTypeFieldContainer> StructureTypeFieldContainers = new List<StructureTypeFieldContainer>();
 
         #endregion
 
         #region Generated Data
         [Title("Generated Data")]
         public List<TypeDefinition> TypeDefintions = new List<TypeDefinition>();
+
+        public List<StructureDefinition> StructureDefinitions = new List<StructureDefinition>();
         #endregion
 
         /// <summary>
         /// Parse the "DNA1" FileBlock into a StructureDNA. Assume the reader is set to the start of the DNA1 block.
         /// </summary>
-        public static StructureDNA CreateStructureDNA(BinaryReader reader)
+        public static StructureDNA ReadStructureDNA(BinaryReader reader)
         {
             var sdna = new string(reader.ReadChars(4));
 
@@ -96,8 +103,8 @@ namespace BlenderToUnity
                 f.printError("Failed to get structure type indices.");
                 return null;
             }
-            structureDNA.StructureTypeFields = tuple.Item2;
-            if(structureDNA.StructureTypeFields is null)
+            structureDNA.StructureTypeFieldContainers = tuple.Item2;
+            if(structureDNA.StructureTypeFieldContainers is null)
             {
                 f.printError("Failed to get structure type fields.");
                 return null;
@@ -212,7 +219,7 @@ namespace BlenderToUnity
         /// </summary>
         /// <param name="reader"></param>
         /// <returns>A tuple containing the structure type indices and the structure type fields.</returns>
-        private static Tuple<List<short>, List<StructureTypeField>> ReadStructureTypeIndicesAndFields(BinaryReader reader)
+        private static Tuple<List<short>, List<StructureTypeFieldContainer>> ReadStructureTypeIndicesAndFields(BinaryReader reader)
         {
             var type = new string(reader.ReadChars(4));
             if (type != "STRC")
@@ -223,31 +230,50 @@ namespace BlenderToUnity
 
             int numberOfStructures = reader.ReadInt32();
 
-            var structureTypeIndices = new List<short>();
-            var structureTypeFields = new List<StructureTypeField>();
+            var structureTypeIndices = new List<short>(numberOfStructures);
+            var structureTypeFieldContainers = new List<StructureTypeFieldContainer>(numberOfStructures);
 
             for (int i = 0; i < numberOfStructures; i++)
             {
                 short structureTypeIndex = reader.ReadInt16();
                 short numberOfFields = reader.ReadInt16();
-                
-                var structureTypeField = new StructureTypeField();
+               
+                var structureTypeFieldContainer = new StructureTypeFieldContainer(new List<StructureTypeField>(numberOfFields));
 
                 for(int j = 0; j < numberOfFields; j++)
                 {
+                    var structureTypeField = new StructureTypeField();
                     short typeOfField = reader.ReadInt16();
                     short name = reader.ReadInt16();
                     structureTypeField.TypeOfField = typeOfField;
                     structureTypeField.Name = name;
+                    structureTypeFieldContainer.StructureTypeFields.Add(structureTypeField);
                 }
                 structureTypeIndices.Add(structureTypeIndex);
-                structureTypeFields.Add(structureTypeField);
+                structureTypeFieldContainers.Add(structureTypeFieldContainer);
+                
             }
 
-            return Tuple.Create(structureTypeIndices, structureTypeFields);
+            return Tuple.Create(structureTypeIndices, structureTypeFieldContainers);
         }
     }
 
+    /// <summary>
+    /// Contains all fields of a particular structure type.
+    /// </summary>
+    [System.Serializable]
+    public struct StructureTypeFieldContainer
+    {
+        public StructureTypeFieldContainer(List<StructureTypeField> structureTypeFields)
+        {
+            StructureTypeFields = structureTypeFields;
+        }
+        public List<StructureTypeField> StructureTypeFields;
+    }
+
+    /// <summary>
+    /// Contains information about a particular field of a particular structure type.
+    /// </summary>
     [System.Serializable]
     public struct StructureTypeField
     {
