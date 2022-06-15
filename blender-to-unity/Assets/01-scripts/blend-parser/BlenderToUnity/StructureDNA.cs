@@ -155,7 +155,9 @@ namespace BlenderToUnity
                 }
                 while (c != '\0');
                 tempCharList.RemoveAt(tempCharList.Count - 1); // removes terminating zero
-                nameList.Add(new string(tempCharList.ToArray()));
+                var name = new string(tempCharList.ToArray());
+
+                nameList.Add(name);
                 tempCharList.Clear();
             }
 
@@ -190,7 +192,10 @@ namespace BlenderToUnity
                 }
                 while (c != '\0');
                 tempCharList.RemoveAt(tempCharList.Count - 1); // removes terminating zero
-                typeNameList.Add(new string(tempCharList.ToArray()));
+                var typeName = new string(tempCharList.ToArray());
+
+
+                typeNameList.Add(typeName);
                 tempCharList.Clear();
             }
             while (reader.BaseStream.Position % 4 != 0) { reader.ReadByte(); }

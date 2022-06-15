@@ -2,25 +2,26 @@ using System.IO;
 
 namespace BlenderToUnity
 {
-    [System.Serializable]
     public class FileBlock
     {
         /// <summary>
         /// Binary stream position at the start of the block in the file.
         /// </summary>
-        public long BlockStartPosition = 0;
+        public long BlockStartPosition {get; private set;} = 0;
 
-        public string Code;
+        public string Code {get; private set;}
 
-        public int LenBody;
+        public int LenBody {get; private set;}
 
-        public long OldMemoryAddress;
+        public long OldMemoryAddress {get; private set;}
 
-        public int SDNAIndex;
+        public int SDNAIndex {get; private set;}
 
-        public int Count;
+        public int Count {get; private set;}
 
-        public byte[] Body;
+        public byte[] Body {get; private set;}
+
+        public static int Debug_BlocksRead = 0;
 
         /// <summary>
         /// Read a single FileBlock from a blend file.
@@ -54,6 +55,10 @@ namespace BlenderToUnity
             {
                 reader.ReadByte();
             }
+
+
+            Debug_BlocksRead++;
+            f.print($"\tFileBlock {Debug_BlocksRead}: {fileBlock.Code} sdnaIndex: {fileBlock.SDNAIndex} count: {fileBlock.Count} from: {fileBlock.BlockStartPosition} - {reader.BaseStream.Position}");
 
             return fileBlock;
         }
