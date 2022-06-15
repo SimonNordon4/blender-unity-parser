@@ -7,34 +7,35 @@ using Sirenix.OdinInspector;
 
 namespace BlenderToUnity
 {
+    [System.Serializable]
     public class BlenderFile
     {
 
         /// <summary>
         /// Source File Path of the .blend being read.
         /// </summary>
-
+        [field: SerializeField]
         public string SourceFilePath {get; private set; }
         /// <summary>
         /// Parsed header of the .blend file.
         /// </summary>
-
+        [field: SerializeField]
         public Header Header {get; private set; }
 
         /// <summary>
         /// List of uncast FileBlocks in the .blend file. We only have their sdna index and a data blob at this stage.
         /// </summary>
-        public List<FileBlock> FileBlocks {get; private set; } = new List<FileBlock>();
+        public List<FileBlock> FileBlocks = new List<FileBlock>();
 
         /// <summary>
         /// Parsed FileBlock "DNA1" Which contains all the important information about the other file blocks in the .blend file.
         /// </summary>
-        public StructureDNA StructureDNA {get; private set; } = null;
+        public StructureDNA StructureDNA = null;
 
         /// <summary>
         /// A dictionary mapping memory addresses to the structures held in the corresponding file block.
         /// </summary>
-        public Dictionary<ulong,Structure[]> MemoryMap {get; private set; } = new Dictionary<ulong,Structure[]>();
+        public Dictionary<ulong,Structure[]> MemoryMap = new Dictionary<ulong,Structure[]>();
 
         public BlenderFile(string path) : this(new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read)))
         {
@@ -44,7 +45,6 @@ namespace BlenderToUnity
                 return;
             }
 
-            f.print("Setting SourceFilePath to: " + path);
             SourceFilePath = path;
         }
 
@@ -181,23 +181,22 @@ namespace BlenderToUnity
         /// </summary>
         private List<FileBlock> ReadFileBlocks(BinaryReader reader)
         {
-            f.print("Reading FileBlocks");
-
             var fileBlocks = new List<FileBlock>();
             var blockCode = "";
 
-            FileBlock.Debug_BlocksRead = 0;
+            int blocksRead = 0;
             // ENDB is the last block in the file.
             while (blockCode != "ENDB")
             {
                 FileBlock block = FileBlock.ReadFileBlock(reader, Header.PointerSize);
 
+                blocksRead++;
+
                 if(block is null)
                 {
-                    f.printError($"Failed to read block {FileBlock.Debug_BlocksRead} with code {blockCode}");
+                    f.printError($"Failed to read block {blocksRead} with code {blockCode}");
                     return null;
                 }
-                
                 fileBlocks.Add(block);
 
                 blockCode = block.Code; // Neccesary for ending the while loop.
