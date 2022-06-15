@@ -167,3 +167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c97226d7c0ad50499241860fd64d068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BlendFileViewer:
+    <SourceFilePath>k__BackingField: 
+    <Header>k__BackingField:
+      <PointerSize>k__BackingField: 0
+      <VersionNumber>k__BackingField: 
+      <Endian>k__BackingField: 
+    <FileBlocks>k__BackingField: []
