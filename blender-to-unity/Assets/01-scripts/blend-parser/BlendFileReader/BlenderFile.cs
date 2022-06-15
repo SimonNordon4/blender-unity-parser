@@ -63,6 +63,9 @@ namespace BlenderFileReader
         /// <param name="reader"><pre>BinaryReader</pre> containing a Blender file.</param>
         public BlenderFile(BinaryReader reader)
         {
+            var parseWatch = new System.Diagnostics.Stopwatch();
+            parseWatch.Start();
+
             string versionNumber;
 
             readHeader(reader, out versionNumber);
@@ -77,6 +80,9 @@ namespace BlenderFileReader
             Structures = memoryMap.Values.ToList();
 
             reader.Close();
+
+            parseWatch.Stop();
+            UnityEngine.Debug.Log("Parsing took " + parseWatch.ElapsedMilliseconds + "ms");
         }
 
         /// <summary>

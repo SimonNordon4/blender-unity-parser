@@ -14,12 +14,13 @@ namespace BlenderToUnity
         /// <summary>
         /// Source File Path of the .blend being read.
         /// </summary>
-        public string SourceFilePath = string.Empty;
-
+        [field: SerializeField]
+        public string SourceFilePath {get; private set; }
         /// <summary>
         /// Parsed header of the .blend file.
         /// </summary>
-        public Header Header = null;
+        [field: SerializeField]
+        public Header Header {get; private set; }
 
         /// <summary>
         /// List of uncast FileBlocks in the .blend file. We only have their sdna index and a data blob at this stage.
@@ -30,6 +31,11 @@ namespace BlenderToUnity
         /// Parsed FileBlock "DNA1" Which contains all the important information about the other file blocks in the .blend file.
         /// </summary>
         public StructureDNA StructureDNA = null;
+
+        /// <summary>
+        /// A dictionary mapping memory addresses to the structures held in the corresponding file block.
+        /// </summary>
+        public Dictionary<ulong,Structure[]> MemoryMap = new Dictionary<ulong,Structure[]>();
 
         public BlenderFile(string path) : this(new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read)))
         {
@@ -110,6 +116,20 @@ namespace BlenderToUnity
             }
 
             f.stopwatch("Generate SDNAStructure data");
+            #endregion
+
+            #region Create Memory Map
+            f.startwatch("Create Memory Map");
+
+            MemoryMap = CreateMemoryMap();
+            if(MemoryMap is null)
+            {
+                f.printError("Failed to create MemoryMap. Aborting.");
+                reader.Close();
+                return;
+            }
+
+            f.stopwatch("Create Memory Map");
             #endregion
 
             reader.Close();
@@ -204,6 +224,18 @@ namespace BlenderToUnity
             return structureDNA;
         }
     
+        private Dictionary<ulong,Structure[]> CreateMemoryMap()
+        {
+            Dictionary<ulong,Structure[]> memoryMap = new Dictionary<ulong,Structure[]>();
+
+            for (int i = 0; i < FileBlocks.Count; i++)
+            {
+                FileBlock blockToBeParsed = FileBlocks[i];
+                Structure[] temp = Structure.ParseFileBlock(blockToBeParsed,i,StructureDNA);
+            }
+
+            return memoryMap;
+        }
         private bool CreateStructureData(StructureDNA structureDNA)
         {
             return StructureCreator.GenerateSDNAData(ref structureDNA);

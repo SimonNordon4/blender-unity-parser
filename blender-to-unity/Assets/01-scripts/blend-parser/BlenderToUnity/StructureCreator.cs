@@ -32,7 +32,11 @@ namespace BlenderToUnity
             }
 
             // next step is to 'initialise' the structure definitions.
-            // it looks like it's doing some recursive mumbo jumbo.
+            // finish lazy initialization of the structures
+            // foreach(StructureDefinition structDef in sdna.StructureDefinitions)
+            // {
+            //     structDef.InitializeFields();
+            // }
 
             return true;
         }

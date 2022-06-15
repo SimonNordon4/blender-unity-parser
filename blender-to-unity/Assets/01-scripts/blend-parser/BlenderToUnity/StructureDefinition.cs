@@ -48,6 +48,7 @@ namespace BlenderToUnity
         {
             if(isInitialised)
                 throw new InvalidOperationException("Can't initialize a structure twice.");
+            isInitialised = true;
             foreach(FieldDefinition f in _fields)
             {
                 if(!f.IsPrimitive)

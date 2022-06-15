@@ -58,7 +58,6 @@ namespace BlenderToUnity
             string name = Type.Name; // can't use 'this'
             var structure = sdna.StructureDefinitions.Find(v => { return v.StructureTypeName == name; });
             structure.InitializeFields();
-
         }
     }
 }

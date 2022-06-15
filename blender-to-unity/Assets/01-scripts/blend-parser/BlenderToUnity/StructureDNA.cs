@@ -40,6 +40,8 @@ namespace BlenderToUnity
         /// </summary>
         public List<short> StructureTypeIndices = new List<short>();
 
+
+
         /// <summary>
         /// Usually this would be a List<List<StructureTypeField>> but Unity wouldn't be able to serialize that, so we use a container class.
         /// </summary>

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UnityEngine;
+using System.Diagnostics;
 
 namespace BlenderFileReader
 {
@@ -63,6 +65,9 @@ namespace BlenderFileReader
         /// <param name="reader"><pre>BinaryReader</pre> containing a Blender file.</param>
         public BlenderFile(BinaryReader reader)
         {
+            var startWatch = new Stopwatch();
+            startWatch.Start();
+
             string versionNumber;
 
             readHeader(reader, out versionNumber);
@@ -77,6 +82,9 @@ namespace BlenderFileReader
             Structures = memoryMap.Values.ToList();
 
             reader.Close();
+
+            startWatch.Stop();
+            UnityEngine.Debug.Log("Parsing took " + startWatch.ElapsedMilliseconds + "ms");
         }
 
         /// <summary>
