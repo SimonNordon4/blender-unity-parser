@@ -12,6 +12,6 @@ public class BlendReaderInput : MonoBehaviour
     [Button]
     private void ReadBlend()
     {
-        var blendFile = new BlenderFileReader.BlenderFile(blendFilePath);
+        var blendFile = new BlenderToUnity.BlenderFile(blendFilePath);
     }
 }
