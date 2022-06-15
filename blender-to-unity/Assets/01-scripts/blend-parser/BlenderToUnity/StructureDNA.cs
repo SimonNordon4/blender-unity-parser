@@ -36,18 +36,9 @@ namespace BlenderToUnity
         public List<short> TypeSizes = new List<short>();
 
         /// <summary>
-        /// List of all DNA Types by index in Types / TypeDefinitions.
+        /// A list of all Types of Structures defined in the DNA1 Block. Each Structure contains and index to it's Type, as well as a list of it's Fields names and types.
         /// </summary>
-        public List<short> StructureTypeIndices = new List<short>();
-
-
-
-        /// <summary>
-        /// Usually this would be a List<List<StructureTypeField>> but Unity wouldn't be able to serialize that, so we use a container class.
-        /// </summary>
-        /// <typeparam name="StructureTypeFieldContainer">Serializable class containg a list of StructureTypeField</typeparam>
-        /// <returns></returns>
-        public List<StructureTypeFieldContainer> StructureTypeFieldContainers = new List<StructureTypeFieldContainer>();
+        public List<StructureType> StructureTypes = new List<StructureType>();
 
         #endregion
 
@@ -57,64 +48,6 @@ namespace BlenderToUnity
 
         public List<StructureDefinition> StructureDefinitions = new List<StructureDefinition>();
         #endregion
-
-        /// <summary>
-        /// Parse the "DNA1" FileBlock into a StructureDNA. Assume the reader is set to the start of the DNA1 block.
-        /// </summary>
-        public static StructureDNA ReadStructureDNA(BinaryReader reader)
-        {
-            var sdna = new string(reader.ReadChars(4));
-
-            if (sdna != "SDNA")
-            {
-                f.printError($"Expected SDNA but got: {sdna} at position {reader.BaseStream.Position}");
-                return null;
-            }
-
-            var structureDNA = new StructureDNA();
-
-            // Get Names.
-            structureDNA.Names = ReadNames(reader);
-            if (structureDNA.Names is null)
-            {
-                f.printError("Failed to get name list.");
-                return null;
-            }
-
-            // Get Type Names.
-            structureDNA.Types = ReadTypeNames(reader);
-            if (structureDNA.Types is null)
-            {
-                f.printError("Failed to get type list.");
-                return null;
-            }
-
-            // Get Type Lengths.
-            structureDNA.TypeSizes = ReadTypeLengths(reader, structureDNA.Types.Count);
-            if (structureDNA.TypeSizes is null)
-            {
-                f.printError("Failed to get type length list.");
-                return null;
-            }
-
-            // Read Structure Type Indices and Structure Type Fields.
-            var tuple = ReadStructureTypeIndicesAndFields(reader);
-            structureDNA.StructureTypeIndices = tuple.Item1;
-            if(structureDNA.StructureTypeIndices is null)
-            {
-                f.printError("Failed to get structure type indices.");
-                return null;
-            }
-            structureDNA.StructureTypeFieldContainers = tuple.Item2;
-            if(structureDNA.StructureTypeFieldContainers is null)
-            {
-                f.printError("Failed to get structure type fields.");
-                return null;
-            }
-
-            return structureDNA;
-        }
-
 
         public bool SetFileBlock(List<FileBlock> fileBlocks)
         {
@@ -216,76 +149,6 @@ namespace BlenderToUnity
             return typeLengthList;
         }
     
-        /// <summary>
-        /// Reads the StructureTypeIndices and StructureTypeFields. We do this at the same time for speed reasons, hence the tuple.
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <returns>A tuple containing the structure type indices and the structure type fields.</returns>
-        private static Tuple<List<short>, List<StructureTypeFieldContainer>> ReadStructureTypeIndicesAndFields(BinaryReader reader)
-        {
-            var type = new string(reader.ReadChars(4));
-            if (type != "STRC")
-            {
-                f.printError($"Failed reading SDNA, STRC could not be read at {reader.BaseStream.Position}");
-                return null;
-            }
-
-            int numberOfStructures = reader.ReadInt32();
-
-            var structureTypeIndices = new List<short>(numberOfStructures);
-            var structureTypeFieldContainers = new List<StructureTypeFieldContainer>(numberOfStructures);
-
-            for (int i = 0; i < numberOfStructures; i++)
-            {
-                short structureTypeIndex = reader.ReadInt16();
-                short numberOfFields = reader.ReadInt16();
-               
-                var structureTypeFieldContainer = new StructureTypeFieldContainer(new List<StructureTypeField>(numberOfFields));
-
-                for(int j = 0; j < numberOfFields; j++)
-                {
-                    var structureTypeField = new StructureTypeField();
-                    short typeOfField = reader.ReadInt16();
-                    short name = reader.ReadInt16();
-                    structureTypeField.TypeOfField = typeOfField;
-                    structureTypeField.Name = name;
-                    structureTypeFieldContainer.StructureTypeFields.Add(structureTypeField);
-                }
-                
-                structureTypeIndices.Add(structureTypeIndex);
-                structureTypeFieldContainers.Add(structureTypeFieldContainer);
-                
-            }
-
-            return Tuple.Create(structureTypeIndices, structureTypeFieldContainers);
-        }
-    }
-
-    /// <summary>
-    /// Contains all fields of a particular structure type.
-    /// </summary>
-    [System.Serializable]
-    public struct StructureTypeFieldContainer
-    {
-        public StructureTypeFieldContainer(List<StructureTypeField> structureTypeFields)
-        {
-            StructureTypeFields = structureTypeFields;
-        }
-        public List<StructureTypeField> StructureTypeFields;
-    }
-
-    /// <summary>
-    /// Contains information about a particular field of a particular structure type.
-    /// </summary>
-    [System.Serializable]
-    public struct StructureTypeField
-    {
-        public StructureTypeField(short type, short name)
-        {
-            TypeOfField = type;
-            Name = name;
-        }
-        public short TypeOfField;
-        public short Name;
+       
     }
 }

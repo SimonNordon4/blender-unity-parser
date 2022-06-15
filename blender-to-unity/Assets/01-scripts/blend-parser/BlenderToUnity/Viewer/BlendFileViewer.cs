@@ -79,23 +79,24 @@ namespace BlenderToUnity
     [System.Serializable]
     public class DNA1BlockViewer
     {
-        
+
+
+       public DNA1BlockViewer (DNA1Block dna1Block)
+       {
+
+       }
+    }
+
+
+    [System.Serializable]
+    public struct StructureTypeViewer 
+    {
+
     }
 
     [System.Serializable]
-    public class StructureDNAViewer
-    {
-        
-    }
-
-    public class StructureViewer 
+    public struct StructureTypeFieldViewer
     {
 
     }
-
-    public class FieldViewer
-    {
-
-    }
-
 }

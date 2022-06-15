@@ -33,7 +33,8 @@ namespace BlenderToUnity
             Size = size;
 
             int index = sdna.Types.IndexOf(name);
-            IsPrimitive = sdna.StructureTypeIndices.IndexOf((short)index) == -1;
+            //IsPrimitive = sdna.StructureTypeIndices.IndexOf((short)index) == -1;
+            IsPrimitive = false; //place holder.
         }
     }
 }

@@ -10,6 +10,10 @@ namespace BlenderToUnity
     public class BlenderFile
     {
         /// <summary>
+        /// Binary reader associated with this file while it's being read.
+        /// </summary>
+        public BinaryReader Reader { get; private set; }
+        /// <summary>
         /// Source File Path of the .blend being read.
         /// </summary>
         public string SourceFilePath {get; private set; }
@@ -24,7 +28,13 @@ namespace BlenderToUnity
         public List<FileBlock> FileBlocks {get; private set; } = new List<FileBlock>();
 
         /// <summary>
-        /// Parsed FileBlock "DNA1" Which contains all the important information about the other file blocks in the .blend file.
+        /// The special DNA1 Block of the FileBlocks. DNA1 is the second last block and contains descriptions for all other blocks.
+        /// </summary>
+        /// <value></value>
+        public DNA1Block DNA1Block {get; private set;}
+
+        /// <summary>
+        /// Blend File Structure Definitions generated from the dna1 block. The contents within describe blender Types, Structures and Fields.
         /// </summary>
         public StructureDNA StructureDNA {get; private set; }= null;
 
@@ -46,6 +56,8 @@ namespace BlenderToUnity
 
         public BlenderFile(BinaryReader reader)
         {
+            Reader = reader;
+
             f.startwatch("Parse Blend");
 
             #region Get Header
@@ -80,53 +92,38 @@ namespace BlenderToUnity
             #region Get SDNAStructure
             f.startwatch("Read SDNAStructure");
 
-            StructureDNA = ReadStructureDNA(reader);
-            if(StructureDNA is null)
-            {
-                f.printError("Failed to read StructureDNA. Aborting.");
-                reader.Close();
-                return;
-            }
-
-            // Give the structureDNA a reference to the block file it was parsed from. Not neccessary, but keeps things nicer.
-            var setDna = StructureDNA.SetFileBlock(FileBlocks);
-            if(!setDna)
-            {
-                f.printError("Failed to set FileBlocks in StructureDNA. Aborting.");
-                reader.Close();
-                return;
-            }
+            DNA1Block = DNA1Block.ReadDNA1Block(this);
 
             f.stopwatch("Read SDNAStructure");
             #endregion
 
-            #region Parse SDNAStructure
-            f.startwatch("Generate SDNAStructure data");
+            // #region Parse SDNAStructure
+            // f.startwatch("Generate SDNAStructure data");
 
-            var operationSuccess = CreateStructureData(StructureDNA);
-            if(operationSuccess == false)
-            {
-                f.printError("Failed to generate StructureData. Aborting.");
-                reader.Close();
-                return;
-            }
+            // var operationSuccess = CreateStructureData(StructureDNA);
+            // if(operationSuccess == false)
+            // {
+            //     f.printError("Failed to generate StructureData. Aborting.");
+            //     reader.Close();
+            //     return;
+            // }
 
-            f.stopwatch("Generate SDNAStructure data");
-            #endregion
+            // f.stopwatch("Generate SDNAStructure data");
+            // #endregion
 
-            #region Create Memory Map
-            f.startwatch("Create Memory Map");
+            // #region Create Memory Map
+            // f.startwatch("Create Memory Map");
 
-            MemoryMap = CreateMemoryMap();
-            if(MemoryMap is null)
-            {
-                f.printError("Failed to create MemoryMap. Aborting.");
-                reader.Close();
-                return;
-            }
+            // MemoryMap = CreateMemoryMap();
+            // if(MemoryMap is null)
+            // {
+            //     f.printError("Failed to create MemoryMap. Aborting.");
+            //     reader.Close();
+            //     return;
+            // }
 
-            f.stopwatch("Create Memory Map");
-            #endregion
+            // f.stopwatch("Create Memory Map");
+            // #endregion
 
             reader.Close();
 
@@ -201,25 +198,6 @@ namespace BlenderToUnity
             return fileBlocks;
         }
 
-        private StructureDNA ReadStructureDNA(BinaryReader reader)
-        {
-            var sdnaBlock = FileBlocks[FileBlocks.Count-2]; // Sdna is the second last block.
-            
-            if(sdnaBlock.Code != "DNA1")
-            {
-                f.printError("Failed to find DNA1 block at the second last block position.");
-                return null;
-            }
-
-            // Reset the reader back to the start of the DNA1 Body.
-            var headerSize = Header.PointerSize == 4 ? 20 : 24;
-            reader.BaseStream.Position = sdnaBlock.BlockStartPosition + headerSize;
-
-            StructureDNA structureDNA = StructureDNA.ReadStructureDNA(reader);
-
-            return structureDNA;
-        }
-    
         private Dictionary<ulong,Structure[]> CreateMemoryMap()
         {
             Dictionary<ulong,Structure[]> memoryMap = new Dictionary<ulong,Structure[]>();
@@ -231,10 +209,6 @@ namespace BlenderToUnity
             }
 
             return memoryMap;
-        }
-        private bool CreateStructureData(StructureDNA structureDNA)
-        {
-            return StructureCreator.GenerateSDNAData(ref structureDNA);
         }
     }
 }
