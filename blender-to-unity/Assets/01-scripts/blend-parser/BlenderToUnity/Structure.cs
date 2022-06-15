@@ -6,7 +6,6 @@ namespace BlenderToUnity
 {
     public class Structure
     {
-
         public IField Parent { get; private set; }
 
         public string Name { get; private set; }
