@@ -24,17 +24,14 @@ namespace BlenderToUnity
         /// <summary>
         /// Creates a new type as defined by SDNA.
         /// </summary>
-        /// <param name="name">Name of the type.</param>
-        /// <param name="size">Size of the type in bytes.</param>
+        /// <param name="typeName">Name of the type.</param>
+        /// <param name="typeSize">Size of the type in bytes.</param>
         /// <param name="sdna">Structure DNA for the type.</param>
-        public TypeDefinition(string name, short size, StructureDNA sdna)
+        public TypeDefinition(string typeName, short typeSize, bool typeIsPrimitive)
         {
-            Name = name;
-            Size = size;
-
-            int index = sdna.Types.IndexOf(name);
-            //IsPrimitive = sdna.StructureTypeIndices.IndexOf((short)index) == -1;
-            IsPrimitive = false; //place holder.
+            this.Name = typeName;
+            this.Size = typeSize;
+            this.IsPrimitive = typeIsPrimitive;
         }
     }
 }

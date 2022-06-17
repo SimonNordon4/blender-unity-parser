@@ -36,7 +36,7 @@ namespace BlenderToUnity
         /// <summary>
         /// Blend File Structure Definitions generated from the dna1 block. The contents within describe blender Types, Structures and Fields.
         /// </summary>
-        public StructureDNA StructureDNA {get; private set; }= null;
+        public StructureDNA StructureDNA {get; private set; }
 
         /// <summary>
         /// A dictionary mapping memory addresses to the structures held in the corresponding file block.
@@ -97,19 +97,13 @@ namespace BlenderToUnity
             f.stopwatch("Read SDNAStructure");
             #endregion
 
-            // #region Parse SDNAStructure
-            // f.startwatch("Generate SDNAStructure data");
+            #region Create SDNAStructure
+            f.startwatch("Generate SDNAStructure data");
+            
+            StructureDNA = new StructureDNA(this);
 
-            // var operationSuccess = CreateStructureData(StructureDNA);
-            // if(operationSuccess == false)
-            // {
-            //     f.printError("Failed to generate StructureData. Aborting.");
-            //     reader.Close();
-            //     return;
-            // }
-
-            // f.stopwatch("Generate SDNAStructure data");
-            // #endregion
+            f.stopwatch("Generate SDNAStructure data");
+            #endregion
 
             // #region Create Memory Map
             // f.startwatch("Create Memory Map");

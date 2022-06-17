@@ -239,7 +239,7 @@ namespace BlenderToUnity
                 short typeOfField = reader.ReadInt16();
                 short name = reader.ReadInt16();
                 structureTypeField.TypeOfField = typeOfField;
-                structureTypeField.Name = name;
+                structureTypeField.NameOfField = name;
 
                 structureTypeFields.Add(structureTypeField);
             }
@@ -272,9 +272,9 @@ namespace BlenderToUnity
         public StructureTypeField(short type, short name)
         {
             TypeOfField = type;
-            Name = name;
+            NameOfField = name;
         }
         public short TypeOfField;
-        public short Name;
+        public short NameOfField;
     }
 }
