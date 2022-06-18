@@ -11,9 +11,18 @@ public class BlendReaderInput : MonoBehaviour
     [ReadOnly]
     public BlenderFile blendFile;
 
+    [ReadOnly]
+    public BlenderFileReader.BlenderFile oldBlendFile;
+
     [Button]
     private void ReadBlend()
     {
         blendFile = new BlenderToUnity.BlenderFile(blendFilePath);
+    }
+
+    [Button]
+    private void ReadBlendExisting()
+    {
+        oldBlendFile = new BlenderFileReader.BlenderFile(blendFilePath);
     }
 }
