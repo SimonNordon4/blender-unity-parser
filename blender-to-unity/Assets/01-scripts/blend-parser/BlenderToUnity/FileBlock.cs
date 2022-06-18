@@ -9,7 +9,12 @@ namespace BlenderToUnity
         /// <summary>
         /// Binary stream position at the start of the block in the file.
         /// </summary>
+        [field: SerializeField]
         public long BlockStartPosition {get; set;} = 0;
+        /// <summary>
+        /// The index of the block. The nth index will show up at n blocks in the file.
+        /// </summary>
+        public int BlockIndex {get; set;}
 
         [field: SerializeField]
         public string Code{get; set;}

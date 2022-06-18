@@ -47,7 +47,7 @@ namespace BlenderToUnity
         public StructureDNA StructureDNA { get; private set; }
 
         [field: SerializeField] 
-        public List<Structure> Structures {get; private set;}
+        public List<StructureRoot> Structures {get; private set;}
 
         public BlenderFile(string path) : this(new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read)))
         {
@@ -75,18 +75,22 @@ namespace BlenderToUnity
 
             StructureDNA = new StructureDNA(this);
 
-            //Structures = GetStructures(reader);
+            Structures = GetStructures(reader);
 
             reader.Close();
 
             f.stopwatch("Parse Blend");
         }
 
-        private List<Structure> GetStructures(BinaryReader reader)
+        private List<StructureRoot> GetStructures(BinaryReader reader)
         {
-            var structures = new List<Structure>();
+            var structures = new List<StructureRoot>();
 
-
+            foreach(var block in FileBlocks)
+            {
+                var structureRoot  = new StructureRoot(block,this);
+                structures.Add(structureRoot);
+            }
 
             return structures;
         }
@@ -143,7 +147,7 @@ namespace BlenderToUnity
             while (blockCode != "ENDB")
             {
                 FileBlock block = FileBlock.ReadFileBlock(reader, Header.PointerSize);
-
+                block.BlockIndex = blocksRead;
                 blocksRead++;
 
                 if (block is null)
@@ -151,6 +155,7 @@ namespace BlenderToUnity
                     f.printError($"Failed to read block {blocksRead} with code {blockCode}");
                     return null;
                 }
+
                 fileBlocks.Add(block);
 
                 blockCode = block.Code; // Neccesary for ending the while loop.

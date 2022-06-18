@@ -6,55 +6,48 @@ using UnityEngine;
 namespace BlenderToUnity
 {
     [System.Serializable]
-    public class Structure
+    public class Structure : IField
     {
-        public string Name;
+        [field: SerializeField]
+        public string TypeName {get; private set;}
 
-        public Structure[] Structures;
-
-        public static Structure[] ParseFileBlock(BlenderFile file, int blockIndex)
+        /// <summary>
+        /// Structure is the parsed data of a FileBlock.
+        /// </summary>
+        /// <param name="partialBody">Section of the block body representing 1 structure.</param>
+        /// <param name="definition">Structure definition associated with the block body</param>
+        public Structure(byte[] partialBody, StructureDefinition definition)
         {
-            var block = file.FileBlocks[blockIndex];
-            var structDefinition = file.StructureDNA.StructureDefinitions[block.SDNAIndex];
+           TypeName = definition.StructureTypeName;
+           List<IField> fields = new List<IField>();
+           fields = ParseFields(partialBody, definition);
+        }
 
-            var structures = new Structure[block.Count];
+        private List<IField> ParseFields(byte[] partialBody, StructureDefinition definition)
+        {
+            List<IField> fields = new List<IField>();
 
-            // if there are multiple block
-            if(block.Count > 1)
+            foreach (var fieldDefinition in definition.FieldDefinitions)
             {
-                for (int i = 0; i < block.Count; i++)
+                // If it's an array, pointer or primitive we just keep going down.
+
+                // Everything is eventually a primitive.
+                if(fieldDefinition.IsArray || fieldDefinition.IsPointer || fieldDefinition.IsPrimitive)
                 {
-                    int structLen = block.LenBody / block.Count;
-                    byte[] body = new byte[structLen];
-
-                    // Get the body which is a partial chunk of the original block body.
-                    for (int j = 0; j < structLen; j++)
-                    {
-                        body[j] = block.Body[i * structLen + j];
-                    }
-
-                    var structure = new Structure(body, structDefinition);
-                    structures[i] = structure;
+                    var field = new Field(fieldDefinition);
                 }
 
-                return structures;
+                // if it's a struct we want to return that struct as a field, so that it can continue.
+                else
+                {
+                    
+                    //var field = new Structure(partialBody,fieldDefinition.StructureDefinition);
+                }
             }
 
-            structures[0] = new Structure(block.Body, structDefinition);
-            return structures;
-
+            return fields;
         }
 
-        public Structure(FileBlock block, BlenderFile file)
-        {
-            var structureDefinition = file.StructureDNA.StructureDefinitions[block.SDNAIndex];
-            var body = block.Body;
-            
-        }
 
-        public Structure(byte[] blockBody, StructureDefinition defnition)
-        {
-            this.Name = defnition.StructureTypeName;
-        }
     }
 }
