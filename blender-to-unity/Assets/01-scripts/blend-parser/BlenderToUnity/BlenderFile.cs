@@ -61,29 +61,29 @@ namespace BlenderToUnity
 
             FileBlocks = ReadFileBlocks(reader);
 
-            DNA1Block = new DNA1Block(this);
+            StructureDNA = new StructureDNA();
+            StructureDNA.ReadBlenderFile(this);
+            
 
-            StructureDNA = new StructureDNA(this);
-
-            Structures = GetStructures(reader);
+            //Structures = GetStructures(reader);
 
             reader.Close();
 
             f.stopwatch("Parse Blend");
         }
 
-        private List<StructureRoot> GetStructures(BinaryReader reader)
-        {
-            var structures = new List<StructureRoot>();
+        // private List<StructureRoot> GetStructures(BinaryReader reader)
+        // {
+        //     var structures = new List<StructureRoot>();
 
-            foreach(var block in FileBlocks)
-            {
-                var structureRoot  = new StructureRoot(block,this);
-                structures.Add(structureRoot);
-            }
+        //     foreach(var block in FileBlocks)
+        //     {
+        //         var structureRoot  = new StructureRoot(block,this);
+        //         structures.Add(structureRoot);
+        //     }
 
-            return structures;
-        }
+        //     return structures;
+        // }
 
         /// <summary>
         /// Read and set the header. Returns null if the header is invalid.
@@ -164,10 +164,5 @@ namespace BlenderToUnity
 
         //     return memoryMap;
         // }
-
-        public StructureDefinition GetStructureDefinition(string name)
-        {
-            return StructureDNA.StructureDefinitions.FirstOrDefault(x => x.StructureTypeName == name);
-        }
     }
 }

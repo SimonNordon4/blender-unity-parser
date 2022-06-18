@@ -10,9 +10,5 @@ namespace BlenderToUnity
         [field: SerializeField]
         public string TypeName { get; private set; }
 
-        public Field(FieldDefinition fieldDefinition)
-        {
-            TypeName = fieldDefinition.Type.Name;
-        }
     }
 }
