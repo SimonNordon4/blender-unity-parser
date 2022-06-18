@@ -1,5 +1,6 @@
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using System;
 using Sirenix.OdinInspector;
 
@@ -12,7 +13,7 @@ namespace BlenderToUnity
     {
         public List<TypeDefinition> TypeDefinitions { get; private set; } = new List<TypeDefinition>();
 
-        public List<StructureDefinition> StructureDefinitions { get; private set; } = new List<StructureDefinition>();
+        //public List<StructureDefinition> StructureDefinitions { get; private set; } = new List<StructureDefinition>();
 
         public StructureDNA(BlenderFile file)
         {
@@ -30,7 +31,10 @@ namespace BlenderToUnity
             {
                 var typeName = dna1.NameTypes[i];
                 var typeSize = dna1.TypeSizes[i];
-                var typeIsPrimitive = dna1.StructureTypeIndices.IndexOf((short)i) == -1;
+
+                // probably wrong.
+                var isStructureType = dna1.StructureTypes.Any(st => st.TypeIndex == (short)i);
+                var typeIsPrimitive = !isStructureType;
 
                 TypeDefinition typeDefinition = new TypeDefinition(typeName, typeSize, typeIsPrimitive);
 
@@ -50,7 +54,7 @@ namespace BlenderToUnity
             {
                 var structureTypeDefintion = this.TypeDefinitions[i];
                 List<FieldDefinition> fields = CreateFieldDefinitions(i, dna1);
-                var structureDefinition = new StructureDefinition(structureTypeDefintion,);
+                var structureDefinition = new StructureDefinition(structureTypeDefintion, fields);
                 structureDefinitions.Add(structureDefinition);
             }
 
@@ -64,16 +68,16 @@ namespace BlenderToUnity
         /// <returns>List of generated FieldDefinitions for that particular structure at index</returns>
         private List<FieldDefinition> CreateFieldDefinitions(int structureDefintionIndex, DNA1Block dna1)
         {
-            StructureType structureType = dna1.StructureTypes[structureDefintionIndex];
-            int numberOfFields = structureType.StructureTypeFields.Count;
+            DNAStruct structureType = dna1.StructureTypes[structureDefintionIndex];
+            int numberOfFields = structureType.Fields.Count;
 
             List<FieldDefinition> fieldDefinitions = new List<FieldDefinition>(numberOfFields);
 
             for (int i = 0; i < numberOfFields; i++)
             {
-                var structureField = structureType.StructureTypeFields[i];
-                var fieldName = structureField.NameOfField;
-                var fieldType = structureField.TypeOfField;
+                var structureField = structureType.Fields[i];
+                var fieldName = dna1.Names[structureField.NameIndex];
+                var fieldType = this.TypeDefinitions[structureField.TypeIndex];
                 var fieldDefinition = new FieldDefinition(fieldName, fieldType);
                 fieldDefinitions.Add(fieldDefinition);
             }

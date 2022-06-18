@@ -19,6 +19,9 @@ namespace BlenderToUnity
         [field:SerializeField]
         public DNA1BlockViewer DNA1Block { get; private set; }
 
+        [field:SerializeField]
+        public StructureDNAViewer StructureDNA { get; private set; }
+
         public BlendFileViewer(BlenderFile blendFile)
         {
             SourceFilePath = blendFile.SourceFilePath;
@@ -32,6 +35,8 @@ namespace BlenderToUnity
             }
 
             DNA1Block = new DNA1BlockViewer(blendFile.DNA1Block);
+
+            StructureDNA = new StructureDNAViewer(blendFile.StructureDNA);
         }
     }
 
@@ -119,11 +124,11 @@ namespace BlenderToUnity
     {
         public short StructureTypeIndex;
         public List<StructureTypeFieldViewer> StructureTypeFields;
-        public StructureTypeViewer(StructureType structureType)
+        public StructureTypeViewer(DNAStruct structureType)
         {
-            this.StructureTypeIndex = structureType.StructureTypeIndex;
+            this.StructureTypeIndex = structureType.TypeIndex;
             this.StructureTypeFields = new List<StructureTypeFieldViewer>();
-            foreach (var structureTypeField in structureType.StructureTypeFields)
+            foreach (var structureTypeField in structureType.Fields)
             {
                 this.StructureTypeFields.Add(new StructureTypeFieldViewer(structureTypeField));
             }
@@ -133,13 +138,47 @@ namespace BlenderToUnity
     [System.Serializable]
     public struct StructureTypeFieldViewer
     {
-        public short TypeOfField;
+        public short typeIndex;
         public short Name;
 
-        public StructureTypeFieldViewer(StructureTypeField structureTypeField)
+        public StructureTypeFieldViewer(DNAField structureTypeField)
         {
-            this.TypeOfField = structureTypeField.TypeOfField;
-            this.Name = structureTypeField.NameOfField;
+            this.typeIndex = structureTypeField.TypeIndex;
+            this.Name = structureTypeField.NameIndex;
+        }
+    }
+
+    [System.Serializable]
+    public class StructureDNAViewer
+    {
+        [field: SerializeField]
+        public List<TypeDefinitionViewer> TypeDefinitions { get; private set; }
+
+        public StructureDNAViewer(StructureDNA structureDNA)
+        {
+            this.TypeDefinitions = new List<TypeDefinitionViewer>();
+            foreach (var typeDefinition in structureDNA.TypeDefinitions)
+            {
+                this.TypeDefinitions.Add(new TypeDefinitionViewer(typeDefinition));
+            }
+        }
+    }
+
+    [System.Serializable]
+    public class TypeDefinitionViewer
+    {
+        [field: SerializeField]
+        public string Name;
+        [field: SerializeField]
+        public short Size;
+        [field: SerializeField]
+        public bool IsPrimitive;
+
+        public TypeDefinitionViewer(TypeDefinition typeDefinition)
+        {
+            this.Name = typeDefinition.Name;
+            this.Size = typeDefinition.Size;
+            this.IsPrimitive = typeDefinition.IsPrimitive;
         }
     }
 }

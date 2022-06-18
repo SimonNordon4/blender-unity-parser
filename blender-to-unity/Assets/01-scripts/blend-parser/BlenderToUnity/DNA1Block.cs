@@ -31,83 +31,41 @@ namespace BlenderToUnity
         /// typeof(Structures[42]).ToString() == NameTypes[StructureTypeIndices[42]]
         /// </remarks>
         /// </summary>
-        public List<short> StructureTypeIndices { get; private set; }
-        public List<StructureType> StructureTypes { get; private set; }
+        public List<DNAStruct> StructureTypes { get; private set; }
 
-        public DNA1Block(FileBlock block)
+        public DNA1Block(BlenderFile file)
         {
-            this.BlockStartPosition = block.BlockStartPosition;
-            this.Code = block.Code;
-            this.LenBody = block.LenBody;
-            this.OldMemoryAddress = block.OldMemoryAddress;
-            this.SDNAIndex = block.SDNAIndex;
-            this.Count = block.Count;
-            this.Body = block.Body;
-        }
+            var rawBlock = file.FileBlocks[file.FileBlocks.Count - 2];
 
-        public static DNA1Block ReadDNA1Block(BlenderFile blendFile)
-        {
-            var reader = blendFile.Reader;
+            this.BlockStartPosition = rawBlock.BlockStartPosition;
+            this.Code = rawBlock.Code;
+            this.LenBody = rawBlock.LenBody;
+            this.OldMemoryAddress = rawBlock.OldMemoryAddress;
+            this.SDNAIndex = rawBlock.SDNAIndex;
+            this.Count = rawBlock.Count;
+            this.Body = rawBlock.Body;
 
-            // The raw data block (second last block)
-            var rawBlock = blendFile.FileBlocks[blendFile.FileBlocks.Count - 2];
-
-            // Reset the stream to the start of the body of the block (skipping the header)
+            var reader = file.Reader;
             var rawStartPosition = rawBlock.BlockStartPosition;
-            var rawBlockHeaderSize = blendFile.Header.PointerSize == 4 ? 20 : 24;
-            blendFile.Reader.BaseStream.Position = rawStartPosition + rawBlockHeaderSize;
-
-            // Read the block
-
+            var rawBlockHeaderSize = file.Header.PointerSize == 4 ? 20 : 24;
+            file.Reader.BaseStream.Position = rawStartPosition + rawBlockHeaderSize;
 
             var sdna = new string(reader.ReadChars(4));
 
-            if (sdna != "SDNA")
-            {
-                f.printError($"Expected SDNA but got: {sdna} at position {reader.BaseStream.Position}");
-                return null;
-            }
-
-            var dna1Block = new DNA1Block(rawBlock);
-
             // Get Names.
-            dna1Block.Names = ReadNames(reader);
-            if (dna1Block.Names is null)
-            {
-                f.printError("Failed to get name list.");
-                return null;
-            }
+            this.Names = ReadNames(reader);
 
             // Get Type Names.
-            dna1Block.NameTypes = ReadTypeNames(reader);
-            if (dna1Block.NameTypes is null)
-            {
-                f.printError("Failed to get type list.");
-                return null;
-            }
+            this.NameTypes = ReadTypeNames(reader);
 
             // Get Type Lengths.
-            dna1Block.TypeSizes = ReadTypeLengths(reader, dna1Block.NameTypes.Count);
-            if (dna1Block.TypeSizes is null)
-            {
-                f.printError("Failed to get type length list.");
-                return null;
-            }
+            this.TypeSizes = ReadTypeLengths(reader, this.NameTypes.Count);
 
             // Read The Structure types (Field and Indices)
-            dna1Block.StructureTypes = ReadStructureTypeIndicesAndFields(reader);
-            if (dna1Block.StructureTypes is null)
-            {
-                f.printError("Failed to get structure type fields.");
-                return null;
-            }
-
-            return dna1Block;
+            this.StructureTypes = ReadStructureTypeIndicesAndFields(reader);
         }
 
-
-
-        private static List<string> ReadNames(BinaryReader reader)
+        private List<string> ReadNames(BinaryReader reader)
         {
             var type = new string(reader.ReadChars(4));
             if (type != "NAME")
@@ -142,7 +100,7 @@ namespace BlenderToUnity
             return nameList;
         }
 
-        private static List<string> ReadTypeNames(BinaryReader reader)
+        private List<string> ReadTypeNames(BinaryReader reader)
         {
             var type = new string(reader.ReadChars(4));
             if (type != "TYPE")
@@ -176,7 +134,7 @@ namespace BlenderToUnity
             return typeNameList;
         }
 
-        private static List<short> ReadTypeLengths(BinaryReader reader, int numberOfTypes)
+        private List<short> ReadTypeLengths(BinaryReader reader, int numberOfTypes)
         {
             var type = new string(reader.ReadChars(4));
             if (type != "TLEN")
@@ -200,7 +158,7 @@ namespace BlenderToUnity
         /// </summary>
         /// <param name="reader"></param>
         /// <returns>A tuple containing the structure type indices and the structure type fields.</returns>
-        private static List<StructureType> ReadStructureTypeIndicesAndFields(BinaryReader reader)
+        private List<DNAStruct> ReadStructureTypeIndicesAndFields(BinaryReader reader)
         {
             var type = new string(reader.ReadChars(4));
             if (type != "STRC")
@@ -211,17 +169,17 @@ namespace BlenderToUnity
 
             int numberOfStructures = reader.ReadInt32();
 
-            var structureTypes = new List<StructureType>(numberOfStructures);
+            var structureTypes = new List<DNAStruct>(numberOfStructures);
 
             for (int i = 0; i < numberOfStructures; i++)
             {
-                short structureTypeIndex = reader.ReadInt16();
-
+                short typeIndex = reader.ReadInt16();
                 short numberOfFields = reader.ReadInt16();
+                var fields = GetStructureTypeFields(reader, numberOfFields);
 
-                var structueTypeFields = GetStructureTypeFields(reader, numberOfFields);
+                var typeName = this.NameTypes[typeIndex];
 
-                var structureType = new StructureType(structureTypeIndex, structueTypeFields);
+                var structureType = new DNAStruct(typeIndex, typeName, fields);
 
                 structureTypes.Add(structureType);
             }
@@ -229,19 +187,22 @@ namespace BlenderToUnity
             return structureTypes;
         }
 
-        private static List<StructureTypeField> GetStructureTypeFields(BinaryReader reader, int numberOfFields)
+        private List<DNAField> GetStructureTypeFields(BinaryReader reader, int numberOfFields)
         {
-            var structureTypeFields = new List<StructureTypeField>(numberOfFields);
+            var structureTypeFields = new List<DNAField>(numberOfFields);
 
             for (int i = 0; i < numberOfFields; i++)
             {
-                var structureTypeField = new StructureTypeField();
-                short typeOfField = reader.ReadInt16();
-                short name = reader.ReadInt16();
-                structureTypeField.TypeOfField = typeOfField;
-                structureTypeField.NameOfField = name;
+                
+                short typeIndex = reader.ReadInt16();
+                short nameIndex = reader.ReadInt16();
 
-                structureTypeFields.Add(structureTypeField);
+                string typeName = this.NameTypes[typeIndex];
+                string name = this.Names[nameIndex];
+
+                var dnaField = new DNAField(typeIndex, nameIndex, typeName, name);
+
+                structureTypeFields.Add(dnaField);
             }
 
             return structureTypeFields;
@@ -251,30 +212,36 @@ namespace BlenderToUnity
     /// <summary>
     /// Contains all fields of a particular structure type.
     /// </summary>
-    [System.Serializable]
-    public struct StructureType
+    public struct DNAStruct
     {
-        public StructureType(short structureTypeIndex, List<StructureTypeField> structureTypeFields)
+        public short TypeIndex;
+        public string TypeName;
+        public List<DNAField> Fields;
+
+        public DNAStruct(short typeIndex,string typeName, List<DNAField> fields)
         {
-            StructureTypeIndex = structureTypeIndex;
-            StructureTypeFields = structureTypeFields;
+            this.TypeIndex = typeIndex;
+            this.TypeName = typeName;
+            this.Fields = fields;
         }
-        public short StructureTypeIndex;
-        public List<StructureTypeField> StructureTypeFields;
     }
 
     /// <summary>
     /// Contains information about a particular field of a particular structure type.
     /// </summary>
     [System.Serializable]
-    public struct StructureTypeField
+    public struct DNAField
     {
-        public StructureTypeField(short type, short name)
+        public short TypeIndex;
+        public short NameIndex;
+        public string Type;
+        public string Name;
+        public DNAField(short typeIndex, short nameIndex,string typeName, string name)
         {
-            TypeOfField = type;
-            NameOfField = name;
+            TypeIndex = typeIndex;
+            NameIndex = nameIndex;
+            Type = typeName;
+            Name = name;
         }
-        public short TypeOfField;
-        public short NameOfField;
     }
 }

@@ -7,19 +7,23 @@ using Sirenix.OdinInspector;
 
 namespace BlenderToUnity
 {
+    [System.Serializable]
     public class BlenderFile
     {
         /// <summary>
         /// Binary reader associated with this file while it's being read.
         /// </summary>
+
         public BinaryReader Reader { get; private set; }
         /// <summary>
         /// Source File Path of the .blend being read.
         /// </summary>
+        [field: SerializeField]
         public string SourceFilePath {get; private set; }
         /// <summary>
         /// Parsed header of the .blend file.
         /// </summary>
+        [field: SerializeField]
         public Header Header {get; private set; }
 
         /// <summary>
@@ -41,7 +45,7 @@ namespace BlenderToUnity
         /// <summary>
         /// A dictionary mapping memory addresses to the structures held in the corresponding file block.
         /// </summary>
-        public Dictionary<ulong,Structure[]> MemoryMap {get; private set; } = new Dictionary<ulong,Structure[]>();
+        //public Dictionary<ulong,Structure[]> MemoryMap {get; private set; } = new Dictionary<ulong,Structure[]>();
 
         public BlenderFile(string path) : this(new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read)))
         {
@@ -92,7 +96,7 @@ namespace BlenderToUnity
             #region Get SDNAStructure
             f.startwatch("Read SDNAStructure");
 
-            DNA1Block = DNA1Block.ReadDNA1Block(this);
+            DNA1Block = new DNA1Block(this);
 
             f.stopwatch("Read SDNAStructure");
             #endregion
@@ -192,17 +196,17 @@ namespace BlenderToUnity
             return fileBlocks;
         }
 
-        private Dictionary<ulong,Structure[]> CreateMemoryMap()
-        {
-            Dictionary<ulong,Structure[]> memoryMap = new Dictionary<ulong,Structure[]>();
+        // private Dictionary<ulong,Structure[]> CreateMemoryMap()
+        // {
+        //     Dictionary<ulong,Structure[]> memoryMap = new Dictionary<ulong,Structure[]>();
 
-            for (int i = 0; i < FileBlocks.Count; i++)
-            {
-                FileBlock blockToBeParsed = FileBlocks[i];
-                Structure[] temp = Structure.ParseFileBlock(blockToBeParsed,i,StructureDNA);
-            }
+        //     for (int i = 0; i < FileBlocks.Count; i++)
+        //     {
+        //         FileBlock blockToBeParsed = FileBlocks[i];
+        //         Structure[] temp = Structure.ParseFileBlock(blockToBeParsed,i,StructureDNA);
+        //     }
 
-            return memoryMap;
-        }
+        //     return memoryMap;
+        // }
     }
 }
