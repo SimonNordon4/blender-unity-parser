@@ -34,20 +34,10 @@ namespace BlenderToUnity
         public List<FileBlock> FileBlocks { get; private set; } = new List<FileBlock>();
 
         /// <summary>
-        /// The special DNA1 Block of the FileBlocks. DNA1 is the second last block and contains descriptions for all other blocks.
-        /// </summary>
-
-        [field: SerializeField]
-        public DNA1Block DNA1Block { get; private set; }
-
-        /// <summary>
         /// Blend File Structure Definitions generated from the dna1 block. The contents within describe blender Types, Structures and Fields.
         /// </summary>
         [field: SerializeField] 
         public StructureDNA StructureDNA { get; private set; }
-
-        [field: SerializeField] 
-        public List<StructureRoot> Structures {get; private set;}
 
         public BlenderFile(string path) : this(new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read)))
         {
