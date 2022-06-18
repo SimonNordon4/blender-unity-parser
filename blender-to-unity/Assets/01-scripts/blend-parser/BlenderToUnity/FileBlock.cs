@@ -1,4 +1,5 @@
 using System.IO;
+using UnityEngine;
 
 namespace BlenderToUnity
 {
@@ -8,19 +9,19 @@ namespace BlenderToUnity
         /// <summary>
         /// Binary stream position at the start of the block in the file.
         /// </summary>
-        public long BlockStartPosition = 0;
+        public long BlockStartPosition {get; set;} = 0;
 
-        public string Code;
-
-        public int LenBody;
-
-        public long OldMemoryAddress;
-
-        public int SDNAIndex;
-
-        public int Count;
-
-        public byte[] Body;
+        [field: SerializeField]
+        public string Code{get; set;}
+        [field: SerializeField]
+        public int LenBody{get; set;}
+        [field: SerializeField]
+        public long OldMemoryAddress{get; set;}
+        [field: SerializeField]
+        public int SDNAIndex{get; set;}
+        [field: SerializeField]
+        public int Count{get; set;}
+        public byte[] Body{get; set;}
 
         /// <summary>
         /// Read a single FileBlock from a blend file.

@@ -1,9 +1,11 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace BlenderToUnity
 {
+    [System.Serializable]
     /// <summary>
     /// The DNA1Block of the FileBlock. 
     /// </summary>
@@ -12,16 +14,19 @@ namespace BlenderToUnity
         /// <summary>
         /// Names of all possible Fields for within the Blend File. (*id, filter_type, render etc)
         /// </summary>
+        [field: SerializeField] 
         public List<string> Names { get; private set; }
 
         /// <summary>
         /// Name of the Types of all possible Fields within the Blend File. ( short, vec3f, Mesh, etc)
         /// </summary>
-        public List<string> NameTypes { get; private set; }
+        [field: SerializeField] 
+        public List<string> TypeNames { get; private set; }
 
         /// <summary>
         /// The Byte Size of the Types of all possible Fields within the Blend File. (1, 2, 4, 8, etc)
         /// </summary>
+        [field: SerializeField] 
         public List<short> TypeSizes { get; private set; }
 
         /// <summary>
@@ -31,7 +36,8 @@ namespace BlenderToUnity
         /// typeof(Structures[42]).ToString() == NameTypes[StructureTypeIndices[42]]
         /// </remarks>
         /// </summary>
-        public List<DNAStruct> StructureTypes { get; private set; }
+        [field: SerializeField] 
+        public List<DNAStruct> DNAStructs { get; private set; }
 
         public DNA1Block(BlenderFile file)
         {
@@ -56,13 +62,13 @@ namespace BlenderToUnity
             this.Names = ReadNames(reader);
 
             // Get Type Names.
-            this.NameTypes = ReadTypeNames(reader);
+            this.TypeNames = ReadTypeNames(reader);
 
             // Get Type Lengths.
-            this.TypeSizes = ReadTypeLengths(reader, this.NameTypes.Count);
+            this.TypeSizes = ReadTypeLengths(reader, this.TypeNames.Count);
 
             // Read The Structure types (Field and Indices)
-            this.StructureTypes = ReadStructureTypeIndicesAndFields(reader);
+            this.DNAStructs = ReadStructureTypeIndicesAndFields(reader);
         }
 
         private List<string> ReadNames(BinaryReader reader)
@@ -177,7 +183,7 @@ namespace BlenderToUnity
                 short numberOfFields = reader.ReadInt16();
                 var fields = GetStructureTypeFields(reader, numberOfFields);
 
-                var typeName = this.NameTypes[typeIndex];
+                var typeName = this.TypeNames[typeIndex];
 
                 var structureType = new DNAStruct(typeIndex, typeName, fields);
 
@@ -197,7 +203,7 @@ namespace BlenderToUnity
                 short typeIndex = reader.ReadInt16();
                 short nameIndex = reader.ReadInt16();
 
-                string typeName = this.NameTypes[typeIndex];
+                string typeName = this.TypeNames[typeIndex];
                 string name = this.Names[nameIndex];
 
                 var dnaField = new DNAField(typeIndex, nameIndex, typeName, name);
@@ -212,6 +218,7 @@ namespace BlenderToUnity
     /// <summary>
     /// Contains all fields of a particular structure type.
     /// </summary>
+    [System.Serializable]
     public struct DNAStruct
     {
         public short TypeIndex;

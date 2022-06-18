@@ -19,37 +19,39 @@ namespace BlenderToUnity
         /// Source File Path of the .blend being read.
         /// </summary>
         [field: SerializeField]
-        public string SourceFilePath {get; private set; }
+        public string SourceFilePath { get; private set; }
         /// <summary>
         /// Parsed header of the .blend file.
         /// </summary>
         [field: SerializeField]
-        public Header Header {get; private set; }
+        [field: Tooltip("test")]
+        public Header Header { get; private set; }
 
         /// <summary>
         /// List of uncast FileBlocks in the .blend file. We only have their sdna index and a data blob at this stage.
         /// </summary>
-        public List<FileBlock> FileBlocks {get; private set; } = new List<FileBlock>();
+        [field: SerializeField]
+        public List<FileBlock> FileBlocks { get; private set; } = new List<FileBlock>();
 
         /// <summary>
         /// The special DNA1 Block of the FileBlocks. DNA1 is the second last block and contains descriptions for all other blocks.
         /// </summary>
-        /// <value></value>
-        public DNA1Block DNA1Block {get; private set;}
+
+        [field: SerializeField]
+        public DNA1Block DNA1Block { get; private set; }
 
         /// <summary>
         /// Blend File Structure Definitions generated from the dna1 block. The contents within describe blender Types, Structures and Fields.
         /// </summary>
-        public StructureDNA StructureDNA {get; private set; }
+        [field: SerializeField] 
+        public StructureDNA StructureDNA { get; private set; }
 
-        /// <summary>
-        /// A dictionary mapping memory addresses to the structures held in the corresponding file block.
-        /// </summary>
-        //public Dictionary<ulong,Structure[]> MemoryMap {get; private set; } = new Dictionary<ulong,Structure[]>();
+        [field: SerializeField] 
+        public List<Structure> Structures {get; private set;}
 
         public BlenderFile(string path) : this(new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read)))
         {
-            if(!File.Exists(path))
+            if (!File.Exists(path))
             {
                 f.printError("Unable to find file: " + path);
                 return;
@@ -64,68 +66,29 @@ namespace BlenderToUnity
 
             f.startwatch("Parse Blend");
 
-            #region Get Header
-            f.startwatch("Read Header");
 
             Header = ReadHeader(reader);
-            if(Header is null)
-            {
-                f.printError("Failed to read header. Aborting.");
-                reader.Close();
-                return;
-            }
-
-            f.stopwatch("Read Header");
-            #endregion
-
-            #region Get File Blocks
-            f.startwatch("Read File Blocks");
 
             FileBlocks = ReadFileBlocks(reader);
 
-            if(FileBlocks is null)
-            {
-                f.printError("Failed to read FileBlocks. Aborting.");
-                reader.Close();
-                return;
-            }
-
-            f.stopwatch("Read File Blocks");
-            #endregion
-
-            #region Get SDNAStructure
-            f.startwatch("Read SDNAStructure");
-
             DNA1Block = new DNA1Block(this);
 
-            f.stopwatch("Read SDNAStructure");
-            #endregion
-
-            #region Create SDNAStructure
-            f.startwatch("Generate SDNAStructure data");
-            
             StructureDNA = new StructureDNA(this);
 
-            f.stopwatch("Generate SDNAStructure data");
-            #endregion
-
-            // #region Create Memory Map
-            // f.startwatch("Create Memory Map");
-
-            // MemoryMap = CreateMemoryMap();
-            // if(MemoryMap is null)
-            // {
-            //     f.printError("Failed to create MemoryMap. Aborting.");
-            //     reader.Close();
-            //     return;
-            // }
-
-            // f.stopwatch("Create Memory Map");
-            // #endregion
+            //Structures = GetStructures(reader);
 
             reader.Close();
 
             f.stopwatch("Parse Blend");
+        }
+
+        private List<Structure> GetStructures(BinaryReader reader)
+        {
+            var structures = new List<Structure>();
+
+
+
+            return structures;
         }
 
         /// <summary>
@@ -151,7 +114,7 @@ namespace BlenderToUnity
                 return null;
             }
 
-            if ((endianness == 'v' && !BitConverter.IsLittleEndian) || (endianness == 'V' && BitConverter.IsLittleEndian)|| (endianness != 'v' && endianness != 'V'))
+            if ((endianness == 'v' && !BitConverter.IsLittleEndian) || (endianness == 'V' && BitConverter.IsLittleEndian) || (endianness != 'v' && endianness != 'V'))
             {
                 f.printError("Endianness of computer does not appear to match endianness of file. Open the file in Blender and save it to convert.");
                 return null;
@@ -165,7 +128,7 @@ namespace BlenderToUnity
 
             return header;
         }
-    
+
         /// <summary>
         /// Read and set the FileBlocks. Returns null if any file block is invalid.
         /// Will also collect the DNA1 Block.
@@ -183,7 +146,7 @@ namespace BlenderToUnity
 
                 blocksRead++;
 
-                if(block is null)
+                if (block is null)
                 {
                     f.printError($"Failed to read block {blocksRead} with code {blockCode}");
                     return null;
