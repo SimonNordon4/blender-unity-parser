@@ -31,7 +31,7 @@ namespace BlenderToUnity
             {
                 // If it's an array, pointer or primitive we just keep going down.
 
-                // Everything is eventually a primitive.
+                // Everything is eventually a primitive. 
                 if(fieldDefinition.IsArray || fieldDefinition.IsPointer || fieldDefinition.IsPrimitive)
                 {
                     var field = new Field(fieldDefinition);
@@ -41,7 +41,7 @@ namespace BlenderToUnity
                 else
                 {
                     
-                    //var field = new Structure(partialBody,fieldDefinition.StructureDefinition);
+                    //var field = new Structure(partialBody,fieldDefinition);
                 }
             }
 

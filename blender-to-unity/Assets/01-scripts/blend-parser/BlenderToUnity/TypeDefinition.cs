@@ -20,7 +20,7 @@ namespace BlenderToUnity
         /// Indicates if this type is a primitive (non-primitive types are defined in the DNA1 block as DNAStructs).
         /// </summary>
         public bool IsPrimitive;
-        
+
         public TypeDefinition(string typeName, short typeSize, bool typeIsPrimitive)
         {
             this.Name = typeName;

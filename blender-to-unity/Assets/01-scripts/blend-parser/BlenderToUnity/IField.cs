@@ -11,7 +11,7 @@ namespace BlenderToUnity
     /// </summary>
     public interface IField
     {
-        [field: SerializeField]
+
         string TypeName {get;}
     }
 

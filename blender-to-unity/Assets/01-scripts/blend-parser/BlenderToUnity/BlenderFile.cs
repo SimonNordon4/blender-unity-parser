@@ -163,9 +163,7 @@ namespace BlenderToUnity
 
             return fileBlocks;
         }
-
-        // private Dictionary<ulong,Structure[]> CreateMemoryMap()
-        // {
+ 
         //     Dictionary<ulong,Structure[]> memoryMap = new Dictionary<ulong,Structure[]>();
 
         //     for (int i = 0; i < FileBlocks.Count; i++)
@@ -176,5 +174,10 @@ namespace BlenderToUnity
 
         //     return memoryMap;
         // }
+
+        public StructureDefinition GetStructureDefinition(string name)
+        {
+            return StructureDNA.StructureDefinitions.FirstOrDefault(x => x.StructureTypeName == name);
+        }
     }
 }

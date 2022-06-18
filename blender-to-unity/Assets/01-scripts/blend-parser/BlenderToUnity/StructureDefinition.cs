@@ -35,20 +35,5 @@ namespace BlenderToUnity
             this.StructureTypeSize = typeDefinition.Size;
             this.FieldDefinitions = fieldDefinitions;
         }
-
-        // So Initialize fields calls initialize structure on every field, which calls intialize fields, which call initialize structure etc until every structure / field has been initialized...
-        // public void InitializeFields()
-        // {
-        //     if(isInitialised)
-        //         throw new InvalidOperationException("Can't initialize a structure twice.");
-        //     isInitialised = true;
-        //     foreach(FieldDefinition f in _fields)
-        //     {
-        //         if(!f.IsPrimitive)
-        //         {
-        //             f.InitializeStructure(sdna);
-        //         }
-        //     }
-        // }
     }
 }
