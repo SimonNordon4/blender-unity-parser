@@ -14,14 +14,17 @@ namespace BlenderToUnity
         public string Type;
         public string FieldName;
 
+        public short FieldSize;
+
         public FieldContext Context;
 
-        public DNAField(int typeIndex, int fieldNameIndex, string type, string fieldName)
+        public DNAField(int typeIndex, int fieldNameIndex, string type, string fieldName, short fieldSize)
         {
             this.TypeIndex = typeIndex;
             this.FieldNameIndex = fieldNameIndex;
             this.Type = type;
             this.FieldName = fieldName;
+            this.FieldSize = fieldSize;
 
             var context = FieldContext.Value;
             

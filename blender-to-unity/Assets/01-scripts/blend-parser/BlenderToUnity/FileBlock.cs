@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using UnityEngine;
 
@@ -14,6 +17,7 @@ namespace BlenderToUnity
         /// <summary>
         /// The index of the block. The nth index will show up at n blocks in the file.
         /// </summary>
+        [field: SerializeField]
         public int BlockIndex {get; set;}
 
         [field: SerializeField]
@@ -27,6 +31,10 @@ namespace BlenderToUnity
         [field: SerializeField]
         public int Count{get; set;}
         public byte[] Body{get; set;}
+
+        // Structures represent the parsed data of a FileBlock.
+        [field: SerializeField]
+        public Structure[] Structures {get; set;}
 
         /// <summary>
         /// Read a single FileBlock from a blend file.
@@ -62,6 +70,56 @@ namespace BlenderToUnity
             }
 
             return fileBlock;
+        }
+    
+        public void ParseFileBlock(BlenderFile file)
+        {
+            // Nothing to parse.
+            if (!BlockIsParseable())
+            {
+                Structures = new Structure[0];
+                return;
+            }
+
+            int numberOfStructs = Count;
+            int lenStruct = LenBody / Count;
+            var structures = new Structure[numberOfStructs];
+
+            var dnaType = file.StructureDNA.DNATypes[SDNAIndex];
+
+            if (dnaType.IsPrimitive)
+            {
+                f.printError($"Block {BlockIndex} is type {dnaType.TypeName} which is a primitive or void type. and cannot create a structure.");
+                structures = new Structure[0];
+                return;
+            }
+
+            if (numberOfStructs == 1)
+            {
+                structures[0] = new Structure(Body, dnaType, file);
+                return;
+            }
+
+            for (int i = 0; i < numberOfStructs; i++)
+            {
+                // intellicode suggested this lol
+                var structBody = Body.Skip(i * lenStruct).Take(lenStruct).ToArray();
+                var structure = new Structure(structBody, dnaType, file);
+                structures[i] = structure;
+            }
+
+        }
+
+        /// <summary>
+        /// Check to see if the provided file block can be parsed as a structure.
+        /// </summary>
+        private bool BlockIsParseable()
+        {
+            // Voids.
+            if (this.Count == 0 || this.LenBody == 0) return false;
+            // Special Blocks.
+            if (this.Code == "TEST" || this.Code == "REND" || this.Code == "DNA1" || this.Code == "ENDB") return false;
+            return true;
         }
     }
 

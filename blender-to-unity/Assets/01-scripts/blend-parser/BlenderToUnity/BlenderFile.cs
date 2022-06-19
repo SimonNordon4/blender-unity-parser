@@ -36,7 +36,7 @@ namespace BlenderToUnity
         /// <summary>
         /// Blend File Structure Definitions generated from the dna1 block. The contents within describe blender Types, Structures and Fields.
         /// </summary>
-        [field: SerializeField] 
+        [field: SerializeField]
         public StructureDNA StructureDNA { get; private set; }
 
         public BlenderFile(string path) : this(new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read)))
@@ -54,22 +54,36 @@ namespace BlenderToUnity
         {
             Reader = reader;
 
-            f.startwatch("Parse Blend");
+            try
+            {
+                f.startwatch("Parse Blend");
 
 
-            Header = ReadHeader(reader);
+                Header = ReadHeader(reader);
 
-            FileBlocks = ReadFileBlocks(reader);
+                FileBlocks = ReadFileBlocks(reader);
 
-            StructureDNA = new StructureDNA();
-            StructureDNA.ReadBlenderFile(this);
-            
+                StructureDNA = new StructureDNA();
+                StructureDNA.ReadBlenderFile(this);
 
-            //Structures = GetStructures(reader);
+                // get structures and types
+                for (int i = 0; i < FileBlocks.Count; i++)
+                {
+                    FileBlocks[i].ParseFileBlock(this);
+                }
 
-            reader.Close();
+                reader.Close();
 
-            f.stopwatch("Parse Blend");
+                f.stopwatch("Parse Blend");
+            }
+            catch (Exception e)
+            {
+                f.printError("Error parsing blend file: " + e.Message);
+            }
+            finally
+            {
+                reader.Close();
+            }
         }
 
         // private List<StructureRoot> GetStructures(BinaryReader reader)
@@ -153,7 +167,7 @@ namespace BlenderToUnity
 
             return fileBlocks;
         }
- 
+
         //     Dictionary<ulong,Structure[]> memoryMap = new Dictionary<ulong,Structure[]>();
 
         //     for (int i = 0; i < FileBlocks.Count; i++)

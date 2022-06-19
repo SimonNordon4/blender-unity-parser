@@ -11,8 +11,7 @@ namespace BlenderToUnity
     /// </summary>
     public interface IField
     {
-
-        string TypeName {get;}
+        string Type {get;}
     }
 
     /// <summary>
@@ -22,7 +21,7 @@ namespace BlenderToUnity
     /// denoting a Blender-defined struct; in which case the value should be the SDNA type name.</typeparam>
     public interface IField<T> : IField
     {
- 
+         
     }
 
      /// <summary>
