@@ -23,6 +23,7 @@ namespace BlenderToUnity
         public Structure(byte[] structBody, DNAType dnaType, BlenderFile file)
         {
             Type = dnaType.DnaStruct.TypeName;
+            f.print($"\tParsing Structure: {Type}. bytes: {structBody.Length} fields: {dnaType.DnaStruct.DnaFields.Count}");
             List<IField> fields = new List<IField>();
             Fields = ParseFields(structBody, dnaType, file);
         }
@@ -36,21 +37,32 @@ namespace BlenderToUnity
             {
                 DNAField dnaField = dnaType.DnaStruct.DnaFields[i];
                 short fieldSize = dnaField.FieldSize;
+                 f.print($"\t\tParsing Field: {dnaField.Type}. bytes: {fieldSize}");
 
+                    // Pointer fields are pointers to other structures.
                 // Get the byte[] containg the value of this field.
                 byte[] fieldBody = new byte[fieldSize];
-                Array.Copy(structBody, startReadPosition, fieldBody, 0, fieldSize);
+
+                // IF ITS A POINTER WE SKIP THE POINTER SIZE !!!! DONT READ THE OBJECT. 
+                for(int j = 0; j < fieldSize; j++)
+                {
+                    fieldBody[j] = structBody[startReadPosition + j];
+                }
+                //Array.Copy(structBody, startReadPosition, fieldBody, 0, fieldSize);
                 // increment the read position to the next field.
                 startReadPosition += fieldSize;
 
-                // Create the field and add it to the list, only if it's a primitive for now.
-                if (dnaField.Context == FieldContext.Value)
+                var field = new Field
                 {
-                    var field = new Field();
-                    field.DnaField = dnaField;
-                    
-                    fields.Add(field);
-                }
+                    FieldName = dnaField.FieldName,
+                    Type = dnaField.Type,
+                    FieldSize = fieldSize,
+                    FieldContext = dnaField.Context,
+                    DnaField = dnaField,
+                    FieldBody = fieldBody
+                };
+
+                fields.Add(field);
             }
             return fields;
         }

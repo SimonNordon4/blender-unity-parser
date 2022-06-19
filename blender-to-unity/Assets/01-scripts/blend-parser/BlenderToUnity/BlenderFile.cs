@@ -71,6 +71,7 @@ namespace BlenderToUnity
                 // get structures and types
                 for (int i = 0; i < FileBlocks.Count; i++)
                 {
+                    f.print("FileBlock: " + i);
                     FileBlocks[i].ParseFileBlock(this);
                 }
 

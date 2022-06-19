@@ -17,7 +17,7 @@ namespace BlenderToUnity
 
         public FieldContext Context;
 
-        public DNAField(int typeIndex, int fieldNameIndex, string type, string fieldName, short fieldSize)
+        public DNAField(int typeIndex, int fieldNameIndex, string type, string fieldName, short fieldSize, int pointerSize)
         {
             this.TypeIndex = typeIndex;
             this.FieldNameIndex = fieldNameIndex;
@@ -56,6 +56,12 @@ namespace BlenderToUnity
                 case 3:
                     context |= FieldContext.Array3D;
                     break;
+            }
+
+            // TODO set field Size to 4 or 8 depending ont he pointer size..... make sure evrything has access to everything??
+            if(context == FieldContext.Pointer)
+            {
+                FieldSize = (short)pointerSize;
             }
 
             this.Context = context;

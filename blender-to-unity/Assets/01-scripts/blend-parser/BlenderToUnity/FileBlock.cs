@@ -74,6 +74,8 @@ namespace BlenderToUnity
     
         public void ParseFileBlock(BlenderFile file)
         {
+            f.print($"Parsing block {BlockIndex}:{Code}. Bytes: {LenBody} Count: {Count}");
+
             // Nothing to parse.
             if (!BlockIsParseable())
             {
@@ -86,6 +88,8 @@ namespace BlenderToUnity
             var structures = new Structure[numberOfStructs];
 
             var dnaType = file.StructureDNA.DNATypes[SDNAIndex];
+
+            f.print($"Block {BlockIndex}: type {dnaType.TypeName}");
 
             if (dnaType.IsPrimitive)
             {
@@ -108,6 +112,8 @@ namespace BlenderToUnity
                 structures[i] = structure;
             }
 
+            return;
+
         }
 
         /// <summary>
@@ -116,7 +122,7 @@ namespace BlenderToUnity
         private bool BlockIsParseable()
         {
             // Voids.
-            if (this.Count == 0 || this.LenBody == 0) return false;
+            if (this.Count <= 0 || this.LenBody <= 0) return false;
             // Special Blocks.
             if (this.Code == "TEST" || this.Code == "REND" || this.Code == "DNA1" || this.Code == "ENDB") return false;
             return true;
