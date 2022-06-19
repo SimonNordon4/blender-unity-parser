@@ -8,26 +8,18 @@ using UnityEngine;
 namespace BlenderToUnity
 {
     [System.Serializable]
-    public class Field<T> : IField<T>
+    public class Field : IField
     {
         [field: SerializeField]
-        public string FieldName { get; private set; }
+        public string FieldName { get; set; }
 
         [field: SerializeField]
-        public string Type { get; private set; }
+        public string Type { get; set; }
 
         [field:SerializeField]
-        public FieldContext FieldContext {get; private set;}
+        public FieldContext FieldContext {get; set;}
 
-        [field:SerializeField]
-        public T Value { get; private set; }
-
-        public Field(T value, DNAField dnaField)
-        {
-            this.FieldName = dnaField.FieldName;
-            this.Type = dnaField.Type;
-            this.FieldContext = dnaField.Context;
-            this.Value = value;
-        }
+        [field: SerializeField]
+        public DNAField DnaField { get; set; }
     }
 }

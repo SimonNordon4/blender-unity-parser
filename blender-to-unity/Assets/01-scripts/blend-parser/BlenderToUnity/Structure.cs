@@ -46,7 +46,9 @@ namespace BlenderToUnity
                 // Create the field and add it to the list, only if it's a primitive for now.
                 if (dnaField.Context == FieldContext.Value)
                 {
-                    var field = ReadPrimitiveValue(fieldBody, dnaField, file);
+                    var field = new Field();
+                    field.DnaField = dnaField;
+                    
                     fields.Add(field);
                 }
             }
