@@ -13,7 +13,6 @@ namespace BlenderToUnity
         public int FieldNameIndex;
         public string Type;
         public string FieldName;
-
         public short FieldSize;
 
         public FieldContext Context;

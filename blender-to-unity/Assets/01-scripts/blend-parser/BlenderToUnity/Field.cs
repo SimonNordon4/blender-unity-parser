@@ -16,10 +16,16 @@ namespace BlenderToUnity
         [field: SerializeField]
         public string Type { get; set; }
 
+        [field: SerializeField]
+        public short FieldSize {get;set;}
+
         [field:SerializeField]
         public FieldContext FieldContext {get; set;}
 
         [field: SerializeField]
         public DNAField DnaField { get; set; }
+
+        [field: SerializeField]
+        public byte[] FieldBody { get; set; }
     }
 }
