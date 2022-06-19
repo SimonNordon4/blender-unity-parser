@@ -47,6 +47,8 @@ namespace BlenderToUnity
                 return;
             }
 
+            f.print("Attempting to read Blender File: " + path);
+
             SourceFilePath = path;
         }
 
@@ -54,7 +56,7 @@ namespace BlenderToUnity
         {
             Reader = reader;
 
-            try
+            using (reader)
             {
                 f.startwatch("Parse Blend");
 
@@ -75,14 +77,6 @@ namespace BlenderToUnity
                 reader.Close();
 
                 f.stopwatch("Parse Blend");
-            }
-            catch (Exception e)
-            {
-                f.printError("Error parsing blend file: " + e.Message);
-            }
-            finally
-            {
-                reader.Close();
             }
         }
 

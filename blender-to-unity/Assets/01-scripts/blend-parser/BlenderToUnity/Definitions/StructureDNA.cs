@@ -222,7 +222,7 @@ namespace BlenderToUnity
                 var isPrimitve = !DNAStructs.Any(dnaStruct => dnaStruct.TypeIndex == i);
                 dnaType.IsPrimitive = isPrimitve;
             
-                dnaType.DnaStruct = isPrimitve ? new DNAStruct(i, this.TypeNames[i], 0, null) : DNAStructs.First(dnaStruct => dnaStruct.TypeIndex == i);
+                dnaType.DnaStruct = isPrimitve ? new DNAStruct(i, this.TypeNames[i],this.TypeSizes[i], 0, null) : DNAStructs.First(dnaStruct => dnaStruct.TypeIndex == i);
 
                 dnaTypes.Add(dnaType);
             }

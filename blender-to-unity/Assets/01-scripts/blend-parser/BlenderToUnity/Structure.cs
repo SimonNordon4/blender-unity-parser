@@ -60,26 +60,26 @@ namespace BlenderToUnity
             return fieldBody;
         }
 
-        /// <summary>
-        /// Return a the value of a field that is a primitive and a value.
-        /// </summary>
-        private IField ReadPrimitiveValue(byte[] fieldBody, DNAField dnaField, BlenderFile file)
-        {
-            // void check.
-            if(fieldBody.Length == 0)
-            {
-                return null;
-            }
-            var fieldType = dnaField.Type;
-            if (fieldType == "char")
-            {
-                f.print("creating a char!");
-                char value = System.Text.Encoding.ASCII.GetChars(fieldBody)[0];
-                var field = new Field<char>(value, dnaField);
-                return field;
-            }
+        // /// <summary>
+        // /// Return a the value of a field that is a primitive and a value.
+        // /// </summary>
+        // private IField ReadPrimitiveValue(byte[] fieldBody, DNAField dnaField, BlenderFile file)
+        // {
+        //     // void check.
+        //     if(fieldBody.Length == 0)
+        //     {
+        //         return null;
+        //     }
+        //     var fieldType = dnaField.Type;
+        //     if (fieldType == "char")
+        //     {
+        //         f.print("creating a char!");
+        //         char value = System.Text.Encoding.ASCII.GetChars(fieldBody)[0];
+        //         var field = new Field<char>(value, dnaField);
+        //         return field;
+        //     }
 
-            return null;
-        }
+        //     return null;
+        // }
     }
 }
