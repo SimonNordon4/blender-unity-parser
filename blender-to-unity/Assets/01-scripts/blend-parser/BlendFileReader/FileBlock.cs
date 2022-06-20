@@ -1,17 +1,22 @@
 ﻿using System;
 using System.IO;
+using UnityEngine;
 
 namespace BlenderFileReader
 {
     /// <summary>
     /// Defines a FileBlock that contains a header and data.
     /// </summary>
+    [System.Serializable]
     public class FileBlock
     {
         /// <summary>
         /// Four-character code indicating the type of data in the FileBlock.
         /// </summary>
+        [field: SerializeField]
         public string Code { get; private set; }
+
+        public int Index {get; set;}
         /// <summary>
         /// Size of the FileBlock's data, in bytes.
         /// </summary>

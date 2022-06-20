@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace BlenderFileReader
 {
+    [System.Serializable]
     /// <summary>
     /// Reads a file into StructureDNA, PopulatedStructs, and whatnot, and when done represents a loaded Blender file
     /// </summary>
@@ -14,21 +15,25 @@ namespace BlenderFileReader
         /// <summary>
         /// Describes the pointer size of the file (either 4 or 8).
         /// </summary>
+        [field: SerializeField]
         public int PointerSize { get; private set; }
 
         /// <summary>
         /// Version number (in string form) of the version of Blender this file was saved in.
         /// </summary>
+        [field: SerializeField]
         public string VersionNumber { get; private set; }
 
         /// <summary>
         /// List of arrays of PopulatedStructures created from parsing a FileBlock. 
         /// </summary>
+        
         public List<Structure[]> Structures { get; private set; }
 
         /// <summary>
         /// A reference to the parsed structure DNA for this file.
         /// </summary>
+        [field: SerializeField]
         public StructureDNA StructureDNA { get; private set; }
 
         /// <summary>
@@ -41,8 +46,10 @@ namespace BlenderFileReader
         /// The path on disk to the file. May be null if the <pre>BlenderFile</pre> was instantiated with 
         /// a <pre>BinaryReader</pre> instead of a string.
         /// </summary>
+                [field: SerializeField]
         public string SourceFilename { get; private set; }
 
+        [SerializeField]
         private List<FileBlock> fileBlocks = new List<FileBlock>();
         private Dictionary<ulong, Structure[]> memoryMap = new Dictionary<ulong, Structure[]>();
 
@@ -116,11 +123,13 @@ namespace BlenderFileReader
         private StructureDNA readBlocks(BinaryReader fileReader)
         {
             StructureDNA dna = null;
+            int index = 0;
             do
             {
                 
                 FileBlock b = FileBlock.ReadBlock(fileReader, PointerSize);
-                
+                b.Index = index;
+                index++;
                 if(b.Code == "DNA1")
                     dna = (StructureDNA)b;
                 fileBlocks.Add(b);

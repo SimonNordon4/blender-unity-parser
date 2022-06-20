@@ -9,11 +9,20 @@ public class BlendReaderInput : MonoBehaviour
     
     private string blendFilePath = @"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blend-parser\BlenderToUnity\example.blend";
     [ReadOnly]
-    public BlenderFile blendFile;
+    public BlenderFileReader.BlenderFile oldBlenderFile;
+
+    [ReadOnly]
+    public BlenderFile blenderFile;
 
     [Button]
     private void ReadBlend()
     {
-        blendFile = new BlenderToUnity.BlenderFile(blendFilePath);
+        blenderFile = new BlenderFile(blendFilePath);
+    }
+
+    [Button]
+    private void ReadOldBlend()
+    {
+        oldBlenderFile = new BlenderFileReader.BlenderFile(blendFilePath);
     }
 }

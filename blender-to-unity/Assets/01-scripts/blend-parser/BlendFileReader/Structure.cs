@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
+using BlenderToUnity;
+
 namespace BlenderFileReader
 {
     /// <summary>
@@ -25,6 +27,9 @@ namespace BlenderFileReader
         /// <returns>An array of PopulatedStructures, or { null } if no structures are defined.</returns>
         public static Structure[] ParseFileBlock(FileBlock block, int blocksParsed, BlenderFile file)
         {
+            var blockType = file.StructureDNA.StructureList[block.SDNAIndex].StructureTypeName;
+            f.print($"Block {block.Index}: type {block.Code} {blockType}");
+
             if(block.Count == 0 || block.Code == "DNA1")
                 return null;
 
@@ -177,6 +182,7 @@ namespace BlenderFileReader
         /// <param name="file">Source file object.</param>
         protected Structure(byte[] data, StructureDefinition template, BlenderFile file)
         {
+            f.print($"\tParsing Structure: {template.StructureTypeName}. bytes: {data.Length} fields: {template.FieldList.Count} index: ?");
             // since this is a root structure, set its name to the type name (as an identification) and
             // Value to the type name (as expected by IField)
             Name = Value = TypeName = template.StructureTypeName;
@@ -195,6 +201,7 @@ namespace BlenderFileReader
         private Structure(byte[] data, StructureDefinition template, string name, Structure parent)
             :this(data, template, parent.ContainingFile)
         {
+            f.print($"\tEmbedded structure constructor {name} with bytes {data.Length} and parent {parent.Name}");
             Name = name;
             Parent = parent;
         }
@@ -209,64 +216,71 @@ namespace BlenderFileReader
         /// <param name="parent">Parent of the fields being parsed.</param>
         private void parseStructureFields(Structure parent, StructureDefinition toParse, byte[] data, ref List<IField> fields, ref int position)
         {
-            foreach(FieldDefinition f in toParse.FieldList)
-                if(f.IsPointer) // it's almost a primitive
+            foreach(FieldDefinition field in toParse.FieldList)
+            {
+                f.print($"\t\tParsing Field: {field.Name}. size: ? at position {position}/{data.Length}");
+                if(field.IsPointer) // it's almost a primitive
                 {
-                    if(f.IsArray)
+                    
+                    if(field.IsArray)
                     {
+                       
                         // height and width are backwards, whoops
-                        int height = getIntFromArrayName(f.Name);
+                        int height = getIntFromArrayName(field.Name);
                         int width = 1;
-                        if(f.Name.Count(v => { return v == '['; }) == 1)
+                        if(field.Name.Count(v => { return v == '['; }) == 1)
                             fields.Add(new Field<ulong[]>(toPointerArray(subArray(data, position, pointerSize * height)),
-                                f.Name, f.Type.Name, (short)pointerSize, parent, pointerSize));
+                                field.Name, field.Type.Name, (short)pointerSize, parent, pointerSize));
                         else
                         {
-                            int start = f.Name.LastIndexOf('[');
-                            int end = f.Name.LastIndexOf(']');
-                            string numberString = f.Name.Substring(start + 1, end - 1 - start);
+                            int start = field.Name.LastIndexOf('[');
+                            int end = field.Name.LastIndexOf(']');
+                            string numberString = field.Name.Substring(start + 1, end - 1 - start);
                             width = int.Parse(numberString);
                             fields.Add(new Field<ulong[][]>(to2DPointerArray(subArray(data, position, pointerSize * height * width), height),
-                                f.Name, f.Type.Name, (short)pointerSize, parent, pointerSize));
+                                field.Name, field.Type.Name, (short)pointerSize, parent, pointerSize));
                         }
                         position += pointerSize * width * height;
                     }
                     else
                     {
                         fields.Add(new Field<ulong>(toPointer(subArray(data, position, pointerSize)),
-                            f.Name, f.Type.Name, (short)pointerSize, parent, pointerSize));
+                            field.Name, field.Type.Name, (short)pointerSize, parent, pointerSize));
                         position += pointerSize;
                     }
                 }
-                else if(f.IsPrimitive)
+                else if(field.IsPrimitive)
                 {
-                    if(f.IsArray)
+                   
+                    if(field.IsArray)
                     {
                         int width = 1;
-                        if(f.Name.Count(v => { return v == '['; }) == 1)
-                            fields.Add(fieldFactory(subArray(data, position, f.Type.Size * getIntFromArrayName(f.Name)),
-                                f.Name, f.Type.Name, f.Type.Size, parent, pointerSize));
+                        if(field.Name.Count(v => { return v == '['; }) == 1)
+                            fields.Add(fieldFactory(subArray(data, position, field.Type.Size * getIntFromArrayName(field.Name)),
+                                field.Name, field.Type.Name, field.Type.Size, parent, pointerSize));
                         else
                         {
-                            int start = f.Name.LastIndexOf('[');
-                            int end = f.Name.LastIndexOf(']');
-                            string numberString = f.Name.Substring(start + 1, end - 1 - start);
+                            int start = field.Name.LastIndexOf('[');
+                            int end = field.Name.LastIndexOf(']');
+                            string numberString = field.Name.Substring(start + 1, end - 1 - start);
                             width = int.Parse(numberString);
-                            fields.Add(fieldFactory(subArray(data, position, f.Type.Size * getIntFromArrayName(f.Name) * width),
-                                f.Name, f.Type.Name, f.Type.Size, parent, pointerSize));
+                            fields.Add(fieldFactory(subArray(data, position, field.Type.Size * getIntFromArrayName(field.Name) * width),
+                                field.Name, field.Type.Name, field.Type.Size, parent, pointerSize));
                         }
-                        position += f.Type.Size * width * getIntFromArrayName(f.Name);
+                        position += field.Type.Size * width * getIntFromArrayName(field.Name);
                     }
                     else
                     {
-                        fields.Add(fieldFactory(subArray(data, position, f.Type.Size), f.Name, f.Type.Name, f.Type.Size, parent, pointerSize));
-                        position += f.Type.Size;
+                        fields.Add(fieldFactory(subArray(data, position, field.Type.Size), field.Name, field.Type.Name, field.Type.Size, parent, pointerSize));
+                        position += field.Type.Size;
                     }
                 }
                 else // non-primitive
                 {
-                    if(f.IsArray)
+                    
+                    if(field.IsArray)
                     {
+                        
                         // Unfortunately, I forgot about the case of non-primitives in arrays and didn't really plan for it
                         // with the format rewrite. One option would be to create some sort of class that inherits from
                         // IField and is just an array of PopulatedStructures. Another could be to cheese PopulatedStructure
@@ -274,9 +288,9 @@ namespace BlenderFileReader
                         // so I'm going to cheese the system by just baking each array item into the structure as a seperate field.
                         // I don't like this idea much either, but it's the simplest solution and it's better than the others.
 
-                        if(f.Name.Count(v => v == '[') == 1)
-                            for(int i = 0; i < getIntFromArrayName(f.Name); i++)
-                                fields.Add(new Structure(subArray(data, i * f.Type.Size, f.Type.Size), f.Structure, f.Name.Split('[')[0] + "[" + i + "]", parent));
+                        if(field.Name.Count(v => v == '[') == 1)
+                            for(int i = 0; i < getIntFromArrayName(field.Name); i++)
+                                fields.Add(new Structure(subArray(data, i * field.Type.Size, field.Type.Size), field.Structure, field.Name.Split('[')[0] + "[" + i + "]", parent));
                         else
                         {
                             // multidimensional arrays of non-primitives, can it get worse?
@@ -292,10 +306,12 @@ namespace BlenderFileReader
                     }
                     else
                     {
-                        fields.Add(new Structure(subArray(data, position, f.Structure.StructureTypeSize), f.Structure, f.Name.Split('[')[0], parent));
-                        position += f.Structure.StructureTypeSize;
+                        
+                        fields.Add(new Structure(subArray(data, position, field.Structure.StructureTypeSize), field.Structure, field.Name.Split('[')[0], parent));
+                        position += field.Structure.StructureTypeSize;
                     }
                 }
+            }
         }
 
         private ulong toPointer(byte[] value)

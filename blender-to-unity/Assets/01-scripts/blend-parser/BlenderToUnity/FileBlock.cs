@@ -74,12 +74,13 @@ namespace BlenderToUnity
     
         public void ParseFileBlock(BlenderFile file)
         {
-            f.print($"Parsing block {BlockIndex}:{Code}. Bytes: {LenBody} Count: {Count}");
+            var type = file.StructureDNA.TypeNames[SDNAIndex];
+            f.print($"Parsing block {BlockIndex}:{Code} {type} Bytes: {LenBody} Count: {Count}");
 
             // Nothing to parse.
             if (!BlockIsParseable())
             {
-                Structures = new Structure[0];
+                Structures = null;
                 return;
             }
 

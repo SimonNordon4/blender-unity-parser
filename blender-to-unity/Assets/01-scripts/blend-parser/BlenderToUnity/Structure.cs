@@ -8,7 +8,8 @@ namespace BlenderToUnity
     [System.Serializable]
     public class Structure : IStructField
     {
-        // TODO - I'm happy with the defintions, but none of the structures work. lol.
+        // TODO - I'm happy with the defintions, but none of the structures work. 
+        // TODO - !!!! ITS BECAUSE THE STRUCTURES DO NOT MATCH THE DNATYPES. Parsing GLOB parses the entirely wrong STRUCT TYPE!!!!
         [field: SerializeField]
         public string Type { get; private set; }
 
@@ -23,7 +24,7 @@ namespace BlenderToUnity
         public Structure(byte[] structBody, DNAType dnaType, BlenderFile file)
         {
             Type = dnaType.DnaStruct.TypeName;
-            f.print($"\tParsing Structure: {Type} index: {dnaType.TypeIndex}. bytes: {structBody.Length} fields: {dnaType.DnaStruct.DnaFields.Count}");
+            f.print($"\tParsing Structure: {Type} index: {dnaType.TypeIndex}. bytes: {structBody.Length} fields: {dnaType.DnaStruct.DnaFields.Count} sdnaIndex: {dnaType.DnaStruct.TypeIndex}");
             List<IField> fields = new List<IField>();
             Fields = ParseFields(structBody, dnaType, file);
         }
