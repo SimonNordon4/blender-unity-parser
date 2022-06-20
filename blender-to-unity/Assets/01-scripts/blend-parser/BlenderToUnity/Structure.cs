@@ -8,7 +8,7 @@ namespace BlenderToUnity
     [System.Serializable]
     public class Structure : IStructField
     {
-
+        // TODO - I'm happy with the defintions, but none of the structures work. lol.
         [field: SerializeField]
         public string Type { get; private set; }
 
@@ -23,7 +23,7 @@ namespace BlenderToUnity
         public Structure(byte[] structBody, DNAType dnaType, BlenderFile file)
         {
             Type = dnaType.DnaStruct.TypeName;
-            f.print($"\tParsing Structure: {Type}. bytes: {structBody.Length} fields: {dnaType.DnaStruct.DnaFields.Count}");
+            f.print($"\tParsing Structure: {Type} index: {dnaType.TypeIndex}. bytes: {structBody.Length} fields: {dnaType.DnaStruct.DnaFields.Count}");
             List<IField> fields = new List<IField>();
             Fields = ParseFields(structBody, dnaType, file);
         }
@@ -32,35 +32,28 @@ namespace BlenderToUnity
         {
             List<IField> fields = new List<IField>();
 
+            // Start reading from index 0 of the structBody.
             int startReadPosition = 0;
+
             for (int i = 0; i < dnaType.DnaStruct.NumberOfFields; i++)
             {
+                // Get the dnaField for this particular Field.
                 DNAField dnaField = dnaType.DnaStruct.DnaFields[i];
-                short fieldSize = dnaField.FieldSize;
-                 f.print($"\t\tParsing Field: {dnaField.Type}. bytes: {fieldSize}");
 
-                    // Pointer fields are pointers to other structures.
-                // Get the byte[] containg the value of this field.
+                int fieldSize = dnaField.FieldSize;
+
+                f.print($"\t\tParsing Field: {dnaField.FieldName} size: {fieldSize} bytes: {startReadPosition} / {structBody.Length}");
+
+                // Read the field from the structBody.
                 byte[] fieldBody = new byte[fieldSize];
-
-                // IF ITS A POINTER WE SKIP THE POINTER SIZE !!!! DONT READ THE OBJECT. 
                 for(int j = 0; j < fieldSize; j++)
-                {
+                { 
                     fieldBody[j] = structBody[startReadPosition + j];
                 }
-                //Array.Copy(structBody, startReadPosition, fieldBody, 0, fieldSize);
-                // increment the read position to the next field.
+
                 startReadPosition += fieldSize;
 
-                var field = new Field
-                {
-                    FieldName = dnaField.FieldName,
-                    Type = dnaField.Type,
-                    FieldSize = fieldSize,
-                    FieldContext = dnaField.Context,
-                    DnaField = dnaField,
-                    FieldBody = fieldBody
-                };
+                var field = new Field<int>(0,fieldBody, dnaField);
 
                 fields.Add(field);
             }

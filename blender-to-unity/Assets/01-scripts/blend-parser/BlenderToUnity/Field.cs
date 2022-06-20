@@ -8,24 +8,31 @@ using UnityEngine;
 namespace BlenderToUnity
 {
     [System.Serializable]
-    public class Field : IField
+    public class Field<T> : IField<T>
     {
-        [field: SerializeField]
-        public string FieldName { get; set; }
-
-        [field: SerializeField]
-        public string Type { get; set; }
-
-        [field: SerializeField]
-        public short FieldSize {get;set;}
-
-        [field:SerializeField]
-        public FieldContext FieldContext {get; set;}
-
+        /// <summary>
+        /// DNAField this field was created from.
+        /// </summary>
         [field: SerializeField]
         public DNAField DnaField { get; set; }
 
+        /// <summary>
+        /// Raw Field Data.
+        /// </summary>
         [field: SerializeField]
         public byte[] FieldBody { get; set; }
+
+        /// <summary>
+        /// Parsed Field Value.
+        /// </summary>
+        [field: SerializeField]
+        public T Value {get;set;}
+
+        public Field(T value, byte[] fieldBody, DNAField dnaField)
+        {
+            Value = value;
+            FieldBody = fieldBody;
+            DnaField = dnaField;
+        }
     }
 }

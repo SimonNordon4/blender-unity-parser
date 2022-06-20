@@ -11,97 +11,25 @@ namespace BlenderToUnity
 
         public int TypeIndex;
         public int FieldNameIndex;
-        public string Type;
+        public string TypeName;
         public string FieldName;
-        public short FieldSize;
+        public int FieldSize;
 
-        public FieldContext Context;
+        public bool IsPrimitive;
+        public bool IsVoid;
 
-        public DNAField(int typeIndex, int fieldNameIndex, string type, string fieldName, short fieldSize, int pointerSize)
-        {
-            this.TypeIndex = typeIndex;
-            this.FieldNameIndex = fieldNameIndex;
-            this.Type = type;
-            this.FieldName = fieldName;
-            this.FieldSize = fieldSize;
+        /// <summary>
+        /// Is Field a pointer?
+        /// </summary>
+        public bool IsPointer;
+        /// <summary>
+        /// PointerDepth = 2 means **object;
+        /// </summary>
+        public int PointerDepth;
 
-            var context = FieldContext.Value;
-            
-            int pointerChars = fieldName.Count(c => c == '*');
-            switch(pointerChars)
-            {
-                case 0:
-                    context = FieldContext.Value;
-                    break;
-                case 1:
-                    context = FieldContext.Pointer;
-                    break;
-                case 2:
-                    context = FieldContext.Pointer2;
-                    break;
-                case 3:
-                    context = FieldContext.Pointer3;
-                    break;
-            }
-
-            int arrayChars = fieldName.Count(c => c == '[');
-            switch(arrayChars)
-            {
-                case 1:
-                    context |= FieldContext.Array;
-                    break;
-                case 2:
-                    context |= FieldContext.Array2D;
-                    break;
-                case 3:
-                    context |= FieldContext.Array3D;
-                    break;
-            }
-
-            // TODO set field Size to 4 or 8 depending ont he pointer size..... make sure evrything has access to everything??
-            if(context == FieldContext.Pointer)
-            {
-                FieldSize = (short)pointerSize;
-            }
-
-            this.Context = context;
-        }
+        public bool IsArray;
+        public int ArrayDepth;
+        public int[] ArrayLengths;
     }
 
-    /// <summary>
-    /// Field context helps us establish a fields attributes. Usually in regards to pointers and arrays.
-    /// <remarks>worst case: ***someItem[4][3][2]</remarks>
-    /// </summary>
-    [Flags]
-    public enum FieldContext : int
-    {
-        /// <summary>
-        /// Field is the actual value.
-        /// </summary>
-        Value = 0, 
-        /// <summary>
-        /// Field is pointer to the value.
-        /// </summary>
-        Pointer = 1, 
-        /// <summary>
-        /// Field is pointer to the pointer to the value.
-        /// </summary>
-        Pointer2 = 2,
-        /// <summary>
-        /// Field is pointer to the pointer to the pointer to the value.
-        /// </summary>
-        Pointer3 = 4, 
-        /// <summary>
-        /// Field is an array.
-        /// </summary>
-        Array = 8,
-        /// <summary>
-        /// Field is an array.
-        /// </summary>
-        Array2D = 16, // 2 dimensional array
-        /// <summary>
-        /// Field is an array.
-        /// </summary>
-        Array3D = 32, // 3 dimensional array
-    }
 }

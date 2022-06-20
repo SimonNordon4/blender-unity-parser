@@ -64,11 +64,12 @@ namespace BlenderToUnity
                 Header = ReadHeader(reader);
 
                 FileBlocks = ReadFileBlocks(reader);
-
+                
+                //get structures and types
                 StructureDNA = new StructureDNA();
                 StructureDNA.ReadBlenderFile(this);
 
-                // get structures and types
+
                 for (int i = 0; i < FileBlocks.Count; i++)
                 {
                     f.print("FileBlock: " + i);

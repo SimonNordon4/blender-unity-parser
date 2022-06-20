@@ -6,7 +6,7 @@ namespace BlenderToUnity
     public struct DNAStruct
     {
 
-        public int TypeIndex;
+        public short TypeIndex;
 
         public string TypeName;
 
@@ -16,13 +16,13 @@ namespace BlenderToUnity
   
         public List<DNAField> DnaFields;
 
-        public DNAStruct(int typeIndex, string typeName, short structSize, int numberOfFields, List<DNAField> fields)
+        public DNAStruct(short typeIndex, string typeName, short structSize, short numberOfFields, List<DNAField> dnaFields)
         {
-            this.TypeIndex = typeIndex;
-            this.TypeName = typeName;
-            this.StructSize = structSize;
-            this.NumberOfFields = numberOfFields;
-            this.DnaFields = fields;
+            TypeIndex = typeIndex;
+            TypeName = typeName;
+            StructSize = structSize;
+            NumberOfFields = numberOfFields;
+            DnaFields = dnaFields;
         }
     }
 }

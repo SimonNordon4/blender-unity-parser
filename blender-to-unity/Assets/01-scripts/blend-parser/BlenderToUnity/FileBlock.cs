@@ -91,9 +91,9 @@ namespace BlenderToUnity
 
             f.print($"Block {BlockIndex}: type {dnaType.TypeName}");
 
-            if (dnaType.IsPrimitive)
+            if (dnaType.IsPrimitive || dnaType.IsVoid)
             {
-                f.printError($"Block {BlockIndex} is type {dnaType.TypeName} which is a primitive or void type. and cannot create a structure.");
+                f.printError($"Block {BlockIndex} is type {dnaType.TypeName} which is a primitive or void. This should be impossible as no FileBlock of that type would exist.");
                 structures = new Structure[0];
                 return;
             }

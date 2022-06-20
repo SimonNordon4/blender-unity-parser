@@ -18,11 +18,15 @@ namespace BlenderToUnity
         [field:SerializeField]
         public short Size {get;set;}
 
+        [field:SerializeField]
+        public bool IsPrimitive {get;set;}
+
+        [field:SerializeField]
+        public bool IsVoid {get;set;}
+
 
         // TODO Replace with enum (Void, Primitive, Struct)
 
-        [field:SerializeField]
-        public bool IsPrimitive {get;set;}
 
         [field: SerializeField]
         public DNAStruct DnaStruct{get;set;}

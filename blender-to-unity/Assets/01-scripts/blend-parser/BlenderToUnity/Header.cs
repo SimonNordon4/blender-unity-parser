@@ -9,7 +9,7 @@ namespace BlenderToUnity
         /// <remarks> Important for reader the bytes of the file. </remarks>
         /// </summary>
         [field: SerializeField]
-         public short PointerSize { get; private set; }
+         public int PointerSize { get; private set; }
 
         /// <summary>
         /// Version the blend was saved in. Only Valuable as a read-only property.
@@ -23,7 +23,7 @@ namespace BlenderToUnity
         [field: SerializeField] 
         public string Endian { get; private set; }
 
-        public Header(short PointerSize, string VersionNumber, char Endian)
+        public Header(int PointerSize, string VersionNumber, char Endian)
         {
             this.PointerSize = PointerSize;
             this.VersionNumber = VersionNumber;
