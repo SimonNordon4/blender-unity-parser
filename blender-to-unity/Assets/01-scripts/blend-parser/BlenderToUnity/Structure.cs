@@ -48,17 +48,21 @@ namespace BlenderToUnity
 
                 // Read the field from the structBody.
                 byte[] fieldBody = new byte[fieldSize];
-                for(int j = 0; j < fieldSize; j++)
-                { 
+                for (int j = 0; j < fieldSize; j++)
+                {
                     fieldBody[j] = structBody[startReadPosition + j];
                 }
 
                 startReadPosition += fieldSize;
 
-                var field = new Field<int>(0,fieldBody, dnaField);
+                var field = new Field<int>(0, fieldBody, dnaField);
 
                 fields.Add(field);
             }
+
+            f.print($"\t\tParsing Fields Done: {startReadPosition} / {structBody.Length}");
+            if (startReadPosition - structBody.Length != 0)
+                f.print($"\t\tParsing Field Error Unmatch:{dnaStruct.TypeName}");
             return fields;
         }
 

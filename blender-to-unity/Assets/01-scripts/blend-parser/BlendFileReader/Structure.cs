@@ -311,7 +311,11 @@ namespace BlenderFileReader
                         position += field.Structure.StructureTypeSize;
                     }
                 }
+                
             }
+            f.print($"\t\tParsing Field Finished: {position}/{data.Length}");
+            if(position - data.Length != 0)
+               f.print($"\t\tParsing Field Error Unmatch:{toParse.StructureTypeName}");
         }
 
         private ulong toPointer(byte[] value)
