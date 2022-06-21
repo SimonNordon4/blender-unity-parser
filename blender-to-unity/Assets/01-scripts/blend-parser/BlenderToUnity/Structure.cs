@@ -21,25 +21,26 @@ namespace BlenderToUnity
         /// </summary>
         /// <param name="partialBody">Section of the block body representing 1 structure.</param>
         /// <param name="definition">Structure definition associated with the block body</param>
-        public Structure(byte[] structBody, DNAType dnaType, BlenderFile file)
+        public Structure(byte[] structBody, DNAStruct dnaStruct, BlenderFile file)
         {
-            Type = dnaType.DnaStruct.TypeName;
-            f.print($"\tParsing Structure: {Type} index: {dnaType.TypeIndex}. bytes: {structBody.Length} fields: {dnaType.DnaStruct.DnaFields.Count} sdnaIndex: {dnaType.DnaStruct.TypeIndex}");
+            Type = dnaStruct.TypeName;
+            f.print($"\tParsing Structure: {Type} index: {dnaStruct.TypeIndex}. bytes: {structBody.Length} fields: {dnaStruct.DnaFields.Count} sdnaIndex: {dnaStruct.TypeIndex}");
+
             List<IField> fields = new List<IField>();
-            Fields = ParseFields(structBody, dnaType, file);
+            Fields = ParseFields(structBody, dnaStruct, file);
         }
 
-        private List<IField> ParseFields(byte[] structBody, DNAType dnaType, BlenderFile file)
+        private List<IField> ParseFields(byte[] structBody, DNAStruct dnaStruct, BlenderFile file)
         {
             List<IField> fields = new List<IField>();
 
             // Start reading from index 0 of the structBody.
             int startReadPosition = 0;
 
-            for (int i = 0; i < dnaType.DnaStruct.NumberOfFields; i++)
+            for (int i = 0; i < dnaStruct.NumberOfFields; i++)
             {
                 // Get the dnaField for this particular Field.
-                DNAField dnaField = dnaType.DnaStruct.DnaFields[i];
+                DNAField dnaField = dnaStruct.DnaFields[i];
 
                 int fieldSize = dnaField.FieldSize;
 

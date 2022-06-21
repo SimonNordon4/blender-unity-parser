@@ -233,18 +233,15 @@ namespace BlenderToUnity
                 // Get the type name, field name and field size from the existings lists.
                 string typeName = this.TypeNames[typeIndex];
                 string fieldName = this.FieldNames[fieldNameIndex];
-                int fieldSize = this.TypeSizes[typeIndex];
+                int typeSize = this.TypeSizes[typeIndex];
 
-                // Field is a primitive if it's index can't be found in the DNAStructs. Can't do this because DNA structs doesn't exist.
-                //bool isPrimitive = DNAStructs.Any(dnaStruct => dnaStruct.TypeIndex == typeIndex);
 
-                // Field is void if it's type name is void.
-                bool isVoid = typeName.Contains("void");
+                // Field is void if it has 0 memory allocated to it.
+                bool isVoid = typeSize == 0;
 
                 int pointerDepth = fieldName.Count(c => c == '*');
-
+ 
                 bool isPointer = pointerDepth > 0;
-                if(isPointer) fieldSize = file.Header.PointerSize;
 
                 // get the dimensions of the array. 0 if it's not an array.
                 int arrayDepth = fieldName.Count(c => c == '[');
@@ -267,6 +264,38 @@ namespace BlenderToUnity
                         // subtract one because arrayName[1] == arrayLength[0]
                         arrayLengths[j - 1] = arrayLength;
                     }
+                }
+
+                // Default fieldSize is the typeSize.
+                int fieldSize = typeSize;
+                // If field is a pointer, but isn't an array of pointers, then the fieldSize is always the file Headers PointerSize. 
+                if(isPointer && !isArray)
+                {
+                    fieldSize = file.Header.PointerSize;
+                }
+
+                // If it's array it's the total number of elements * typeSize.
+                else if(isArray && !isPointer)
+                {
+                    int totalTypesInArray = 1;
+                    for (int j = 0; j < arrayLengths.Length; j++)
+                    {
+                        // take the array [3][2][4] of shorts. => 3 * 2 * 4 = 24 types
+                        totalTypesInArray *= arrayLengths[j];
+                    }
+                    // 24 types * typesize (2 bytes) = 48 bytes
+                    fieldSize = totalTypesInArray * typeSize;
+                }
+
+                // If it's an array of pointers, it's the total number of elements * fileHeadersPointerSize. (I think)
+                else if(isArray && isPointer)
+                {
+                    int totalTypesInArray = 1;
+                    for (int j = 0; j < arrayLengths.Length; j++)
+                    {
+                        totalTypesInArray *= arrayLengths[j];
+                    }
+                    fieldSize = totalTypesInArray * file.Header.PointerSize;
                 }
 
                 // Create the Field.

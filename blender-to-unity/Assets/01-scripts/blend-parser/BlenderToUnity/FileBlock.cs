@@ -26,6 +26,14 @@ namespace BlenderToUnity
         public int LenBody{get; set;}
         [field: SerializeField]
         public long OldMemoryAddress{get; set;}
+
+        /// <summary>
+        /// The DNAStruct Index of the block.
+        /// <remarks>Take note, it's the index of the DNASTRUCT not the DNATYPE. 
+        /// SDNAIndex of 309 is DNAStructs[309] = FileGlobal which has a DNAType index of 438
+        /// </remarks>
+        /// </summary>
+        /// <value></value>
         [field: SerializeField]
         public int SDNAIndex{get; set;}
         [field: SerializeField]
@@ -74,8 +82,10 @@ namespace BlenderToUnity
     
         public void ParseFileBlock(BlenderFile file)
         {
-            var type = file.StructureDNA.TypeNames[SDNAIndex];
-            f.print($"Parsing block {BlockIndex}:{Code} {type} Bytes: {LenBody} Count: {Count}");
+            // Warning. FileBlocks are always STRUCTDNAs. SDNAINXEX refers to structures.
+            var type = file.StructureDNA.DNAStructs[SDNAIndex].TypeName;
+
+            f.print($"Block {this.BlockIndex}:{this.Code} sdna: {this.SDNAIndex} ({type})");
 
             // Nothing to parse.
             if (!BlockIsParseable())
@@ -88,16 +98,9 @@ namespace BlenderToUnity
             int lenStruct = LenBody / Count;
             var structures = new Structure[numberOfStructs];
 
-            var dnaType = file.StructureDNA.DNATypes[SDNAIndex];
+            var dnaType = file.StructureDNA.DNAStructs[SDNAIndex];
 
             f.print($"Block {BlockIndex}: type {dnaType.TypeName}");
-
-            if (dnaType.IsPrimitive || dnaType.IsVoid)
-            {
-                f.printError($"Block {BlockIndex} is type {dnaType.TypeName} which is a primitive or void. This should be impossible as no FileBlock of that type would exist.");
-                structures = new Structure[0];
-                return;
-            }
 
             if (numberOfStructs == 1)
             {

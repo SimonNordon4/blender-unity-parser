@@ -27,8 +27,8 @@ namespace BlenderFileReader
         /// <returns>An array of PopulatedStructures, or { null } if no structures are defined.</returns>
         public static Structure[] ParseFileBlock(FileBlock block, int blocksParsed, BlenderFile file)
         {
-            var blockType = file.StructureDNA.StructureList[block.SDNAIndex].StructureTypeName;
-            f.print($"Block {block.Index}: type {block.Code} {blockType}");
+            var blockType = file.StructureDNA.TypeList[block.SDNAIndex];
+            f.print($"Block {block.Index}:{block.Code} sdna: {block.SDNAIndex} ({blockType})");
 
             if(block.Count == 0 || block.Code == "DNA1")
                 return null;

@@ -6,6 +6,7 @@ namespace BlenderFileReader
     /// <summary>
     /// Represents a structure as defined by SDNA. 
     /// </summary>
+    [System.Serializable]
     public struct StructureDefinition
     {
         private List<FieldDefinition> fieldDictionary;

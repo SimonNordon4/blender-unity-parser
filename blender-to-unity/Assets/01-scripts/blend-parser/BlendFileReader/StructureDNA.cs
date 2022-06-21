@@ -2,34 +2,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace BlenderFileReader
 {
     /// <summary>
     /// Represents the file's StructureDNA.
     /// </summary>
+
     public class StructureDNA : FileBlock
     {
         /// <summary>
         /// List of all the names contained in SDNA.
         /// </summary>
-        public List<string> NameList { get; private set; }
+        [field: SerializeField]public List<string> NameList { get; private set; }
         /// <summary>
         /// List of all the types and their sizes contained in SDNA.
         /// </summary>
-        public List<TypeDefinition> TypeList { get; private set; }
+        [field: SerializeField]public List<TypeDefinition> TypeList { get; private set; }
         /// <summary>
         /// List of all the names of the types in SDNA; used primarily for BlenderType and BlenderField's constructors.
         /// </summary>
-        public List<string> TypeNameList { get; private set; }
+        [field: SerializeField]public List<string> TypeNameList { get; private set; }
         /// <summary>
         /// List of all structures defined in SDNA.
         /// </summary>
-        public List<StructureDefinition> StructureList { get; private set; }
+        [field: SerializeField]public List<StructureDefinition> StructureList { get; private set; }
         /// <summary>
         /// List of all of the structures' types by index in TypeList/TypeNameList; used primarily for BlenderType and BlenderField's constructors.
         /// </summary>
-        public List<short> StructureTypeIndices { get; private set; }
+        [field: SerializeField]public List<short> StructureTypeIndices { get; private set; }
 
         /// <summary>
         /// Creates a new StructureDNA block.

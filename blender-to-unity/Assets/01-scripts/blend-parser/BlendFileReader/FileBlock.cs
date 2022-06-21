@@ -20,14 +20,17 @@ namespace BlenderFileReader
         /// <summary>
         /// Size of the FileBlock's data, in bytes.
         /// </summary>
+        [field: SerializeField]
         public int Size { get; private set; }
         /// <summary>
         /// Index in the structures defined by SDNA used to decode the data in this FileBlock.
         /// </summary>
+        [field: SerializeField]
         public int SDNAIndex { get; private set; }
         /// <summary>
         /// Number of objects to decode.
         /// </summary>
+        [field: SerializeField]
         public int Count { get; private set; }
 
         /// <summary>
@@ -38,6 +41,7 @@ namespace BlenderFileReader
         /// <summary>
         /// Old memory address of the FileBlock; used for lists and pointer references.
         /// </summary>
+        [field: SerializeField]
         public ulong OldMemoryAddress { get; private set; }
 
         /// <summary>
