@@ -55,8 +55,8 @@ namespace BlenderToUnity
 
                 startReadPosition += fieldSize;
 
-                var field = new Field<int>(0, fieldBody, dnaField);
-
+                // This where we can create fields based on the dnaField.
+                var field = ParseField(fieldBody, dnaField);
                 fields.Add(field);
             }
 
@@ -66,33 +66,28 @@ namespace BlenderToUnity
             return fields;
         }
 
-        private byte[] FieldBodyFromStructBody(byte[] structBody, ref int startReadPosition, short fieldBodyLength)
-        {
-            byte[] fieldBody = new byte[fieldBodyLength];
 
-            return fieldBody;
+        private IField ParseField(byte[] fieldBody, DNAField dnaField)
+        {
+            return new Field<int>(0, fieldBody, dnaField);
         }
 
-        // /// <summary>
-        // /// Return a the value of a field that is a primitive and a value.
-        // /// </summary>
-        // private IField ReadPrimitiveValue(byte[] fieldBody, DNAField dnaField, BlenderFile file)
-        // {
-        //     // void check.
-        //     if(fieldBody.Length == 0)
-        //     {
-        //         return null;
-        //     }
-        //     var fieldType = dnaField.Type;
-        //     if (fieldType == "char")
-        //     {
-        //         f.print("creating a char!");
-        //         char value = System.Text.Encoding.ASCII.GetChars(fieldBody)[0];
-        //         var field = new Field<char>(value, dnaField);
-        //         return field;
-        //     }
+        /// <summary>
+        /// Return a the value of a field that is a primitive and a value.
+        /// </summary>
+        private IField ReadPrimitiveValue(byte[] fieldBody, DNAField dnaField, BlenderFile file)
+        {
+            // void check.
+            var fieldType = dnaField.TypeName;
+            if (fieldType == "char")
+            {
+                f.print("creating a char!");
+                char value = System.Text.Encoding.ASCII.GetChars(fieldBody)[0];
+                var field = new Field<char>(value, fieldBody, dnaField);
+                return field;
+            }
 
-        //     return null;
-        // }
+            return new Field<char>('a', fieldBody, dnaField);
+        }
     }
 }

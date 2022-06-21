@@ -96,7 +96,7 @@ namespace BlenderToUnity
 
             int numberOfStructs = Count;
             int lenStruct = LenBody / Count;
-            var structures = new Structure[numberOfStructs];
+            Structures = new Structure[numberOfStructs];
 
             var dnaType = file.StructureDNA.DNAStructs[SDNAIndex];
 
@@ -104,7 +104,7 @@ namespace BlenderToUnity
 
             if (numberOfStructs == 1)
             {
-                structures[0] = new Structure(Body, dnaType, file);
+                Structures[0] = new Structure(Body, dnaType, file);
                 return;
             }
 
@@ -113,7 +113,7 @@ namespace BlenderToUnity
                 // intellicode suggested this lol
                 var structBody = Body.Skip(i * lenStruct).Take(lenStruct).ToArray();
                 var structure = new Structure(structBody, dnaType, file);
-                structures[i] = structure;
+                Structures[i] = structure;
             }
 
             return;
