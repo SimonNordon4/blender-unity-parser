@@ -27,6 +27,11 @@ namespace BlenderToUnity
         /// </summary>
         public int PointerDepth;
 
+        /// <summary>
+        /// The Files pointer size.
+        /// </summary>
+        public int PointerSize;
+
         public bool IsArray;
         public int ArrayDepth;
         public int[] ArrayLengths;

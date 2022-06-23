@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Linq;
 using UnityEngine;
 
@@ -12,8 +13,6 @@ namespace BlenderToUnity
         // TODO - !!!! ITS BECAUSE THE STRUCTURES DO NOT MATCH THE DNATYPES. Parsing GLOB parses the entirely wrong STRUCT TYPE!!!!
         [field: SerializeField]
         public string Type { get; private set; }
-
-        [field: SerializeReference]
         public List<IField> Fields { get; private set; }
 
         /// <summary>
@@ -69,25 +68,96 @@ namespace BlenderToUnity
 
         private IField ParseField(byte[] fieldBody, DNAField dnaField)
         {
-            return new Field<int>(0, fieldBody, dnaField);
-        }
+            if (dnaField.IsVoid) return null;
 
-        /// <summary>
-        /// Return a the value of a field that is a primitive and a value.
-        /// </summary>
-        private IField ReadPrimitiveValue(byte[] fieldBody, DNAField dnaField, BlenderFile file)
-        {
-            // void check.
-            var fieldType = dnaField.TypeName;
-            if (fieldType == "char")
+            // Field is Pointer.
+            if (dnaField.IsPointer)
             {
-                f.print("creating a char!");
-                char value = System.Text.Encoding.ASCII.GetChars(fieldBody)[0];
-                var field = new Field<char>(value, fieldBody, dnaField);
-                return field;
+
             }
 
-            return new Field<char>('a', fieldBody, dnaField);
+            // Field is Primitive Value
+            if (dnaField.IsPrimitive)
+            {
+                // Array
+                if (dnaField.IsArray)
+                {
+
+                }
+                else
+                {
+                    f.print("Primitive Value Found");
+                    return ReadPrimitiveValue(fieldBody, dnaField);
+                }
+            }
+
+            // Field is Struct Value
+            else
+            {
+
+            }
+
+            return null;
+
+        }
+
+        private IField ReadPrimitiveValue(byte[] fieldBody, DNAField dnaField)
+        {
+            string fieldType = dnaField.TypeName;
+            switch (fieldType)
+            {
+                case "char":
+                    char charValue = Encoding.ASCII.GetChars(fieldBody)[0];
+                    return new Field<char>(charValue, fieldBody, dnaField);
+                case "uchar":
+                    byte ucharValue = fieldBody[0];
+                    return new Field<byte>(ucharValue, fieldBody, dnaField);
+                case "short":
+                    short shortValue = BitConverter.ToInt16(fieldBody);
+                    return new Field<short>(shortValue, fieldBody, dnaField); ;
+                case "ushort":
+                    ushort ushortValue = BitConverter.ToUInt16(fieldBody);
+                    return new Field<ushort>(ushortValue, fieldBody, dnaField); ;
+                case "int":
+                    int intValue = BitConverter.ToInt32(fieldBody);
+                    return new Field<int>(intValue, fieldBody, dnaField); ;
+                case "long":
+                    if (dnaField.PointerSize == 4)
+                    {
+                        int longValue = BitConverter.ToInt32(fieldBody);
+                        return new Field<int>(longValue, fieldBody, dnaField);
+                    }
+                    else
+                    {
+                        long longValue = BitConverter.ToInt64(fieldBody);
+                        return new Field<long>(longValue, fieldBody, dnaField);
+                    }
+                case "ulong":
+                    if (dnaField.PointerSize == 4)
+                    {
+                        uint longValue = BitConverter.ToUInt32(fieldBody);
+                        return new Field<uint>(longValue, fieldBody, dnaField);
+                    }
+                    else
+                    {
+                        ulong longValue = BitConverter.ToUInt64(fieldBody);
+                        return new Field<ulong>(longValue, fieldBody, dnaField);
+                    }
+                case "float":
+                    float floatValue = BitConverter.ToSingle(fieldBody);
+                    return new Field<float>(floatValue,fieldBody,dnaField);
+                case "double":
+                    double doubleValue = BitConverter.ToDouble(fieldBody);
+                    return new Field<double>(doubleValue,fieldBody,dnaField);
+                case "int64_t":
+                    long int64_tValue = BitConverter.ToInt64(fieldBody);
+                    return new Field<long>(int64_tValue,fieldBody,dnaField);
+                case "uint64_t":
+                    ulong uint64_tValue = BitConverter.ToUInt64(fieldBody);
+                    return new Field<ulong>(uint64_tValue,fieldBody,dnaField);
+            }
+
+            throw new SystemException($"Unknown Primitive Type: {fieldType}");
         }
     }
 }

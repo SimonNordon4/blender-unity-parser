@@ -25,6 +25,8 @@ namespace BlenderToUnity
         /// <summary>List of Type Sizes (in bytes) read directly from the blend file.</summary>
         public List<short> TypeSizes { get; private set; }
 
+        public List<short> StructTypeIndices {get; private set;}
+
         /// <summary>List of DNAStructs read directly from the blend file.</summary>
         [field: SerializeField]
         public List<DNAStruct> DNAStructs { get; private set; }
@@ -75,6 +77,7 @@ namespace BlenderToUnity
             int numberOfTypeNames = this.TypeNames.Count;
             this.TypeSizes = ReadTypeLengths(reader, numberOfTypeNames);
 
+            this.StructTypeIndices = ReadStructIndices(blendFile);
             // We get the DNAstructs first because we have to read them from the file.
             this.DNAStructs = ReadDNAStructs(blendFile);
 
@@ -183,6 +186,42 @@ namespace BlenderToUnity
             return typeLengthList;
         }
 
+        private List<short> ReadStructIndices(BlenderFile file)
+        {
+            List<short> structIndices = new List<short>();
+            var reader = file.Reader;
+            long startReadPosition = reader.BaseStream.Position;
+            var type = new string(reader.ReadChars(4));
+
+            // Check we're reading the STRC section.
+            if (type != "STRC")
+            {
+                f.printError($"Failed reading SDNA, STRC could not be read at {reader.BaseStream.Position}");
+                return null;
+            }
+
+            int numberOfStructures = reader.ReadInt32();
+
+            var dnaStructs = new List<DNAStruct>(numberOfStructures);
+
+            for (int i = 0; i < numberOfStructures; i++)
+            {
+                short typeIndex = reader.ReadInt16();
+                short numberOfFields = reader.ReadInt16();
+               for (int j = 0; j < numberOfFields; j++)
+               {
+                    reader.ReadInt32(); // Equivilant to reading the field.
+               }
+
+
+                structIndices.Add(typeIndex);
+
+            }
+
+            reader.BaseStream.Position = startReadPosition;
+            return structIndices;
+        }
+
         private List<DNAStruct> ReadDNAStructs(BlenderFile file)
         {
             var reader = file.Reader;
@@ -235,10 +274,13 @@ namespace BlenderToUnity
                 string fieldName = this.FieldNames[fieldNameIndex];
                 int typeSize = this.TypeSizes[typeIndex];
 
+                // Field is Primitve if it's type index is not in the struct list.
+                bool isPrimitive = (!StructTypeIndices.Contains(typeIndex)) && (typeSize > 0);
+                if (isPrimitive) f.print("Primitive Field Found! " + typeName + " " + fieldName);
 
                 // Field is void if it has 0 memory allocated to it.
                 bool isVoid = typeSize == 0;
-
+                
                 int pointerDepth = fieldName.Count(c => c == '*');
  
                 bool isPointer = pointerDepth > 0;
@@ -305,9 +347,11 @@ namespace BlenderToUnity
                 dnaField.TypeName = typeName;
                 dnaField.FieldName = fieldName;
                 dnaField.FieldSize = fieldSize;
+                dnaField.IsPrimitive = isPrimitive;
                 dnaField.IsVoid = isVoid;
                 dnaField.IsPointer = isPointer;
                 dnaField.PointerDepth = pointerDepth;
+                dnaField.PointerSize = file.Header.PointerSize;
                 dnaField.IsArray = isArray;
                 dnaField.ArrayDepth = arrayDepth;
                 dnaField.ArrayLengths = arrayLengths;
@@ -347,21 +391,6 @@ namespace BlenderToUnity
             }
 
             return dnaTypes;
-        }
-    
-        // We can only set a field as a primitive after we've gathered all Types and PrimitiveTypes.
-        // Because fields are created alongside their structs, we can't check this during.
-        private void RecalculateDNAFields()
-        {
-            for(int i = 0; i < DNAStructs.Count; i++)
-            {
-                var dnaStruct = DNAStructs[i];
-                for(int j = 0; j < dnaStruct.DnaFields.Count; j++)
-                {
-                    var dnaField = dnaStruct.DnaFields[j];
-                    dnaField.IsPrimitive = DNAPrimitives.Any(dnaType => dnaType.TypeIndex == dnaField.TypeIndex);
-                }
-            }
         }
     }
 
