@@ -10,8 +10,8 @@ namespace BlenderToUnity
         // TODO - Separate out array and pointer def. It's either an array of pointers, or a array of values.
 
         public int TypeIndex;
-        public int FieldNameIndex;
         public string TypeName;
+        public int FieldNameIndex;
         public string FieldName;
         public int FieldSize;
 

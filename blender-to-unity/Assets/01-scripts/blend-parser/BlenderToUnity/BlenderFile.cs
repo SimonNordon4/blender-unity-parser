@@ -81,19 +81,6 @@ namespace BlenderToUnity
             }
         }
 
-        // private List<StructureRoot> GetStructures(BinaryReader reader)
-        // {
-        //     var structures = new List<StructureRoot>();
-
-        //     foreach(var block in FileBlocks)
-        //     {
-        //         var structureRoot  = new StructureRoot(block,this);
-        //         structures.Add(structureRoot);
-        //     }
-
-        //     return structures;
-        // }
-
         /// <summary>
         /// Read and set the header. Returns null if the header is invalid.
         /// </summary>
