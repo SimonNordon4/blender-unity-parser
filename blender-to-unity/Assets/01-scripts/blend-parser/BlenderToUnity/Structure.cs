@@ -83,8 +83,13 @@ namespace BlenderToUnity
                 // Array
                 if (dnaField.IsArray)
                 {
-                    
-                    //return ReadPrimitiveArray(fieldBody, dnaField);
+                    if(dnaField.ArrayDepth == 1)
+                        return ReadPrimitiveArray(fieldBody, dnaField);
+                    if(dnaField.ArrayDepth == 2)
+                        //return ReadPrimitive2DArray(fieldBody, dnaField);
+                    if(dnaField.ArrayDepth == 3)
+                        //return ReadPrimitive3DArray(fieldBody, dnaField);
+                    throw new System.Exception("This parser only supports up to 3Dimensional Arrays");
                 }
 
                 // Primitive Value.
@@ -123,12 +128,12 @@ namespace BlenderToUnity
             string typeName = dnaField.TypeName;
 
             // If we're dealing with a small pointer size, we need change the long and ulong accordingly.
-            if(typeName == "long"  && dnaField.PointerSize == 4) typeName = "int";
-            if(typeName == "ulong" && dnaField.PointerSize == 4) typeName = "uint";
+            if (typeName == "long" && dnaField.PointerSize == 4) typeName = "int";
+            if (typeName == "ulong" && dnaField.PointerSize == 4) typeName = "uint";
 
             var value = PrimitiveFunctionsMap[typeName](fieldBody);
 
-            switch(typeName)
+            switch (typeName)
             {
                 case "char":
                     return new Field<char>((char)value);
@@ -159,70 +164,78 @@ namespace BlenderToUnity
             throw new Exception($"Unknown Primitive Type: {typeName}");
         }
 
-        private IField ReadPrimitiveArray(byte[] fieldBody, DNAField dNAField)
+        private IField ReadPrimitiveArray(byte[] fieldBody, DNAField dnaField)
         {
-            return null;
+            string typeName = dnaField.TypeName;
+
+            // If we're dealing with a small pointer size, we need change the long and ulong accordingly.
+            if (typeName == "long" && dnaField.PointerSize == 4) typeName = "int";
+            if (typeName == "ulong" && dnaField.PointerSize == 4) typeName = "uint";
+
+            switch (typeName)
+            {
+                case "char":
+                    char[] chars = GetArrayValues<char>(fieldBody, dnaField);
+                    return new Field<char[]>(chars);
+                case "uchar":
+                    byte[] uchars = GetArrayValues<byte>(fieldBody, dnaField);
+                    return new Field<byte[]>(uchars);
+                case "short":
+                    short[] shorts = GetArrayValues<short>(fieldBody, dnaField);
+                    return new Field<short[]>(shorts);
+                case "ushort":
+                    ushort[] ushorts = GetArrayValues<ushort>(fieldBody, dnaField);
+                    return new Field<ushort[]>(ushorts);
+                case "int":
+                    int[] ints = GetArrayValues<int>(fieldBody, dnaField);
+                    return new Field<int[]>(ints);
+                case "uint":
+                    uint[] uints = GetArrayValues<uint>(fieldBody, dnaField);
+                    return new Field<uint[]>(uints);
+                case "float":
+                    float[] floats = GetArrayValues<float>(fieldBody, dnaField);
+                    return new Field<float[]>(floats);
+                case "double":
+                    double[] doubles = GetArrayValues<double>(fieldBody, dnaField);
+                    return new Field<double[]>(doubles);
+                case "long":
+                    long[] longs = GetArrayValues<long>(fieldBody, dnaField);
+                    return new Field<long[]>(longs);
+                case "ulong":
+                    ulong[] ulongs = GetArrayValues<ulong>(fieldBody, dnaField);
+                    return new Field<ulong[]>(ulongs);
+                case "int64_t":
+                    long[] int64_ts = GetArrayValues<long>(fieldBody, dnaField);
+                    return new Field<long[]>(int64_ts);
+                case "uint64_t":
+                    ulong[] uint64_ts = GetArrayValues<ulong>(fieldBody, dnaField);
+                    return new Field<ulong[]>(uint64_ts);
+            }
+
+            throw new Exception($"Unknown Primitive Type: {typeName}");
         }
 
+        /// <summary>
+        /// Read an Array of Types from a byte array.
+        /// </summary>
+        /// <returns>Type Array to create a field with.</returns>
+        private T[] GetArrayValues<T>(byte[] fieldBody, DNAField dnaField)
+        {
+            string typeName = dnaField.TypeName;
+            int numberOfValues = dnaField.ArrayLengths[0]; // Total number of values in the 1D array.
+            int fieldTypeSize = dnaField.FieldSize / numberOfValues; // Size of each value in the array (char[64] has fieldsize of 64, but fieldTypeSize of 1 for example).
 
-        // private IField ReadPrimitiveValue_Old(byte[] fieldBody, DNAField dnaField)
-        // {
-        //     string fieldType = dnaField.TypeName;
-        //     switch (fieldType)
-        //     {
-        //         case "char":
-        //             char charValue = Encoding.ASCII.GetChars(fieldBody)[0];
-        //             return new Field<char>(charValue, fieldBody, dnaField);
-        //         case "uchar":
-        //             byte ucharValue = fieldBody[0];
-        //             return new Field<byte>(ucharValue, fieldBody, dnaField);
-        //         case "short":
-        //             short shortValue = BitConverter.ToInt16(fieldBody);
-        //             return new Field<short>(shortValue, fieldBody, dnaField); ;
-        //         case "ushort":
-        //             ushort ushortValue = BitConverter.ToUInt16(fieldBody);
-        //             return new Field<ushort>(ushortValue, fieldBody, dnaField); ;
-        //         case "int":
-        //             int intValue = BitConverter.ToInt32(fieldBody);
-        //             return new Field<int>(intValue, fieldBody, dnaField); ;
-        //         case "long":
-        //             if (dnaField.PointerSize == 4)
-        //             {
-        //                 int longValue = BitConverter.ToInt32(fieldBody);
-        //                 return new Field<int>(longValue, fieldBody, dnaField);
-        //             }
-        //             else
-        //             {
-        //                 long longValue = BitConverter.ToInt64(fieldBody);
-        //                 return new Field<long>(longValue, fieldBody, dnaField);
-        //             }
-        //         case "ulong":
-        //             if (dnaField.PointerSize == 4)
-        //             {
-        //                 uint longValue = BitConverter.ToUInt32(fieldBody);
-        //                 return new Field<uint>(longValue, fieldBody, dnaField);
-        //             }
-        //             else
-        //             {
-        //                 ulong longValue = BitConverter.ToUInt64(fieldBody);
-        //                 return new Field<ulong>(longValue, fieldBody, dnaField);
-        //             }
-        //         case "float":
-        //             float floatValue = BitConverter.ToSingle(fieldBody);
-        //             return new Field<float>(floatValue, fieldBody, dnaField);
-        //         case "double":
-        //             double doubleValue = BitConverter.ToDouble(fieldBody);
-        //             return new Field<double>(doubleValue, fieldBody, dnaField);
-        //         case "int64_t":
-        //             long int64_tValue = BitConverter.ToInt64(fieldBody);
-        //             return new Field<long>(int64_tValue, fieldBody, dnaField);
-        //         case "uint64_t":
-        //             ulong uint64_tValue = BitConverter.ToUInt64(fieldBody);
-        //             return new Field<ulong>(uint64_tValue, fieldBody, dnaField);
-        //     }
+            T[] values = new T[numberOfValues];
 
-        //     throw new SystemException($"Unknown Primitive Type: {fieldType}");
-        // }
+            for (int i = 0; i < numberOfValues; i++)
+            {
+                byte[] fieldValueBody = fieldBody.Skip(i * fieldTypeSize).Take(fieldTypeSize).ToArray();
+                values[i] = (T)PrimitiveFunctionsMap[typeName](fieldValueBody);
+            }
+
+            return values;
+        }
+
 
         // private IField ReadPrimitiveArray(byte[] fieldBody, DNAField dnaField)
         // {
