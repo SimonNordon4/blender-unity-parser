@@ -14,6 +14,8 @@ namespace BlenderToUnity
 
         [field: SerializeField]
         public string Type { get; private set; }
+
+        [field: SerializeReference]
         public List<IField> Fields { get; private set; }
 
         /// <summary>
@@ -24,7 +26,7 @@ namespace BlenderToUnity
         public Structure(byte[] structBody, DNAStruct dnaStruct, BlenderFile file)
         {
             Type = dnaStruct.TypeName;
-            f.print($"\tParsing Structure: {Type} index: {dnaStruct.TypeIndex}. bytes: {structBody.Length} fields: {dnaStruct.DnaFields.Count} sdnaIndex: {dnaStruct.TypeIndex}");
+            //f.print($"\tParsing Structure: {Type} index: {dnaStruct.TypeIndex}. bytes: {structBody.Length} fields: {dnaStruct.DnaFields.Count} sdnaIndex: {dnaStruct.TypeIndex}");
 
             List<IField> fields = new List<IField>();
             Fields = ParseFields(structBody, dnaStruct, file);
@@ -44,7 +46,7 @@ namespace BlenderToUnity
 
                 int fieldSize = dnaField.FieldSize;
 
-                f.print($"\t\tParsing Field: {dnaField.FieldName} size: {fieldSize} bytes: {startReadPosition} / {structBody.Length}");
+                //f.print($"\t\tParsing Field: {dnaField.FieldName} size: {fieldSize} bytes: {startReadPosition} / {structBody.Length}");
 
                 // Read the field from the structBody.
                 byte[] fieldBody = new byte[fieldSize];
@@ -60,7 +62,7 @@ namespace BlenderToUnity
                 fields.Add(field);
             }
 
-            f.print($"\t\tParsing Fields Done: {startReadPosition} / {structBody.Length}");
+            //f.print($"\t\tParsing Fields Done: {startReadPosition} / {structBody.Length}");
             if (startReadPosition - structBody.Length != 0)
                 f.print($"\t\tParsing Field Error Unmatch:{dnaStruct.TypeName}");
             return fields;
@@ -83,13 +85,14 @@ namespace BlenderToUnity
                 // Array
                 if (dnaField.IsArray)
                 {
-                    if(dnaField.ArrayDepth == 1)
-                        return ReadPrimitiveArray(fieldBody, dnaField);
-                    if(dnaField.ArrayDepth == 2)
-                        //return ReadPrimitive2DArray(fieldBody, dnaField);
-                    if(dnaField.ArrayDepth == 3)
-                        //return ReadPrimitive3DArray(fieldBody, dnaField);
-                    throw new System.Exception("This parser only supports up to 3Dimensional Arrays");
+                    // if(dnaField.ArrayDepth == 1)
+                    //     return ReadPrimitiveArray(fieldBody, dnaField);
+                    // if(dnaField.ArrayDepth == 2)
+                    //     //return ReadPrimitive2DArray(fieldBody, dnaField);
+                    // if(dnaField.ArrayDepth == 3)
+                    //     //return ReadPrimitive3DArray(fieldBody, dnaField);
+                    // throw new System.Exception("This parser only supports up to 3Dimensional Arrays");
+                    return null;
                 }
 
                 // Primitive Value.
@@ -136,29 +139,29 @@ namespace BlenderToUnity
             switch (typeName)
             {
                 case "char":
-                    return new Field<char>((char)value);
+                    return new CharField(dnaField.FieldName,(char)value);
                 case "uchar":
-                    return new Field<byte>((byte)value);
+                    return new UCharField(dnaField.FieldName,(byte)value);
                 case "short":
-                    return new Field<short>((short)value);
+                    return new ShortField(dnaField.FieldName,(short)value);
                 case "ushort":
-                    return new Field<ushort>((ushort)value);
+                    return new UShortField(dnaField.FieldName,(ushort)value);
                 case "int":
-                    return new Field<int>((int)value);
+                    return new IntField(dnaField.FieldName,(int)value);
                 case "uint":
-                    return new Field<uint>((uint)value);
+                    return new UIntField(dnaField.FieldName,(uint)value);
                 case "float":
-                    return new Field<float>((float)value);
+                    return new FloatField(dnaField.FieldName,(float)value);
                 case "double":
-                    return new Field<double>((double)value);
+                    return new DoubleField(dnaField.FieldName,(double)value);
                 case "long":
-                    return new Field<long>((long)value);
+                    return new LongField(dnaField.FieldName,(long)value);
                 case "ulong":
-                    return new Field<ulong>((ulong)value);
+                    return new ULongField(dnaField.FieldName,(ulong)value);
                 case "int64_t":
-                    return new Field<long>((long)value);
+                    return new LongField(dnaField.FieldName,(long)value);
                 case "uint64_t":
-                    return new Field<ulong>((ulong)value);
+                    return new ULongField(dnaField.FieldName,(ulong)value);
             }
 
             throw new Exception($"Unknown Primitive Type: {typeName}");

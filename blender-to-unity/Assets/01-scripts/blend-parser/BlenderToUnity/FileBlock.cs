@@ -85,7 +85,7 @@ namespace BlenderToUnity
             // Warning. FileBlocks are always STRUCTDNAs. SDNAINXEX refers to structures.
             var type = file.StructureDNA.DNAStructs[SDNAIndex].TypeName;
 
-            f.print($"Block {this.BlockIndex}:{this.Code} sdna: {this.SDNAIndex} ({type})");
+            //f.print($"Block {this.BlockIndex}:{this.Code} sdna: {this.SDNAIndex} ({type})");
 
             // Nothing to parse.
             if (!BlockIsParseable())
@@ -100,7 +100,7 @@ namespace BlenderToUnity
 
             var dnaType = file.StructureDNA.DNAStructs[SDNAIndex];
 
-            f.print($"Block {BlockIndex}: type {dnaType.TypeName}");
+            //f.print($"Block {BlockIndex}: type {dnaType.TypeName}");
 
             if (numberOfStructs == 1)
             {

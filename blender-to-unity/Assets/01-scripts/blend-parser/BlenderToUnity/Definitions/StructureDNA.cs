@@ -90,7 +90,7 @@ namespace BlenderToUnity
             // TODO. Figure out which Types are Primitive if they're not void and they're not a struct.
             // TODO. Updated all Fields based on whether they point to a void, or a primitive type.
 
-            Debug = new StructureDNADebug(blendFile);
+           // Debug = new StructureDNADebug(blendFile);
 
             return;
         }
@@ -276,7 +276,7 @@ namespace BlenderToUnity
 
                 // Field is Primitve if it's type index is not in the struct list.
                 bool isPrimitive = (!StructTypeIndices.Contains(typeIndex)) && (typeSize > 0);
-                if (isPrimitive) f.print("Primitive Field Found! " + typeName + " " + fieldName);
+                //if (isPrimitive) f.print("Primitive Field Found! " + typeName + " " + fieldName);
 
                 // Field is void if it has 0 memory allocated to it.
                 bool isVoid = typeSize == 0;

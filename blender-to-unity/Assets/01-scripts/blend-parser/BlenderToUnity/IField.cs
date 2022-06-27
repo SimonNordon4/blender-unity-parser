@@ -11,7 +11,7 @@ namespace BlenderToUnity
     /// </summary>
     public interface IField
     {
-        //string Type {get;}
+
     }
 
     /// <summary>

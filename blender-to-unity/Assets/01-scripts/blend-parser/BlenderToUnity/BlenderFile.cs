@@ -60,20 +60,26 @@ namespace BlenderToUnity
             {
                 f.startwatch("Parse Blend");
 
-
                 Header = ReadHeader(reader);
 
+                f.startwatch("Read File Blocks");
+
                 FileBlocks = ReadFileBlocks(reader);
+
+                f.stopwatch("Read File Blocks");
                 
+                f.startwatch("Read Structure DNA");
                 //get structures and types
                 StructureDNA = new StructureDNA();
                 StructureDNA.ReadBlenderFile(this);
+                f.stopwatch("Read Structure DNA");
 
-
+                f.startwatch("Parse File Blocks");
                 for (int i = 0; i < FileBlocks.Count; i++)
                 {
                     FileBlocks[i].ParseFileBlock(this);
                 }
+                f.stopwatch("Parse File Blocks");
 
                 reader.Close();
 
