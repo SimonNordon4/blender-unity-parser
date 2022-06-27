@@ -35,6 +35,23 @@ namespace BlenderToUnity
             // DnaField = dnaField;
         }
     }
+
+    /// <summary>
+    /// Array container for a field that is itself a field.
+    /// </summary>
+    public class FieldArray : IField<List<IField>>
+    {
+        [field:SerializeField]
+        public string FieldName { get; set; }
+         [field:SerializeReference]
+        public List<IField> Value { get; set; }
+        public FieldArray(string fieldName,List<IField> value)
+        {
+            FieldName = fieldName;
+            Value = value;
+        }
+    }
+
     [System.Serializable]
     public class CharField : Field
     {

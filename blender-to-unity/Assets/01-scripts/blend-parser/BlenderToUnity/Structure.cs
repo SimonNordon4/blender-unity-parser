@@ -59,6 +59,11 @@ namespace BlenderToUnity
 
                 // This where we can create fields based on the dnaField.
                 var field = ParseField(fieldBody, dnaField);
+                if(field is not null && field.GetType() == typeof(FieldArray))
+                {
+                    file.DebugFields.Add(field);
+                }
+                    
                 fields.Add(field);
             }
 
@@ -85,13 +90,12 @@ namespace BlenderToUnity
                 // Array
                 if (dnaField.IsArray)
                 {
-                    // if(dnaField.ArrayDepth == 1)
-                    //     return ReadPrimitiveArray(fieldBody, dnaField);
-                    // if(dnaField.ArrayDepth == 2)
-                    //     //return ReadPrimitive2DArray(fieldBody, dnaField);
-                    // if(dnaField.ArrayDepth == 3)
-                    //     //return ReadPrimitive3DArray(fieldBody, dnaField);
-                    // throw new System.Exception("This parser only supports up to 3Dimensional Arrays");
+                    if(dnaField.ArrayDepth == 1)
+                        return ReadPrimitiveArray(fieldBody, dnaField);
+                    
+                    // need a while loop.
+                 
+
                     return null;
                 }
 
@@ -168,6 +172,23 @@ namespace BlenderToUnity
         }
 
         private IField ReadPrimitiveArray(byte[] fieldBody, DNAField dnaField)
+        {
+            string typeName = dnaField.TypeName;
+            int numberOfValues = dnaField.ArrayLengths[0]; // Total number of values in the 1D array.
+            int fieldTypeSize = dnaField.FieldSize / numberOfValues; // Size of each value in the array (char[64] has fieldsize of 64, but fieldTypeSize of 1 for example).
+
+            var fieldArray = new List<IField>(numberOfValues);
+            for (int i = 0; i < numberOfValues; i++)
+            {
+                byte[] fieldValueBody = fieldBody.Skip(i * fieldTypeSize).Take(fieldTypeSize).ToArray();
+                var fieldValue = ReadPrimitiveValue(fieldValueBody, dnaField);
+                fieldArray.Add(fieldValue);
+            }
+
+            return new FieldArray(dnaField.FieldName,fieldArray);
+        }
+
+        private IField ReadPrimitiveArray_OLD(byte[] fieldBody, DNAField dnaField)
         {
             string typeName = dnaField.TypeName;
 

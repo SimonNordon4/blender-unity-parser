@@ -39,6 +39,9 @@ namespace BlenderToUnity
         [field: SerializeField]
         public StructureDNA StructureDNA { get; private set; }
 
+        [SerializeReference]
+        public List<IField> DebugFields = new List<IField>();
+
         public BlenderFile(string path) : this(new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read)))
         {
             if (!File.Exists(path))
