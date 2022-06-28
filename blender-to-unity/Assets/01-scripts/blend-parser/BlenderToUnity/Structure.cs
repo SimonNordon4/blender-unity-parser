@@ -90,11 +90,61 @@ namespace BlenderToUnity
                 // Array
                 if (dnaField.IsArray)
                 {
-                    if(dnaField.ArrayDepth == 1)
-                        return ReadPrimitiveArray(fieldBody, dnaField);
+                    // if(dnaField.ArrayDepth == 1)
+                    //     return ReadPrimitiveArray(fieldBody, dnaField);
                     
                     // need a while loop.
-                 
+                    string typeName = dnaField.TypeName;
+                    int numberOfValues = 1;
+                    for(int i = 0; i < dnaField.ArrayDepth; i++) { numberOfValues *= dnaField.ArrayLengths[i]; } // Total number of values is length of all arrays '[2][2][2]' = 8 values.
+
+                    int fieldTypeSize = dnaField.FieldSize / numberOfValues; // Size of ach value in the array (char[64] has fieldsize of 64, but fieldTypeSize of 1 for example).
+
+                    // The last array length contains the maximum number of elements in the first array.
+                    // If ArrayDepth == 1 then the MaxArraySize == NumberOfValues.
+                    var MaxArraySize = dnaField.ArrayLengths[dnaField.ArrayDepth - 1]; 
+
+                    var arrayOfMaximumArrays = new List<IField>(); // This will contain our arrays
+                    var arrayOfValues = new List<IField>(); // This will contain our values.
+                    for (int i = 0; i < numberOfValues; i++)
+                    {
+                        byte[] arrayBody = fieldBody.Skip(i * fieldTypeSize).Take(fieldTypeSize).ToArray();
+                        var primitiveField = ReadPrimitiveValue(arrayBody, dnaField); // read the primitive value.
+                        arrayOfValues.Add(primitiveField); // Add it to our value array.
+
+                        // If the value array has reached it's maximum elements, create a new FieldArray, add it to the arrayOfMaximumArrays and clear the arrayOfValues.
+                        if(i % MaxArraySize == 0)
+                        {
+                            var FieldArray = new FieldArray(typeName, arrayOfValues);
+                            arrayOfMaximumArrays.Add(FieldArray);
+                            arrayOfValues.Clear();
+                        }
+   
+                    }
+
+                    // If the array depth is 1, we only need to return that single FieldArray.
+                    if(arrayOfMaximumArrays.Count == 1)
+                    {
+                        return arrayOfMaximumArrays[0];
+                    }
+
+                    // // Now split the values up into their constituent arrays. say [3][2][4] = 24 / 4 = 6
+                    // for(int i = dnaField.ArrayDepth; i > 0; i--)
+                    // {
+                    //     // First split the array into it's max number of elements.
+                    //     // if i = 3 then maxArraySize == 4
+                    //     int maxArraySize = dnaField.ArrayLengths[i];
+                    //     int totalNumberOfValueArrays = numberOfValues / maxArraySize;
+
+                    //     for(int j = 0; j < totalNumberOfValueArrays; j++)
+                    //     {
+                    //         // Get the values for this array.
+                    //         var valueArray = rawPrimitiveFields.Skip(j * maxArraySize).Take(maxArraySize).ToList();
+                            
+                    //     }
+                    //     // when it hits the max numner, add it to an array of array?
+                    //     // keep creating arrays until their are none left?
+                    // }
 
                     return null;
                 }
