@@ -122,7 +122,7 @@ namespace BlenderToUnity
    
                     }
 
-                    // If the array depth is 1, we only need to return that single FieldArray.
+                    // If the array depth is 1, we only need to return that single FieldArray. 
                     if(arrayOfMaximumArrays.Count == 1)
                     {
                         return arrayOfMaximumArrays[0];
