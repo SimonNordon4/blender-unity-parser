@@ -53,113 +53,125 @@ namespace BlenderToUnity
     }
 
     [System.Serializable]
-    public class CharField : Field
+    public class FieldChar : Field
     {
         [field:SerializeField]
         public char Char { get; set; }
 
-        public CharField(string fieldName, char value) : base(fieldName)
+        public FieldChar(string fieldName, char value) : base(fieldName)
         {
             Char = value;
         }
     }
     [System.Serializable]
-    public class UCharField: Field
+    public class FieldUChar: Field
     {
         [field:SerializeField]
         public byte UChar { get; set; }
 
-        public UCharField(string fieldName, byte value) : base(fieldName)
+        public FieldUChar(string fieldName, byte value) : base(fieldName)
         {
             UChar = value;
         }
     }
     [System.Serializable]
-    public class ShortField : Field
+    public class FieldShort : Field
     {
         [field:SerializeField]
         public short Short { get; set; }
 
-        public ShortField(string fieldName, short value) : base(fieldName)
+        public FieldShort(string fieldName, short value) : base(fieldName)
         {
             Short = value;
         }
     }
     [System.Serializable]
-    public class UShortField : Field
+    public class FieldUShort : Field
     {
         [field:SerializeField]
         public ushort UShort { get; set; }
 
-        public UShortField(string fieldName, ushort value) : base(fieldName)
+        public FieldUShort(string fieldName, ushort value) : base(fieldName)
         {
             UShort = value;
         }
     }
     [System.Serializable]
-    public class IntField : Field
+    public class FieldInt : Field
     {
         [field:SerializeField]
         public int Int { get; set; }
 
-        public IntField(string fieldName, int value) : base(fieldName)
+        public FieldInt(string fieldName, int value) : base(fieldName)
         {
             Int = value;
         }
     }
     [System.Serializable]
-    public class UIntField : Field
+    public class FieldUInt : Field
     {
         [field:SerializeField]
         public uint UInt { get; set; }
 
-        public UIntField(string fieldName, uint value) : base(fieldName)
+        public FieldUInt(string fieldName, uint value) : base(fieldName)
         {
             UInt = value;
         }
     }
     [System.Serializable]
-    public class LongField : Field
+    public class FieldLong : Field
     {
         [field:SerializeField]
         public long Long { get; set; }
 
-        public LongField(string fieldName, long value) : base(fieldName)
+        public FieldLong(string fieldName, long value) : base(fieldName)
         {
             Long = value;
         }
     }
     [System.Serializable]
-    public class ULongField : Field
+    public class FieldULong : Field
     {
         [field:SerializeField]
         public ulong ULong { get; set; }
 
-        public ULongField(string fieldName, ulong value) : base(fieldName)
+        public FieldULong(string fieldName, ulong value) : base(fieldName)
         {
             ULong = value;
         }
     }
     [System.Serializable]
-    public class FloatField : Field
+    public class FieldFloat : Field
     {
         [field:SerializeField]
         public float Float { get; set; }
 
-        public FloatField(string fieldName, float value) : base(fieldName)
+        public FieldFloat(string fieldName, float value) : base(fieldName)
         {
             Float = value;
         }
     }
     [System.Serializable]
-    public class DoubleField : Field
+    public class FieldDouble : Field
     {
         [field:SerializeField]
         public double Double { get; set; }
 
-        public DoubleField(string fieldName, double value) : base(fieldName)
+        public FieldDouble(string fieldName, double value) : base(fieldName)
         {
             Double = value;
+        }
+    }
+
+    [System.Serializable]
+    public class FieldChars : Field
+    {
+        [field:SerializeField]
+        public char[] Chars { get; set; }
+
+        public FieldChars(string fieldName, char[] value) : base(fieldName)
+        {
+            Chars = value;
         }
     }
 }
