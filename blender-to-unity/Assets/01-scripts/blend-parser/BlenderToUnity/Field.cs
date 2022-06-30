@@ -36,17 +36,15 @@ namespace BlenderToUnity
         }
     }
 
-    public class FieldArray : IField
+    [System.Serializable]
+    public class FieldArrays : Field
     {
         [field: SerializeField]
-        public string FieldName { get; set; }
+        public List<Field> Fields { get; set; }
 
-        [field: SerializeReference]
-        public List<IField> Fields { get; set; }
-        public FieldArray(string fieldName)
+        public FieldArrays(string fieldName, List<Field> value) : base(fieldName)
         {
-            FieldName = fieldName;
-            Fields = new List<IField>();
+            Fields = value;
         }
     }
 
