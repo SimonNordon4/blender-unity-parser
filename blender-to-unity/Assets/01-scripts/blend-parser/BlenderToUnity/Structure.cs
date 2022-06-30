@@ -82,7 +82,12 @@ namespace BlenderToUnity
             // Field is Pointer.
             if (dnaField.IsPointer)
             {
+                if(dnaField.IsArray)
+                {
+                    return null;
+                }
 
+                
             }
 
             // Field is Primitive Value
@@ -102,7 +107,6 @@ namespace BlenderToUnity
                         default:
                             throw new Exception($"Unsupported Array Depth: {dnaField.ArrayDepth}");
                     }
-
                 }
 
                 // Primitive Value.
