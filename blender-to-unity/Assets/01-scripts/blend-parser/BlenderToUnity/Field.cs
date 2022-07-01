@@ -177,6 +177,11 @@ namespace BlenderToUnity
             Chars = value;
             String = new string(value);
         }
+
+        public char[] GetArray()
+        {
+            return Chars;
+        }
     }
 
     [System.Serializable]

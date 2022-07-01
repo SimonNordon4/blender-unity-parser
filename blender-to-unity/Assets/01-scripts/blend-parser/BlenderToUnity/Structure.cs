@@ -184,10 +184,14 @@ namespace BlenderToUnity
             if (typeName == "long" && dnaField.PointerSize == 4) typeName = "int";
             if (typeName == "ulong" && dnaField.PointerSize == 4) typeName = "uint";
 
+            
+
             switch (typeName)
             {
                 case "char":
                     char[] chars = GetArrayValues<char>(fieldBody, dnaField);
+                    // This will return fieldChars if 1D, or fieldArray(s) if multipleD.
+                    var new_fieldArray = SplitArray<char[]>(chars, dnaField);
                     fieldArrays = new FieldChars(dnaField.FieldName, chars);
                     break;
                 case "uchar":
@@ -249,13 +253,32 @@ namespace BlenderToUnity
 
             for (int i = SecondLastArrayIndex; i > -1; i--)
             {
-                int arraySize = dnaField.ArrayLengths[i];
+                int sizeOfEachArray = dnaField.ArrayLengths[i];
+                int numberOfArrays = 1;
+                int arrayIndex = i;
+                while(arrayIndex > -1)
+                {
+                    numberOfArrays *= dnaField.ArrayLengths[arrayIndex];
+                    arrayIndex--;
+                }
+
+                object[] bufferArray;
+                for (int j = 0; j < numberOfArrays; j++)
+                {
+                    Array.Copy(values,j * sizeOfEachArray,bufferArray,0,sizeOfEachArray);
+                }
 
                 // we'll need another for loop here.
             }
 
-
             return null;
+        }
+
+        // Split array into multi dimensional arrys.
+        private IField SplitArray<T>(T values, DNAField dNAField)
+        {
+            // return either a FieldArray or a FieldChars (if 1D).
+            return default;
         }
 
         private IField ReadPrimitiveArray(byte[] fieldBody, DNAField dnaField)
