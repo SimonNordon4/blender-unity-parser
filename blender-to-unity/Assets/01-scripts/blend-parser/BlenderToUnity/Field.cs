@@ -39,7 +39,7 @@ namespace BlenderToUnity
     [System.Serializable]
     public class FieldArrays : Field
     {
-        [field: SerializeField]
+        [field: SerializeReference]
         public List<Field> Fields { get; set; }
 
         public FieldArrays(string fieldName, List<Field> value) : base(fieldName)
