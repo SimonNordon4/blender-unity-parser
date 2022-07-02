@@ -184,8 +184,6 @@ namespace BlenderToUnity
             if (typeName == "long" && dnaField.PointerSize == 4) typeName = "int";
             if (typeName == "ulong" && dnaField.PointerSize == 4) typeName = "uint";
 
-            
-
             switch (typeName)
             {
                 case "char":
@@ -262,11 +260,11 @@ namespace BlenderToUnity
                     arrayIndex--;
                 }
 
-                object[] bufferArray;
-                for (int j = 0; j < numberOfArrays; j++)
-                {
-                    Array.Copy(values,j * sizeOfEachArray,bufferArray,0,sizeOfEachArray);
-                }
+                // object[] bufferArray;
+                // for (int j = 0; j < numberOfArrays; j++)
+                // {
+                //     Array.Copy(values,j * sizeOfEachArray,bufferArray,0,sizeOfEachArray);
+                // }
 
                 // we'll need another for loop here.
             }
