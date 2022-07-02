@@ -47,11 +47,6 @@ namespace BlenderToUnity
         /// <summary>
         /// Read a single FileBlock from a blend file.
         /// </summary>
-        /// <param name="reader">Current Binary Reader</param>
-        /// <param name="pointerSize">pointer size of the file.</param>
-        /// <param name="code">The Block Code</param>
-        /// <param name="fileBlock">Return the file block.</param>
-        /// <returns></returns>
         public static FileBlock ReadFileBlock(BinaryReader reader, int pointerSize)
         {
             // Input Checking.

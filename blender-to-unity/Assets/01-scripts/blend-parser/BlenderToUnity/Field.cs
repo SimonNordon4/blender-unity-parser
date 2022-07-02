@@ -53,12 +53,17 @@ namespace BlenderToUnity
     [System.Serializable]
     public class FieldChar : Field
     {
-        [field: SerializeField]
+        [field:SerializeField]
+        public string String {get; set;}
+        [field:SerializeField]
+        public short Short {get; set;}
         public char Char { get; set; }
 
         public FieldChar(string fieldName, char value) : base(fieldName)
         {
             Char = value;
+            String = value.ToString();
+            Short = (short)value;
         }
     }
     [System.Serializable]

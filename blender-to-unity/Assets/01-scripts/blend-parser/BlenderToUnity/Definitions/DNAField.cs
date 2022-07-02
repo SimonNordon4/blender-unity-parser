@@ -6,9 +6,9 @@ namespace BlenderToUnity
     [System.Serializable]
     public struct DNAField
     {
-        // TODO - add Array Definition Support.
-        // TODO - Separate out array and pointer def. It's either an array of pointers, or a array of values.
-
+        /// <summary>
+        /// Type Index. Primitive, Void or Structure.
+        /// </summary>
         public int TypeIndex;
         public string TypeName;
         public int FieldNameIndex;

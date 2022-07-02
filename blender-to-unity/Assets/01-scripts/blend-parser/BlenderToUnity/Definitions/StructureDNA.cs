@@ -84,14 +84,6 @@ namespace BlenderToUnity
             // Now we can generate our DNATypes.
             this.DNATypes = GetDNATypes();
 
-            
-
-            // TODO. Figure out which Types are VOID by referncing their Size.
-            // TODO. Figure out which Types are Primitive if they're not void and they're not a struct.
-            // TODO. Updated all Fields based on whether they point to a void, or a primitive type.
-
-           // Debug = new StructureDNADebug(blendFile);
-
             return;
         }
 
@@ -391,6 +383,10 @@ namespace BlenderToUnity
             }
 
             return dnaTypes;
+        }
+        public DNAStruct GetDNAStructFromTypeIndex(int typeIndex)
+        {
+            return DNAStructs.First(dnaStruct => dnaStruct.TypeIndex == typeIndex);
         }
     }
 

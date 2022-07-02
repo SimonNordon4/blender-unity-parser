@@ -16,15 +16,21 @@ namespace BlenderToUnity
         [field: SerializeReference]
         public List<IField> Fields { get; private set; }
 
+        /// <summary>
+        /// Parse a Structure. A Structure contains the type and a list of its fields.
+        /// </summary>
         public Structure(byte[] structBody, DNAStruct dnaStruct, BlenderFile file)
         {
             Type = dnaStruct.TypeName;
-            //f.print($"\tParsing Structure: {Type} index: {dnaStruct.TypeIndex}. bytes: {structBody.Length} fields: {dnaStruct.DnaFields.Count} sdnaIndex: {dnaStruct.TypeIndex}");
 
             List<IField> fields = new List<IField>();
             Fields = ParseFields(structBody, dnaStruct, file);
         }
 
+        /// <summary>
+        /// Parse all fields contained with a the byte[] structBody.
+        /// </summary>
+        /// <returns>List of Ifields</returns>
         private List<IField> ParseFields(byte[] structBody, DNAStruct dnaStruct, BlenderFile file)
         {
             List<IField> fields = new List<IField>();
@@ -51,12 +57,24 @@ namespace BlenderToUnity
                 startReadPosition += fieldSize;
 
                 // This where we can create fields based on the dnaField.
-                var field = ParseField(fieldBody, dnaField);
+                var field = ParseField(fieldBody, dnaField, file);
 
+                #region DEBUG
                 if (dnaField.IsArray && dnaField.ArrayDepth > 1)
                 {
                     file.DebugFields.Add(field);
                 }
+
+                if(dnaField.IsPointer && !dnaField.IsArray)
+                {
+                    file.DebugPointers.Add(field);
+                }
+
+                if(!dnaField.IsPointer && !dnaField.IsArray && !dnaField.IsPrimitive)
+                {
+                    file.DebugStructures.Add(field);
+                }
+                #endregion
 
                 fields.Add(field);
             }
@@ -67,14 +85,17 @@ namespace BlenderToUnity
             return fields;
         }
 
-        private IField ParseField(byte[] fieldBody, DNAField dnaField)
+        /// <summary>
+        /// Parse a single field contained with a structure from the byte[] fieldBody. 
+        /// </summary>
+        private IField ParseField(byte[] fieldBody, DNAField dnaField, BlenderFile file)
         {
             if (dnaField.IsVoid) return null;
 
             // Pointers
             if (dnaField.IsPointer && !dnaField.IsArray)
             {
-                // return pointer.
+                return ReadPointerValue(fieldBody, dnaField);
             }
             if (dnaField.IsPointer && dnaField.IsArray)
             {
@@ -99,7 +120,7 @@ namespace BlenderToUnity
             // Structures
             if (!dnaField.IsPointer && !dnaField.IsPrimitive && !dnaField.IsArray)
             {
-                // return struct.
+                return ReadStructureValue(fieldBody, dnaField, file);
             }
             if (!dnaField.IsPointer && !dnaField.IsPrimitive && dnaField.IsArray)
             {
@@ -108,6 +129,17 @@ namespace BlenderToUnity
             return null;
         }
 
+        private FieldULong ReadPointerValue(byte[] fieldBody, DNAField dnaField)
+        {
+            if(fieldBody.Length == 0) f.print("FIELD BODY IS 0");
+            var pointer = dnaField.PointerSize == 4 ? BitConverter.ToUInt32(fieldBody, 0) : BitConverter.ToUInt64(fieldBody, 0);
+            return new FieldULong(dnaField.FieldName, pointer);
+        }
+
+        /// <summary>
+        /// Dictonary mapping field TypeName with the corresponding function to conver the binary field to that type.
+        /// </summary>
+        /// <returns>Returns a value in a particular type</returns>
         public static Dictionary<string, Func<byte[], object>> PrimitiveFunctionsMap = new Dictionary<string, Func<byte[], object>>()
         {
             ["char"] = body => { return (char)Encoding.ASCII.GetChars(body)[0]; },
@@ -124,6 +156,9 @@ namespace BlenderToUnity
             ["uint64_t"] = body => { return (ulong)BitConverter.ToUInt64(body); },
         };
 
+        /// <summary>
+        /// Dictionary mapping field TypeName with the corresponding function to convert the binary field to an array of that type.
+        /// </summary>
         public static Dictionary<string, Func<string, object, Field>> PrimitiveArrayFunctionMap = new Dictionary<string, Func<string, object, Field>>()
         {
             ["char"] = (fieldName, values) => { return new FieldChars(fieldName, (char[])values); },
@@ -140,6 +175,9 @@ namespace BlenderToUnity
             ["uint64_t"] = (fieldName, values) => { return new FieldULongs(fieldName, (ulong[])values); },
         };
 
+        /// <summary>
+        /// Reads a single Primitive Value and returns it as an iFeild
+        /// </summary>
         private IField ReadPrimitiveValue(byte[] fieldBody, DNAField dnaField)
         {
             string typeName = dnaField.TypeName;
@@ -181,6 +219,9 @@ namespace BlenderToUnity
             throw new Exception($"Unknown Primitive Type: {typeName}");
         }
 
+        /// <summary>
+        /// Reads a 1 Dimensional array of primitive values and returns it as an IField.
+        /// </summary>
         private IField ReadPrimitiveArray(byte[] fieldBody, DNAField dnaField)
         {
             string typeName = dnaField.TypeName;
@@ -232,6 +273,9 @@ namespace BlenderToUnity
             throw new Exception($"Unknown Primitive Type: {typeName}");
         }
 
+        /// <summary>
+        /// Generic function to read binary data and parse it into an array of primitive values of a particular type.
+        /// </summary>
         private T[] GetArrayValues<T>(byte[] fieldBody, DNAField dnaField)
         {
             string typeName = dnaField.TypeName;
@@ -252,6 +296,10 @@ namespace BlenderToUnity
             return values;
         }
 
+        /// <summary>
+        /// Parses binary data that is deemed as a field containing an array of primitive values with 2 or more dimensions.
+        /// </summary>
+        /// <returns>Returns a FieldArrays containing n number of primitive arrays</returns>
         private IField ReadPrimitiveMultiDimensionalArray(byte[] fieldBody, DNAField dnaField)
         {
             string typeName = dnaField.TypeName;
@@ -291,6 +339,10 @@ namespace BlenderToUnity
             }
         }
 
+        /// <summary>
+        /// Parses binary data in a multi dimensional array of a designated type.
+        /// </summary>
+        /// <returns>A Field Array containing n number of primitive arrays.</returns>
         private IField ProcessMultiDimensionalArray<T>(byte[] fieldBody, DNAField dnaField)
         {
             var values = GetArrayValues<T>(fieldBody, dnaField);
@@ -299,7 +351,6 @@ namespace BlenderToUnity
 
             for (int i = dnaField.ArrayDepth - 2; i > -1; i--)
             {
-                f.print("i: " + i + " array length: " + dnaField.ArrayLengths[i]);
                 int arraysAtCurrentDepth = 1;
                 for (int j = 0; j <= i; j++)
                 {
@@ -313,7 +364,6 @@ namespace BlenderToUnity
                 {
                     if (i == dnaField.ArrayDepth - 2) // If we're at the first array we want to split up the values.
                     {
-                        f.print("Spliting array up  at " + j + " of " + arraysAtCurrentDepth);
                         var partialValues = values.Skip(j * arraySize).Take(arraySize).ToArray();
                         var array = ProccessArrayValues(dnaField, partialValues);
                         bufferArray.Add(array);
@@ -333,6 +383,10 @@ namespace BlenderToUnity
             throw new SystemException("How did you get here?");
         }
         
+        /// <summary>
+        /// Processes generic array values into a primitive array Field Type.
+        /// </summary>
+        /// <returns>A Primitive Array Field Type (e.g. FieldChars, FieldFloats etc)</returns>
         private Field ProccessArrayValues<T>(DNAField dnaField, T arrayValues)
         {
             string typeName = dnaField.TypeName;
@@ -341,6 +395,14 @@ namespace BlenderToUnity
             if (typeName == "ulong" && dnaField.PointerSize == 4) typeName = "uint";
 
             return PrimitiveArrayFunctionMap[typeName](dnaField.FieldName, arrayValues);
+        }
+    
+        private IField ReadStructureValue(byte[] fieldBody, DNAField dnaField, BlenderFile file)
+        {
+            f.print("type index == " + dnaField.TypeIndex);
+            var structureDNA = file.StructureDNA.GetDNAStructFromTypeIndex(dnaField.TypeIndex);
+            f.print("struct type == " + structureDNA.TypeName);
+            return new Structure(fieldBody, structureDNA, file);
         }
     }
 

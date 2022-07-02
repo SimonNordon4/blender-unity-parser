@@ -42,6 +42,12 @@ namespace BlenderToUnity
         [SerializeReference]
         public List<IField> DebugFields = new List<IField>();
 
+        [SerializeReference]
+        public List<IField> DebugPointers = new List<IField>();
+
+            [SerializeReference]
+        public List<IField> DebugStructures = new List<IField>();
+
         public BlenderFile(string path) : this(new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read)))
         {
             if (!File.Exists(path))
@@ -101,7 +107,7 @@ namespace BlenderToUnity
 
             if (pointerSize != 4 && pointerSize != 8)
             {
-                f.printError("Invalid pointer size: " + pointerSize);
+                f.printError("Invalid pointer size: " + pointerSize); //test
                 return null;
             }
 
