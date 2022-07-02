@@ -10,19 +10,12 @@ namespace BlenderToUnity
     [System.Serializable]
     public class Structure : IStructField
     {
-
-
         [field: SerializeField]
         public string Type { get; private set; }
 
         [field: SerializeReference]
         public List<IField> Fields { get; private set; }
 
-        /// <summary>
-        /// Structure is the parsed data of a FileBlock.
-        /// </summary>
-        /// <param name="partialBody">Section of the block body representing 1 structure.</param>
-        /// <param name="definition">Structure definition associated with the block body</param>
         public Structure(byte[] structBody, DNAStruct dnaStruct, BlenderFile file)
         {
             Type = dnaStruct.TypeName;
@@ -74,7 +67,6 @@ namespace BlenderToUnity
             return fields;
         }
 
-
         private IField ParseField(byte[] fieldBody, DNAField dnaField)
         {
             if (dnaField.IsVoid) return null;
@@ -113,14 +105,8 @@ namespace BlenderToUnity
             {
                 // return struct array.
             }
-
-
-
             return null;
-
         }
-
-
 
         public static Dictionary<string, Func<byte[], object>> PrimitiveFunctionsMap = new Dictionary<string, Func<byte[], object>>()
         {
@@ -150,7 +136,7 @@ namespace BlenderToUnity
             ["double"] = (fieldName, values) => { return new FieldDoubles(fieldName, (double[])values); },
             ["long"] = (fieldName, values) => { return new FieldLongs(fieldName, (long[])values); },
             ["ulong"] = (fieldName, values) => { return new FieldULongs(fieldName, (ulong[])values); },
-            ["int64_t"] = (fieldName, values) =>  { return new FieldLongs(fieldName, (long[])values); },
+            ["int64_t"] = (fieldName, values) => { return new FieldLongs(fieldName, (long[])values); },
             ["uint64_t"] = (fieldName, values) => { return new FieldULongs(fieldName, (ulong[])values); },
         };
 
@@ -194,7 +180,6 @@ namespace BlenderToUnity
 
             throw new Exception($"Unknown Primitive Type: {typeName}");
         }
-
 
         private IField ReadPrimitiveArray(byte[] fieldBody, DNAField dnaField)
         {
@@ -247,11 +232,6 @@ namespace BlenderToUnity
             throw new Exception($"Unknown Primitive Type: {typeName}");
         }
 
-
-        /// <summary>
-        /// Read an Array of Types from a byte array.
-        /// </summary>
-        /// <returns>Type Array to create a field with.</returns>
         private T[] GetArrayValues<T>(byte[] fieldBody, DNAField dnaField)
         {
             string typeName = dnaField.TypeName;
@@ -306,9 +286,9 @@ namespace BlenderToUnity
                     return ProcessMultiDimensionalArray<long>(fieldBody, dnaField);
                 case "uint64_t":
                     return ProcessMultiDimensionalArray<ulong>(fieldBody, dnaField);
+                default:
+                    throw new SystemException($"Unknown Primitive Type: {typeName}");
             }
-
-            throw new NotImplementedException();
         }
 
         private IField ProcessMultiDimensionalArray<T>(byte[] fieldBody, DNAField dnaField)
@@ -341,7 +321,7 @@ namespace BlenderToUnity
                     // we split up the FieldArrays
                     else
                     {
-                        throw new NotImplementedException("Multi-dimensional arrays of arrays are not implemented yet.");
+                        throw new NotImplementedException("Arrays of 3 or more dimensions are not yet supported.");
                     }
                 }
 
@@ -352,6 +332,7 @@ namespace BlenderToUnity
             }
             throw new SystemException("How did you get here?");
         }
+        
         private Field ProccessArrayValues<T>(DNAField dnaField, T arrayValues)
         {
             string typeName = dnaField.TypeName;
