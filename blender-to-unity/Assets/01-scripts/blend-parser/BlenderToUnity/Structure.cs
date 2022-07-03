@@ -90,7 +90,10 @@ namespace BlenderToUnity
         /// </summary>
         private IField ParseField(byte[] fieldBody, DNAField dnaField, BlenderFile file)
         {
-            if (dnaField.IsVoid) return null;
+            if (dnaField.IsVoid) 
+            {
+                return new FieldVoid(dnaField.FieldName);
+            }
 
             // Pointers
             if (dnaField.IsPointer && !dnaField.IsArray)
@@ -100,6 +103,8 @@ namespace BlenderToUnity
             if (dnaField.IsPointer && dnaField.IsArray)
             {
                 // return pointer array.
+                f.print("Pointer Array with Depth: " + dnaField.ArrayDepth);
+                return null;
             }
 
             // Primitives
@@ -125,7 +130,13 @@ namespace BlenderToUnity
             if (!dnaField.IsPointer && !dnaField.IsPrimitive && dnaField.IsArray)
             {
                 // return struct array.
+                f.print("Structure Array with Depth: " + dnaField.ArrayDepth);
+                return null;
             }
+
+            f.print("Missed: " + dnaField.FieldName + " of type " + dnaField.TypeName);
+
+            f.print("UnParsed Obj");
             return null;
         }
 
@@ -399,9 +410,9 @@ namespace BlenderToUnity
     
         private IField ReadStructureValue(byte[] fieldBody, DNAField dnaField, BlenderFile file)
         {
-            f.print("type index == " + dnaField.TypeIndex);
+           
             var structureDNA = file.StructureDNA.GetDNAStructFromTypeIndex(dnaField.TypeIndex);
-            f.print("struct type == " + structureDNA.TypeName);
+            
             return new Structure(fieldBody, structureDNA, file);
         }
     }

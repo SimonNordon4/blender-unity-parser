@@ -36,6 +36,8 @@ namespace BlenderToUnity
         }
     }
 
+    #region Meta Fields
+
     [System.Serializable]
     public class FieldArrays : Field
     {
@@ -47,6 +49,23 @@ namespace BlenderToUnity
             Fields = value;
         }
     }
+
+    /// <summary>
+    /// Represents a null field in the blender file. We're explicitly denoting it as not to confuse ourselves between a null field from the file, and an actual null field.
+    /// </summary>
+    [System.Serializable]
+    public class FieldVoid : Field
+    {
+        [field: SerializeField]
+        public string Void { get; set; }
+
+        public FieldVoid(string fieldName) : base(fieldName)
+        {
+            Void = "void";
+        }
+    }
+
+    #endregion
 
     #region Primitives
 
