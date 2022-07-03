@@ -47,8 +47,10 @@ namespace BlenderToUnity
         /// <summary>
         /// Read a single FileBlock from a blend file.
         /// </summary>
-        public static FileBlock ReadFileBlock(BinaryReader reader, int pointerSize)
+        public static FileBlock ReadFileBlock(BlenderFile file)
         {
+            var pointerSize = file.Header.PointerSize;
+            var reader = file.Reader;
             // Input Checking.
             if (pointerSize != 4 && pointerSize != 8)
             {

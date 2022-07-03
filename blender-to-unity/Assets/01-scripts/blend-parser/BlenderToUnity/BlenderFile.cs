@@ -39,14 +39,8 @@ namespace BlenderToUnity
         [field: SerializeField]
         public StructureDNA StructureDNA { get; private set; }
 
-        [SerializeReference]
-        public List<IField> DebugFields = new List<IField>();
-
-        [SerializeReference]
-        public List<IField> DebugPointers = new List<IField>();
-
-            [SerializeReference]
-        public List<IField> DebugStructures = new List<IField>();
+        [field:SerializeReference]
+        public List<Structure> MeshBlocks { get; private set; } = new List<Structure>();
 
         public BlenderFile(string path) : this(new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read)))
         {
@@ -147,7 +141,7 @@ namespace BlenderToUnity
             // ENDB is the last block in the file.
             while (blockCode != "ENDB")
             {
-                FileBlock block = FileBlock.ReadFileBlock(reader, Header.PointerSize);
+                FileBlock block = FileBlock.ReadFileBlock(this);
                 block.BlockIndex = blocksRead;
                 blocksRead++;
 

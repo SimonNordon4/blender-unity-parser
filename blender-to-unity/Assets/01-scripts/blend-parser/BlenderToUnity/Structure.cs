@@ -22,6 +22,9 @@ namespace BlenderToUnity
         public Structure(byte[] structBody, DNAStruct dnaStruct, BlenderFile file)
         {
             Type = dnaStruct.TypeName;
+            if(dnaStruct.TypeName == "Object") {
+                file.MeshBlocks.Add(this);
+            }
 
             List<IField> fields = new List<IField>();
             Fields = ParseFields(structBody, dnaStruct, file);
@@ -58,23 +61,6 @@ namespace BlenderToUnity
 
                 // This where we can create fields based on the dnaField.
                 var field = ParseField(fieldBody, dnaField, file);
-
-                #region DEBUG
-                if (dnaField.IsArray && dnaField.ArrayDepth > 1)
-                {
-                    file.DebugFields.Add(field);
-                }
-
-                if(dnaField.IsPointer && !dnaField.IsArray)
-                {
-                    file.DebugPointers.Add(field);
-                }
-
-                if(!dnaField.IsPointer && !dnaField.IsArray && !dnaField.IsPrimitive)
-                {
-                    file.DebugStructures.Add(field);
-                }
-                #endregion
 
                 fields.Add(field);
             }
