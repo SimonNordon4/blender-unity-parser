@@ -22,7 +22,8 @@ namespace BlenderToUnity
         public Structure(byte[] structBody, DNAStruct dnaStruct, BlenderFile file)
         {
             Type = dnaStruct.TypeName;
-            if(dnaStruct.TypeName == "Object") {
+            if (dnaStruct.TypeName == "Mesh")
+            {
                 file.MeshBlocks.Add(this);
             }
 
@@ -76,7 +77,7 @@ namespace BlenderToUnity
         /// </summary>
         private IField ParseField(byte[] fieldBody, DNAField dnaField, BlenderFile file)
         {
-            if (dnaField.IsVoid) 
+            if (dnaField.IsVoid)
             {
                 return new FieldVoid(dnaField.FieldName);
             }
@@ -89,8 +90,7 @@ namespace BlenderToUnity
             if (dnaField.IsPointer && dnaField.IsArray)
             {
                 // return pointer array.
-                f.print("Pointer Array with Depth: " + dnaField.ArrayDepth);
-                return null;
+                return ReadPointerArray(fieldBody, dnaField);
             }
 
             // Primitives
@@ -115,9 +115,7 @@ namespace BlenderToUnity
             }
             if (!dnaField.IsPointer && !dnaField.IsPrimitive && dnaField.IsArray)
             {
-                // return struct array.
-                f.print("Structure Array with Depth: " + dnaField.ArrayDepth);
-                return null;
+                return ReadStructureArray(fieldBody, dnaField, file);
             }
 
             f.print("Missed: " + dnaField.FieldName + " of type " + dnaField.TypeName);
@@ -126,11 +124,35 @@ namespace BlenderToUnity
             return null;
         }
 
-        private FieldULong ReadPointerValue(byte[] fieldBody, DNAField dnaField)
+
+        /// <summary>
+        /// Read the value of a single pointer.
+        /// </summary>
+        /// <returns>FieldULong containing a single pointer.</returns>
+        private FieldPointer ReadPointerValue(byte[] fieldBody, DNAField dnaField)
         {
-            if(fieldBody.Length == 0) f.print("FIELD BODY IS 0");
+            if (fieldBody.Length == 0) f.print("FIELD BODY IS 0");
             var pointer = dnaField.PointerSize == 4 ? BitConverter.ToUInt32(fieldBody, 0) : BitConverter.ToUInt64(fieldBody, 0);
-            return new FieldULong(dnaField.FieldName, pointer);
+            return new FieldPointer(dnaField.FieldName, pointer);
+        }
+
+        /// <summary>
+        /// Read the values of a pointer array.
+        /// </summary>
+        /// <returns>FieldULongs containing an array of pointers.</returns>
+        private IField ReadPointerArray(byte[] fieldBody, DNAField dnaField)
+        {
+            int numberOfPoints = 1;
+            for (int i = 0; i < dnaField.ArrayDepth; i++) numberOfPoints *= dnaField.ArrayLengths[i];
+            var pointerFields = new List<FieldPointer>(numberOfPoints);
+            for (int i = 0; i < numberOfPoints; i++)
+            {
+                int pointerDataStartIndex = i * dnaField.PointerSize;
+                ulong pointer = dnaField.PointerSize == 4 ? BitConverter.ToUInt32(fieldBody, pointerDataStartIndex) : BitConverter.ToUInt64(fieldBody, pointerDataStartIndex);
+                var pointerField = new FieldPointer(dnaField.FieldName, pointer);
+                pointerFields.Add(pointerField);
+            }
+            return new FieldPointers(dnaField.FieldName, pointerFields);
         }
 
         /// <summary>
@@ -173,7 +195,7 @@ namespace BlenderToUnity
         };
 
         /// <summary>
-        /// Reads a single Primitive Value and returns it as an iFeild
+        /// Reads a single Primitive Value and returns it as an iField of that type.
         /// </summary>
         private IField ReadPrimitiveValue(byte[] fieldBody, DNAField dnaField)
         {
@@ -355,7 +377,7 @@ namespace BlenderToUnity
                 }
                 int arraySize = dnaField.ArrayLengths[i];
 
-                var bufferArray = new List<Field>(arraysAtCurrentDepth);
+                var bufferArray = new List<IField>(arraysAtCurrentDepth);
 
                 for (int j = 0; j < arraysAtCurrentDepth; j++)
                 {
@@ -379,7 +401,7 @@ namespace BlenderToUnity
             }
             throw new SystemException("How did you get here?");
         }
-        
+
         /// <summary>
         /// Processes generic array values into a primitive array Field Type.
         /// </summary>
@@ -393,13 +415,30 @@ namespace BlenderToUnity
 
             return PrimitiveArrayFunctionMap[typeName](dnaField.FieldName, arrayValues);
         }
-    
+
         private IField ReadStructureValue(byte[] fieldBody, DNAField dnaField, BlenderFile file)
         {
-           
+
             var structureDNA = file.StructureDNA.GetDNAStructFromTypeIndex(dnaField.TypeIndex);
-            
+
             return new Structure(fieldBody, structureDNA, file);
+        }
+
+        private IField ReadStructureArray(byte[] fieldBody, DNAField dnaField, BlenderFile file)
+        {
+            int numberOfStructures = 1;
+            for (int i = 0; i < dnaField.ArrayDepth; i++) { numberOfStructures *= dnaField.ArrayLengths[i]; }
+
+            var structures = new List<IField>(numberOfStructures);
+            for (int i = 0; i < numberOfStructures; i++)
+            {
+                var structureDNA = file.StructureDNA.GetDNAStructFromTypeIndex(dnaField.TypeIndex);
+                int structureBodySize = fieldBody.Length / numberOfStructures;
+                byte[] structureBody = fieldBody.Skip(i * structureBodySize).Take(structureBodySize).ToArray();
+                var structure = new Structure(structureBody, structureDNA, file);
+                structures.Add(structure);
+            }
+            return new FieldArrays(dnaField.FieldName, structures);
         }
     }
 

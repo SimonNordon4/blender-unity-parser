@@ -42,9 +42,9 @@ namespace BlenderToUnity
     public class FieldArrays : Field
     {
         [field: SerializeReference]
-        public List<Field> Fields { get; set; }
+        public List<IField> Fields { get; set; }
 
-        public FieldArrays(string fieldName, List<Field> value) : base(fieldName)
+        public FieldArrays(string fieldName, List<IField> value) : base(fieldName)
         {
             Fields = value;
         }
@@ -65,6 +65,24 @@ namespace BlenderToUnity
         }
     }
 
+    [System.Serializable]
+    public class FieldPointer : Field
+    {
+        [field: SerializeField]
+        public ulong Pointer { get; set; }
+
+        [field:SerializeField]
+        public Structure structureReference {get;set;}
+
+        public FieldPointer(string fieldName, ulong pointer) : base(fieldName)
+        {
+            Pointer = pointer;
+        }
+        public void AssignStructure(Structure structure)
+        {
+            structureReference = structure;
+        }
+    }
     #endregion
 
     #region Primitives

@@ -42,6 +42,9 @@ namespace BlenderToUnity
         [field:SerializeReference]
         public List<Structure> MeshBlocks { get; private set; } = new List<Structure>();
 
+        [field:SerializeReference]
+        public List<Structure> structsWithStructs { get; private set; } = new List<Structure>();
+
         public BlenderFile(string path) : this(new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read)))
         {
             if (!File.Exists(path))
@@ -83,6 +86,13 @@ namespace BlenderToUnity
                     FileBlocks[i].ParseFileBlock(this);
                 }
                 f.stopwatch("Parse File Blocks");
+
+                //TODO
+                // Create a memory map when parsing blocks. // map to the structure or the block itself? I think it's going to actually be the strucutre because 1 block can return many structures.
+                // That's how we can get many MVERTS from a single block.
+
+                // Create a special FieldPointer that can hold a reference to another sturcute.
+                // Populate all of these field pointers with references to the structures contained within the block.
 
                 reader.Close();
 
