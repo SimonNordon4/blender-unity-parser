@@ -83,6 +83,16 @@ namespace BlenderToUnity
             structureReference = structure;
         }
     }
+
+    public class FieldPointers : Field
+    {
+        [field: SerializeReference]
+        public List<FieldPointer> Pointers { get; set; }
+        public FieldPointers(string fieldName, List<FieldPointer> value) : base(fieldName)
+        {
+            Pointers = value;
+        }
+    }
     #endregion
 
     #region Primitives
