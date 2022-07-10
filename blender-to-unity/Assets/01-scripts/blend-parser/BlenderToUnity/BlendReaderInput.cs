@@ -10,7 +10,6 @@ public class BlendReaderInput : MonoBehaviour
     private string blendFilePath = @"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blend-parser\BlenderToUnity\example.blend";
     private string saveFilePath = @"E:\repos\blender-to-unity\blender-to-unity\Assets\01-scripts\blend-parser\BlenderToUnity\example.json";
 
-    private BlenderFileReader.BlenderFile oldBlenderFile;
 
     [ReadOnly]
     public BlenderFile blenderFile;
@@ -28,10 +27,5 @@ public class BlendReaderInput : MonoBehaviour
         var json = EditorJsonUtility.ToJson(blenderFile, true);
         System.IO.File.WriteAllText(saveFilePath, json);
         f.stopwatch("Json Serialize");
-    }
-
-    private void ReadOldBlend()
-    {
-        oldBlenderFile = new BlenderFileReader.BlenderFile(blendFilePath);
     }
 }
