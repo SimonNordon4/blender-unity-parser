@@ -1,16 +1,14 @@
 # Blender Parser for Unity.
 
-Serialize the contents of a blender file in Unity.
+Serialize the contents of a blend file in Unity.
 
-___
+![Blend Reader Input](Media/BlendReaderInput.png)
 
-## How Blender Files Work
+# How to use:
 
--- TODO
+Clone the repository and open the Unity Project.
+Paste your .blend file path into the Blend Reader Input MonoBehaviour.
 
-## How to Use the Parser
+# Support
 
-__
-
--- TODO
-
+The viewport in Unity is quite laggy due to loading the entire blend file. Let me know if you have ideas to make it more performant.
