@@ -65,15 +65,15 @@ sysinfo.txt
 crashlytics-build.properties
 
 # Packed Addressables
-/blender-to-unity/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-blender-to-unity/Library/Artifacts/00/007ba677cdbea063a184a2ecf9e00874
+
+.idea/*
 
 
-/json-test/obj/Debug/net6.0/
 
-/blender-to-unity/[Aa]ssets/Plugins/*
-blender-to-unity/Assets/01-scripts/ublend/blender_export.ublend
+
+
