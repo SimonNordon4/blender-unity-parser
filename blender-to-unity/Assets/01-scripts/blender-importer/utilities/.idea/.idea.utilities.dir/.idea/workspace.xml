@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="78220506-ddc2-4415-94fb-f662053a1a4a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../01-scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/BlenderFile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/BlenderFile.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/Field.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/Field.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/FieldDefinition.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/FieldDefinition.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/FileBlock.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/FileBlock.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/IField.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/IField.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/Structure.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/Structure.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/StructureDNA.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/StructureDNA.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/StructureDefinition.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/StructureDefinition.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/TypeDefinition.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlendFileReader/TypeDefinition.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/BlendReaderInput.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/BlendReaderInput.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/BlenderFile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/BlenderFile.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Definitions.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Definitions/DNAField.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Definitions/DNAField.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Definitions/DNAStruct.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Definitions/DNAStruct.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Definitions/DNAType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Definitions/DNAType.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Definitions/StructureDNA.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Definitions/StructureDNA.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Field.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Field.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/FileBlock.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/FileBlock.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Header.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Header.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/IField.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/IField.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Structure.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/Structure.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/example.blend" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/example.blend.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/example.blend1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/example.blend1.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/example.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/example.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/f.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/BlenderToUnity/f.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/Kaitai.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/Kaitai/BlendBinaryTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/Kaitai/BlendBinaryTest.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/Kaitai/BlenderBlend.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/Kaitai/BlenderBlend.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/Kaitai/KaitaiStream.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/Kaitai/KaitaiStream.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/Kaitai/KaitaiStruct.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blend-parser/Kaitai/KaitaiStruct.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../blender-importer.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BlendData.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BlendData.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BlendImporter.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BlendImporter.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Materials/cube1-No Name.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Materials/cube1-No Name.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cube1 - Copy.blend" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cube1 - Copy.blend.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cube1.blend" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cube1.blend.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cube1.blend1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cube1.blend1.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cube1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cube1.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/__pycache__.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/b2u.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/b2u.py.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/data.py.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/main.py.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/meshes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/meshes.py.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/ops.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/ops.py.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/settings.py.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/test_clip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/test_clip.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../settings.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../settings/BlendImporterGlobalSettings.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../settings/BlendImporterGlobalSettings.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../settings/BlendImporterGlobalSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../settings/BlendImporterGlobalSettings.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/BlendImporterTests.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/BlendImporterTests.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/Materials/test-Material.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/Materials/test-Material.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/test.blend" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/test.blend.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/test_export_meshes.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tests/test_export_meshes.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todo.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todo.md.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../utilities.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BlendPreProcessor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BlendPreProcessor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BlenderProcessHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BlenderProcessHandler.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/f.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/f.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/Materials/Material.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/Materials/Material.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/Materials/blender_export.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/Materials/blender_export.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/Materials/download.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/Materials/download.jpg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/UBlendDataClasses.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/UBlendDataClasses.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/UBlendImporter.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/UBlendImporter.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/blender_export.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/blender_export.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/blender_export.ublend" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/blender_export.ublend.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/cube1.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/cube1.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/untitled.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ublend/untitled.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../07-shaders/uv.mat" beforeDir="false" afterPath="$PROJECT_DIR$/../../../07-shaders/uv.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../07-shaders/uv2.mat" beforeDir="false" afterPath="$PROJECT_DIR$/../../../07-shaders/uv2.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../07-shaders/uv3.mat" beforeDir="false" afterPath="$PROJECT_DIR$/../../../07-shaders/uv3.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../UniversalRenderPipelineGlobalSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../../../UniversalRenderPipelineGlobalSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ProjectSettings/ShaderGraphSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ProjectSettings/ShaderGraphSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ProjectSettings/URPProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ProjectSettings/URPProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ProjectSettings/boot.config" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../../../blend-parser/Kaitai/BlendBinaryTest.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2c4cxYOluF9KutqyA3xKMWQUSqK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "blend-parser-1"
+  },
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\61426\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\61426\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\61426\\AppData\\Local\\Symbols\\src"
+    ]
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="78220506-ddc2-4415-94fb-f662053a1a4a" name="Changes" comment="" />
+      <created>1707374539734</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1707374539734</updated>
+      <workItem from="1707374542562" duration="250000" />
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>
