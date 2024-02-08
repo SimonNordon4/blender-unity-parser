@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: bda0ebec0a0fe65408cfc9ffbb0117ef
+importerOverride:
+  nativeImporterType: 2089858483
+  scriptedImporterType:
+    serializedVersion: 2
+    Hash: f3f5faa6626966c452d6a8c2429a9ff5
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: c60c9aea713e92b42b8a4c1060f11167, type: 3}
+  blendData:
+    blend_meshes: []
+    blend_gameobjects: []
+  vec_precision: 0.001
+  overrideDefaultMaterial: 1
+  defaultMaterial: {instanceID: 0}

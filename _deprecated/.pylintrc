@@ -1,3 +1,0 @@
-[MASTER]
-init-hook='import sys; sys.path.append("E:\\repos\\blender-to-unity\\blender-scripts")'
-# Above line is required so the linter can appreciate our module.
