@@ -2,7 +2,7 @@
 
 Serialize the contents of a blend file in Unity.
 
-![Blend Reader Input](Media/BlendReaderInput.png)
+![Blend Reader Input]([Media/BlendReaderInput.png](https://github.com/SimonNordon4/blender-unity-parser/blob/main/Media/Blend%20Reader%20Input.png?raw=true))
 
 # How to use:
 
